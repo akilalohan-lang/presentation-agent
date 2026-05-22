@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Presentation Agent · PurchasePlus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="assets/PurchasePlus Logos/logo-emblem-mobile.png">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<style>
+
+:root {
+  --grad:        linear-gradient(90deg, #a956ff 0%, #7c5dff 50%, #3766fe 100%);
+  --purple:      #7c5dff;
+  --light-purple:#a956ff;
+  --blue:        #3766fe;
+  --ink:         #111827;
+  --ink-soft:    #1f2937;
+  --body:        #4B5563;
+  --muted:       #9ca3af;
+  --soft:        #f8fafc;
+  --softer:      #fafafa;
+  --border:      #e5e7eb;
+  --border-soft: #f3f4f6;
+  --bg:          #ffffff;
+  --green:       #10b981;
+  --amber:       #f59e0b;
+  --red:         #ef4444;
+  --radius:      12px;
+  --radius-pill: 999px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg); }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--body); font-size: 15px; line-height: 1.6; font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+h1, h2, h3, h4, p { text-wrap: balance; color: var(--ink); }
+h1 { font-size: clamp(32px, 4.5vw, 58px); font-weight: 200; letter-spacing: -1.6px; line-height: 1.06; }
+h2 { font-size: clamp(22px, 3vw, 38px); font-weight: 200; letter-spacing: -1px; line-height: 1.1; }
+h3 { font-size: 15px; font-weight: 600; letter-spacing: -.2px; }
+p { font-weight: 300; }
+button { font-family: inherit; cursor: pointer; border: 0; background: none; }
+input, textarea, select { font-family: inherit; }
+.mono { font-family: 'JetBrains Mono', monospace; }
+
+.grad-text {
+  background: linear-gradient(90deg, #a956ff 0%, #7c5dff 50%, #3766fe 100%);
+  background-size: 220% auto;
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent; -webkit-text-fill-color: transparent;
+  font-weight: inherit;
+  animation: gradPulse 5s linear infinite;
+}
+@keyframes gradPulse {
+  0%   { background-position: 200% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ══════════════════════════════
+   TOP BAR
+   ══════════════════════════════ */
+.topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: 58px;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px;
+  background: rgba(255,255,255,.96); backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-soft);
+}
+.topbar-logo { height: 30px; width: auto; }
+.topbar-steps {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 500; color: var(--muted);
+}
+.step-pill {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 12px; border-radius: var(--radius-pill);
+  font-size: 11.5px; font-weight: 600; letter-spacing: .02em; transition: all .2s;
+}
+.step-pill.done   { background: rgba(16,185,129,.1); color: var(--green); }
+.step-pill.active { background: linear-gradient(135deg, rgba(169,86,255,.12), rgba(55,102,254,.08)); color: var(--purple); }
+.step-pill.pending { color: var(--muted); }
+.step-sep { color: var(--border); font-size: 14px; }
+
+.topbar-user { display: flex; align-items: center; gap: 9px; }
+.topbar-user-avatar {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--grad); color: #fff;
+  font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.topbar-user-name { font-size: 13px; font-weight: 500; color: var(--ink-soft); }
+
+/* ── Page ── */
+.page { min-height: 100dvh; padding-top: 58px; }
+
+/* ══════════════════════════════
+   AUTH OVERLAY — blurs the page
+   ══════════════════════════════ */
+#authOverlay {
+  position: fixed;
+  top: 58px; left: 0; right: 0; bottom: 0;
+  z-index: 150;
+  background: rgba(248,250,252,.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.auth-modal {
+  background: #fff;
+  border-radius: 24px;
+  padding: 44px 36px 40px;
+  max-width: 380px; width: 100%;
+  text-align: center;
+  box-shadow: 0 24px 64px rgba(15,23,42,.14), 0 4px 16px rgba(15,23,42,.06);
+}
+
+.auth-chef-circle {
+  width: 108px; height: 108px; border-radius: 50%;
+  background: linear-gradient(135deg, #f5edff 0%, #eaf1ff 100%);
+  margin: 0 auto 18px; overflow: hidden;
+  border: 4px solid #fff;
+  box-shadow: 0 4px 18px rgba(124,93,255,.28);
+}
+
+.chef-av-bg {
+  width: 100%; height: 100%;
+  background-image: url('assets/Longarms Characters/Stand Alone/98-084 PurchasePlus Longarm Illustration Chef 1 Retina.png');
+  background-size: 220%;
+  background-position: center 15%;
+  background-repeat: no-repeat;
+}
+
+.auth-modal-name {
+  font-size: 10.5px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase;
+  background: var(--grad);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent; -webkit-text-fill-color: transparent;
+  margin-bottom: 10px;
+}
+
+.auth-modal h2 {
+  font-size: 26px; font-weight: 300; letter-spacing: -.7px;
+  margin-bottom: 12px; color: var(--ink); text-wrap: balance;
+}
+
+.auth-modal > p {
+  font-size: 14px; color: var(--body); font-weight: 300;
+  margin-bottom: 28px; line-height: 1.65; text-wrap: balance;
+  max-width: 30ch; margin-left: auto; margin-right: auto;
+}
+
+.google-connect-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%; padding: 13px 20px;
+  background: #fff; border: 1.5px solid #dadce0; border-radius: 10px;
+  font-family: 'Inter', sans-serif; font-size: 14.5px; font-weight: 500;
+  color: #3c4043; cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,.08);
+  transition: box-shadow .18s, border-color .18s;
+  white-space: nowrap; margin-bottom: 14px;
+}
+.google-connect-btn:hover {
+  box-shadow: 0 4px 14px rgba(0,0,0,.13); border-color: #bbb;
+}
+.google-g-icon { width: 20px; height: 20px; flex-shrink: 0; }
+
+.auth-domain-note {
+  font-size: 12px; color: var(--muted); margin: 0; text-wrap: balance;
+}
+
+/* ══════════════════════════════
+   GOOGLE SIGN-IN MOCK SHEET
+   ══════════════════════════════ */
+.auth-error-toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  background: #d93025; color: #fff; padding: 12px 22px;
+  border-radius: var(--radius-pill); font-size: 14px; font-weight: 500;
+  box-shadow: 0 4px 20px rgba(217,48,37,.35);
+  z-index: 1000; display: none; white-space: nowrap;
+}
+
+/* ══════════════════════════════
+   STEP 1 — UPLOAD
+   ══════════════════════════════ */
+#step1 { display: block; }
+
+.upload-hero {
+  padding: 72px 32px 40px;
+  text-align: center; max-width: 680px; margin: 0 auto; width: 100%;
+}
+.upload-hero h1 { margin-bottom: 16px; }
+.upload-hero p { font-size: 17px; color: var(--body); max-width: 48ch; margin: 0 auto; }
+
+.upload-area { max-width: 780px; margin: 0 auto; padding: 0 24px 100px; width: 100%; }
+
+.drop-zone {
+  border: 2px dashed var(--border); border-radius: 18px;
+  padding: 52px 40px; text-align: center; cursor: pointer;
+  background: var(--softer); transition: all .2s;
+  position: relative; margin-bottom: 20px;
+}
+.drop-zone:hover, .drop-zone.drag-over {
+  border-color: var(--purple);
+  background: linear-gradient(135deg, rgba(169,86,255,.05), rgba(55,102,254,.04));
+}
+.drop-zone input[type=file] {
+  position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%;
+}
+.drop-icon {
+  width: 48px; height: 48px; margin: 0 auto 16px;
+  background: linear-gradient(135deg, rgba(169,86,255,.12), rgba(55,102,254,.10));
+  border-radius: 14px; display: flex; align-items: center; justify-content: center;
+}
+.drop-icon svg { width: 24px; height: 24px; color: var(--purple); }
+.drop-title { font-size: 16px; font-weight: 500; color: var(--ink); margin-bottom: 6px; }
+.drop-hint { font-size: 13px; color: var(--muted); }
+.drop-hint strong { color: var(--purple); }
+.file-types {
+  display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 14px;
+}
+.file-type-badge {
+  padding: 3px 10px; background: var(--bg); border: 1px solid var(--border);
+  border-radius: 6px; font-size: 11px; font-family: 'JetBrains Mono', monospace;
+  color: var(--body); font-weight: 500;
+}
+.file-list { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; min-height: 0; }
+.file-chip {
+  display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px;
+  background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-pill);
+  font-size: 12.5px; font-weight: 500; color: var(--ink);
+}
+.file-chip .check { color: var(--green); width: 14px; height: 14px; flex-shrink: 0; }
+.file-chip .remove { color: var(--muted); cursor: pointer; margin-left: 2px; font-size: 13px; line-height: 1; }
+.file-chip .remove:hover { color: var(--red); }
+
+.or-divider {
+  display: flex; align-items: center; gap: 14px;
+  margin: 4px 0 20px; color: var(--muted); font-size: 12px;
+}
+.or-divider::before, .or-divider::after { content: ''; flex: 1; height: 1px; background: var(--border-soft); }
+
+.url-row { display: flex; gap: 10px; margin-bottom: 20px; }
+.url-input {
+  flex: 1; padding: 12px 16px; border: 1px solid var(--border);
+  border-radius: var(--radius); font-size: 14px; color: var(--ink);
+  background: var(--bg); outline: none; transition: border .15s;
+}
+.url-input:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(124,93,255,.1); }
+.url-input::placeholder { color: var(--muted); }
+.url-add-btn {
+  padding: 12px 20px; border-radius: var(--radius);
+  background: var(--softer); border: 1px solid var(--border);
+  font-size: 13.5px; font-weight: 600; color: var(--ink);
+  transition: all .15s; white-space: nowrap;
+}
+.url-add-btn:hover { background: var(--bg); border-color: var(--purple); color: var(--purple); }
+
+.text-label {
+  font-size: 12px; font-weight: 700; color: var(--ink-soft);
+  letter-spacing: .06em; text-transform: uppercase; margin-bottom: 8px; display: block;
+}
+.paste-area {
+  width: 100%; min-height: 110px; padding: 14px 16px;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  font-size: 14px; color: var(--ink); background: var(--bg);
+  resize: vertical; outline: none; transition: border .15s; line-height: 1.6;
+}
+.paste-area:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(124,93,255,.1); }
+.paste-area::placeholder { color: var(--muted); }
+
+.cta-bar {
+  display: flex; justify-content: flex-end; gap: 12px;
+  margin-top: 24px; align-items: center;
+}
+.cta-hint { font-size: 12.5px; color: var(--muted); }
+
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--grad); color: #fff;
+  font-size: 15px; font-weight: 600; padding: 13px 28px;
+  border-radius: var(--radius-pill); border: none; cursor: pointer;
+  white-space: nowrap; box-shadow: 0 4px 18px rgba(124,93,255,.28);
+  transition: transform .15s, box-shadow .15s;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(124,93,255,.42); }
+.btn-primary:disabled { opacity: .4; transform: none; cursor: not-allowed; pointer-events: none; }
+.btn-primary svg { width: 18px; height: 18px; flex-shrink: 0; }
+.btn-secondary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 22px; border-radius: var(--radius-pill);
+  border: 1px solid var(--border); background: var(--bg);
+  font-size: 14px; font-weight: 500; color: var(--ink-soft);
+  transition: all .15s; white-space: nowrap;
+}
+.btn-secondary:hover { border-color: var(--purple); color: var(--purple); }
+.btn-secondary svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+/* ══════════════════════════════
+   STEP 2 — EDITOR
+   ══════════════════════════════ */
+#step2 { display: none; }
+
+.editor-layout {
+  display: grid; grid-template-columns: 1fr 360px; min-height: calc(100dvh - 58px);
+}
+.editor-left {
+  padding: 40px 48px 100px; border-right: 1px solid var(--border-soft); overflow-y: auto;
+}
+.editor-section { margin-bottom: 36px; }
+.editor-section-title {
+  font-size: 11px; font-weight: 700; letter-spacing: .16em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
+}
+.editor-section-title::after { content: ''; flex: 1; height: 1px; background: var(--border-soft); }
+.analysis-card {
+  padding: 18px 20px; background: var(--softer);
+  border: 1px solid var(--border-soft); border-radius: var(--radius); margin-bottom: 10px;
+}
+.analysis-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+.analysis-row:last-child { margin-bottom: 0; }
+.analysis-icon {
+  width: 32px; height: 32px; flex-shrink: 0; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, rgba(169,86,255,.1), rgba(55,102,254,.08));
+}
+.analysis-icon svg { width: 16px; height: 16px; color: var(--purple); }
+.analysis-label { font-size: 12px; color: var(--muted); margin-bottom: 2px; }
+.analysis-value { font-size: 14px; font-weight: 500; color: var(--ink); }
+.missing-banner {
+  padding: 12px 16px;
+  background: rgba(245,158,11,.07); border: 1px solid rgba(245,158,11,.24);
+  border-radius: var(--radius); display: flex; gap: 10px; align-items: flex-start;
+  margin-bottom: 14px; font-size: 13px; color: var(--ink-soft);
+}
+.missing-banner svg { width: 16px; height: 16px; color: var(--amber); flex-shrink: 0; margin-top: 2px; }
+.slide-outline { display: flex; flex-direction: column; gap: 6px; }
+.outline-item {
+  display: flex; align-items: center; gap: 12px; padding: 10px 14px;
+  background: var(--bg); border: 1px solid var(--border-soft); border-radius: 10px;
+}
+.outline-item:hover { border-color: rgba(124,93,255,.28); }
+.outline-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--muted); min-width: 24px; }
+.outline-input { flex: 1; border: none; outline: none; font-size: 13.5px; font-weight: 500; color: var(--ink); background: transparent; font-family: inherit; }
+.outline-handle { color: var(--muted); cursor: grab; }
+.outline-handle svg { width: 14px; height: 14px; }
+.add-slide-btn {
+  display: flex; align-items: center; gap: 8px; padding: 10px 14px;
+  font-size: 13px; color: var(--muted); border: 1px dashed var(--border);
+  border-radius: 10px; cursor: pointer; margin-top: 4px; transition: all .15s;
+  background: none; width: 100%;
+}
+.add-slide-btn:hover { border-color: var(--purple); color: var(--purple); background: rgba(124,93,255,.03); }
+.add-slide-btn svg { width: 14px; height: 14px; }
+.editor-right { padding: 32px 28px 100px; background: var(--softer); overflow-y: auto; }
+.settings-group { margin-bottom: 28px; }
+.settings-label { font-size: 11px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; display: block; }
+.field-group { margin-bottom: 14px; }
+.field-label { font-size: 12px; font-weight: 600; color: var(--ink-soft); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+.field-req-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--amber); flex-shrink: 0; }
+.field-input {
+  width: 100%; padding: 10px 12px; border: 1px solid var(--border);
+  border-radius: 9px; font-size: 13.5px; color: var(--ink);
+  background: var(--bg); outline: none; transition: border .15s;
+}
+.field-input:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(124,93,255,.08); }
+.field-input::placeholder { color: var(--muted); }
+.field-input.warn { border-color: rgba(245,158,11,.6); background: rgba(245,158,11,.03); }
+select.field-input { cursor: pointer; }
+.slider-row { display: flex; align-items: center; gap: 12px; }
+.slide-slider { flex: 1; -webkit-appearance: none; appearance: none; height: 4px; border-radius: 4px; outline: none; background: var(--border); cursor: pointer; }
+.slide-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: var(--purple); cursor: pointer; box-shadow: 0 2px 8px rgba(124,93,255,.3); }
+.slider-value { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 600; color: var(--purple); min-width: 28px; text-align: center; }
+.toggle-list { display: flex; flex-direction: column; gap: 10px; }
+.toggle-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 12px 14px; background: var(--bg); border: 1px solid var(--border-soft); border-radius: 10px; }
+.toggle-info { flex: 1; }
+.toggle-label { font-size: 13.5px; font-weight: 500; color: var(--ink); margin-bottom: 2px; }
+.toggle-desc { font-size: 11.5px; color: var(--muted); line-height: 1.45; }
+.toggle-switch { position: relative; width: 40px; height: 22px; flex-shrink: 0; margin-top: 1px; }
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-track { position: absolute; inset: 0; background: var(--border); border-radius: 11px; cursor: pointer; transition: background .2s; }
+.toggle-track::after { content: ''; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; border-radius: 50%; background: white; transition: transform .2s; box-shadow: 0 1px 4px rgba(0,0,0,.18); }
+.toggle-switch input:checked + .toggle-track { background: var(--purple); }
+.toggle-switch input:checked + .toggle-track::after { transform: translateX(18px); }
+.editor-footer {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 40;
+  background: rgba(255,255,255,.94); backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border-soft); padding: 14px 40px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.footer-back { display: flex; align-items: center; gap: 6px; font-size: 13.5px; font-weight: 500; color: var(--muted); cursor: pointer; padding: 8px 0; transition: color .15s; background: none; border: none; }
+.footer-back:hover { color: var(--purple); }
+.footer-back svg { width: 16px; height: 16px; }
+
+/* ══════════════════════════════
+   PROCESSING
+   ══════════════════════════════ */
+#processing {
+  display: none; position: fixed; inset: 0; z-index: 200;
+  background: rgba(255,255,255,.97); backdrop-filter: blur(8px);
+  flex-direction: column; align-items: center; justify-content: center; gap: 32px;
+}
+.proc-logo { height: 36px; opacity: .65; margin-bottom: 4px; }
+.proc-spinner { width: 48px; height: 48px; border: 3px solid var(--border); border-top-color: var(--purple); border-radius: 50%; animation: spin .9s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.proc-steps { max-width: 360px; width: 100%; }
+.proc-step { display: flex; align-items: center; gap: 14px; padding: 11px 0; border-bottom: 1px solid var(--border-soft); font-size: 13.5px; color: var(--muted); transition: color .3s; }
+.proc-step:last-child { border-bottom: none; }
+.proc-step.active { color: var(--ink); font-weight: 500; }
+.proc-step.done { color: var(--green); }
+.proc-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; background: var(--border); transition: background .3s; }
+.proc-step.active .proc-dot { background: var(--purple); }
+.proc-step.done .proc-dot { background: var(--green); }
+
+/* ══════════════════════════════
+   STEP 3 — OUTPUT
+   ══════════════════════════════ */
+#step3 { display: none; }
+.output-layout { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 80px 32px; min-height: calc(100dvh - 58px); text-align: center; }
+.output-check { width: 72px; height: 72px; border-radius: 50%; background: linear-gradient(135deg, rgba(16,185,129,.1), rgba(16,185,129,.05)); display: flex; align-items: center; justify-content: center; margin-bottom: 28px; }
+.output-check svg { width: 36px; height: 36px; color: var(--green); }
+.output-layout h2 { margin-bottom: 10px; }
+.output-layout p { font-size: 16px; color: var(--body); max-width: 40ch; margin: 0 auto 40px; }
+.url-card { background: var(--softer); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 20px; max-width: 540px; width: 100%; margin: 0 auto 28px; display: flex; align-items: center; gap: 14px; }
+.url-card-url { flex: 1; font-family: 'JetBrains Mono', monospace; font-size: 13px; color: var(--purple); text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.copy-btn { padding: 8px 16px; border-radius: 8px; background: var(--bg); border: 1px solid var(--border); font-size: 12.5px; font-weight: 600; color: var(--ink); transition: all .15s; white-space: nowrap; cursor: pointer; }
+.copy-btn:hover { border-color: var(--purple); color: var(--purple); }
+.copy-btn.copied { border-color: var(--green); color: var(--green); background: rgba(16,185,129,.06); }
+.output-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+.pw-badge { display: inline-flex; align-items: center; gap: 6px; padding: 5px 14px; border-radius: var(--radius-pill); background: rgba(124,93,255,.1); color: var(--purple); font-size: 12px; font-weight: 600; margin-bottom: 24px; }
+.pw-badge svg { width: 12px; height: 12px; }
+.output-restart { font-size: 13px; color: var(--muted); cursor: pointer; background: none; border: none; display: inline-flex; align-items: center; gap: 6px; transition: color .15s; padding: 8px 0; }
+.output-restart:hover { color: var(--purple); }
+.output-restart svg { width: 14px; height: 14px; }
+
+/* ══════════════════════════════
+   CHEF WIDGET (fixed bottom-right)
+   ══════════════════════════════ */
+#chefWidget {
+  position: fixed; bottom: 28px; right: 28px; z-index: 400;
+  display: none; flex-direction: column; align-items: flex-end; gap: 10px;
+}
+#chefWidget.visible { display: flex; }
+
+.chef-bubble {
+  background: #fff; border: 1px solid var(--border);
+  border-radius: 18px 18px 4px 18px; padding: 14px 18px; max-width: 280px;
+  box-shadow: 0 8px 30px rgba(15,23,42,.12);
+  transition: opacity .22s ease, transform .22s ease;
+  transform-origin: bottom right;
+}
+.chef-bubble.is-hidden { opacity: 0; transform: scale(.94) translateY(6px); pointer-events: none; }
+.chef-bubble-name {
+  font-size: 10.5px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  background: var(--grad); -webkit-background-clip: text; background-clip: text;
+  color: transparent; -webkit-text-fill-color: transparent; margin-bottom: 6px;
+}
+.chef-bubble-text { font-size: 14px; line-height: 1.55; color: var(--ink); font-weight: 400; }
+.chef-typing { display: flex; gap: 5px; align-items: center; padding: 4px 0; }
+.chef-typing-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--muted); animation: typingPulse 1.1s ease-in-out infinite; }
+.chef-typing-dot:nth-child(2) { animation-delay: .18s; }
+.chef-typing-dot:nth-child(3) { animation-delay: .36s; }
+@keyframes typingPulse {
+  0%, 100% { opacity: .25; transform: translateY(0); }
+  50%       { opacity: 1;   transform: translateY(-4px); }
+}
+.chef-avatar-btn {
+  width: 68px; height: 68px; border-radius: 50%; overflow: hidden;
+  background: linear-gradient(135deg, #f5edff 0%, #eaf1ff 100%);
+  border: 3px solid #fff; box-shadow: 0 4px 16px rgba(124,93,255,.38);
+  cursor: pointer; flex-shrink: 0; align-self: flex-end;
+  transition: transform .15s, box-shadow .15s;
+}
+.chef-avatar-btn:hover { transform: scale(1.06); box-shadow: 0 6px 22px rgba(124,93,255,.5); }
+
+/* ══════════════════════════════
+   CHOICE MODAL
+   ══════════════════════════════ */
+#choiceModal {
+  position: fixed; inset: 0; z-index: 800;
+  background: rgba(17,24,39,.88); backdrop-filter: blur(10px);
+  display: none; align-items: center; justify-content: center; padding: 24px;
+}
+#choiceModal.open { display: flex; }
+.choice-card {
+  background: #fff; border-radius: 28px;
+  padding: 52px 48px 48px; max-width: 520px; width: 100%;
+  text-align: center; box-shadow: 0 40px 100px rgba(0,0,0,.28);
+}
+.choice-chef-avatar {
+  width: 112px; height: 112px; border-radius: 50%;
+  background: linear-gradient(135deg, #f5edff 0%, #eaf1ff 100%);
+  margin: 0 auto 30px; overflow: hidden;
+  border: 4px solid #fff; box-shadow: 0 6px 24px rgba(124,93,255,.3);
+}
+.choice-card h2 { font-size: 30px; font-weight: 300; letter-spacing: -1px; margin-bottom: 10px; color: var(--ink); text-wrap: balance; }
+.choice-card > p { font-size: 16px; color: var(--body); margin-bottom: 36px; font-weight: 300; text-wrap: balance; }
+.choice-btns { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+.btn-cook {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 100%; max-width: 360px; padding: 17px 32px;
+  background: linear-gradient(90deg, #a956ff, #7c5dff, #3766fe, #7c5dff, #a956ff);
+  background-size: 300% 100%; animation: cookGrad 2.5s linear infinite;
+  color: #fff; font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 700;
+  border: none; border-radius: var(--radius-pill); cursor: pointer; white-space: nowrap;
+  box-shadow: 0 6px 28px rgba(124,93,255,.45);
+  transition: transform .18s, box-shadow .18s; letter-spacing: -.1px;
+}
+.btn-cook:hover { transform: translateY(-2px); box-shadow: 0 10px 36px rgba(124,93,255,.6); }
+@keyframes cookGrad {
+  0%   { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
+}
+.btn-create {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 100%; max-width: 360px; padding: 15px 32px;
+  background: none; border: 1.5px solid var(--border); border-radius: var(--radius-pill);
+  font-family: 'Inter', sans-serif; font-size: 15px; font-weight: 500;
+  color: var(--ink); cursor: pointer; white-space: nowrap;
+  transition: border-color .15s, color .15s;
+}
+.btn-create:hover { border-color: var(--purple); color: var(--purple); }
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .editor-layout { grid-template-columns: 1fr; }
+  .editor-left { padding: 28px 24px 80px; border-right: none; }
+  .editor-right { padding: 24px 24px 80px; border-top: 1px solid var(--border-soft); }
+  .editor-footer { padding: 12px 20px; }
+  .upload-hero { padding: 48px 24px 28px; }
+  .upload-area { padding: 0 16px 80px; }
+  .topbar { padding: 0 20px; }
+  .choice-card { padding: 40px 28px 36px; }
+}
+@media (max-width: 600px) {
+  .topbar-steps { display: none; }
+  .drop-zone { padding: 36px 20px; }
+  .url-row { flex-direction: column; }
+  #chefWidget { bottom: 16px; right: 16px; }
+  .chef-bubble { max-width: 240px; }
+  .auth-modal { padding: 36px 24px 32px; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     TOP BAR (always visible)
+     ══════════════════════════════ -->
+<header class="topbar">
+  <img src="assets/PurchasePlus Logos/logo-horizontal-color.png" alt="PurchasePlus" class="topbar-logo">
+  <div class="topbar-steps" id="stepIndicator">
+    <span class="step-pill active" id="pill1">01 Upload</span>
+    <span class="step-sep">›</span>
+    <span class="step-pill pending" id="pill2">02 Edit</span>
+    <span class="step-sep">›</span>
+    <span class="step-pill pending" id="pill3">03 Output</span>
+  </div>
+  <div class="topbar-user" id="topbarUser" style="display:none;">
+    <div class="topbar-user-avatar" id="topbarAvatar">AL</div>
+    <span class="topbar-user-name" id="topbarName">Akila</span>
+  </div>
+</header>
+
+<!-- ══════════════════════════════
+     PAGE CONTENT (visible behind blur)
+     ══════════════════════════════ -->
+<div class="page">
+
+  <!-- STEP 1 — UPLOAD -->
+  <div id="step1">
+    <div class="upload-hero">
+      <h1>Create a<br><span class="grad-text">presentation.</span></h1>
+      <p>Drop your content in. MasterChef will extract the key points and build a branded PurchasePlus deck.</p>
+    </div>
+
+    <div class="upload-area">
+      <div class="drop-zone" id="dropZone">
+        <input type="file" id="fileInput" multiple accept=".pptx,.pdf,.docx,.txt,.md">
+        <div class="drop-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+        </div>
+        <div class="drop-title">Drop files here, or <strong>browse</strong></div>
+        <div class="drop-hint">PPTX, PDF, DOCX, TXT, or MD</div>
+        <div class="file-types">
+          <span class="file-type-badge">PPTX</span>
+          <span class="file-type-badge">PDF</span>
+          <span class="file-type-badge">DOCX</span>
+          <span class="file-type-badge">TXT</span>
+          <span class="file-type-badge">MD</span>
+        </div>
+      </div>
+      <div class="file-list" id="fileList"></div>
+
+      <div class="or-divider">or add a link</div>
+      <div class="url-row">
+        <input type="url" class="url-input" id="urlInput"
+               placeholder="Google Slides, Google Sheets, Notion, web page…">
+        <button class="url-add-btn" onclick="addUrl()">Add</button>
+      </div>
+      <div class="file-list" id="urlList"></div>
+
+      <div class="or-divider">or paste text directly</div>
+      <label class="text-label" for="pasteArea">Brief, notes, or raw content</label>
+      <textarea class="paste-area" id="pasteArea"
+                placeholder="Paste meeting notes, a brief, bullet points, or anything you want to turn into slides…"
+                rows="5"></textarea>
+
+      <div class="cta-bar">
+        <span class="cta-hint" id="uploadHint">Add at least one file, URL, or some text to continue</span>
+        <button class="btn-primary" id="analyseBtn" onclick="startAnalyse()" disabled>
+          Analyse content
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 2 — EDITOR -->
+  <div id="step2">
+    <div class="editor-layout">
+      <div class="editor-left">
+        <div class="editor-section">
+          <div class="editor-section-title">Content analysis</div>
+          <div class="analysis-card">
+            <div class="analysis-row">
+              <div class="analysis-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              </div>
+              <div>
+                <div class="analysis-label">Files and sources</div>
+                <div class="analysis-value" id="analysisSources">—</div>
+              </div>
+            </div>
+            <div class="analysis-row">
+              <div class="analysis-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              </div>
+              <div>
+                <div class="analysis-label">Status</div>
+                <div class="analysis-value" id="analysisStatus">Ready to generate slides</div>
+              </div>
+            </div>
+          </div>
+          <div class="missing-banner" id="missingBanner" style="display:none;">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            <span id="missingText">Fill in the required fields on the right before generating.</span>
+          </div>
+        </div>
+        <div class="editor-section">
+          <div class="editor-section-title">Slide outline</div>
+          <div class="slide-outline" id="slideOutline"></div>
+          <button class="add-slide-btn" onclick="addSlide()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Add slide
+          </button>
+        </div>
+        <div class="editor-section">
+          <div class="editor-section-title">Add more content</div>
+          <div class="drop-zone" style="padding:28px 24px;" id="dropZone2">
+            <input type="file" id="fileInput2" multiple accept=".pptx,.pdf,.docx,.txt,.md">
+            <div class="drop-title" style="font-size:14px;">Drop more files here</div>
+            <div class="drop-hint">Supplement with additional documents</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="editor-right">
+        <div class="settings-group">
+          <span class="settings-label">Presentation details</span>
+          <div class="field-group">
+            <label class="field-label" for="titleInput"><span class="field-req-dot"></span>Title</label>
+            <input type="text" class="field-input" id="titleInput" placeholder="e.g. Platform Overview 2026">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="presenterInput">Presented by</label>
+            <input type="text" class="field-input" id="presenterInput" placeholder="e.g. Akila Lohan">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="audienceSelect"><span class="field-req-dot"></span>Audience</label>
+            <select class="field-input" id="audienceSelect">
+              <option value="">Select audience…</option>
+              <option value="hotel-group">Hotel group / operator</option>
+              <option value="investor">Investor / board</option>
+              <option value="internal">Internal team</option>
+              <option value="supplier">Supplier / partner</option>
+              <option value="executive">Executive / C-suite</option>
+              <option value="custom">Custom / other</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Number of slides</label>
+            <div class="slider-row">
+              <input type="range" class="slide-slider" id="slideCount" min="4" max="16" value="7" oninput="updateSlider(this)">
+              <span class="slider-value" id="sliderVal">7</span>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="passwordInput">Password <span style="font-size:11px;color:var(--muted);font-weight:400;">(optional)</span></label>
+            <input type="text" class="field-input" id="passwordInput" placeholder="Leave blank for public link">
+          </div>
+        </div>
+        <div class="settings-group">
+          <span class="settings-label">Visual style</span>
+          <div class="toggle-list">
+            <div class="toggle-row">
+              <div class="toggle-info"><div class="toggle-label">Longarms characters</div><div class="toggle-desc">Illustrated characters matched to each slide topic</div></div>
+              <label class="toggle-switch"><input type="checkbox" id="togLongarms" checked><span class="toggle-track"></span></label>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-info"><div class="toggle-label">Colourful UI cards</div><div class="toggle-desc">Branded UI component illustrations as visual accents</div></div>
+              <label class="toggle-switch"><input type="checkbox" id="togCards" checked><span class="toggle-track"></span></label>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-info"><div class="toggle-label">App screenshots</div><div class="toggle-desc">Real PurchasePlus screens as slide backgrounds</div></div>
+              <label class="toggle-switch"><input type="checkbox" id="togScreens" checked><span class="toggle-track"></span></label>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-info"><div class="toggle-label">Generate AI images</div><div class="toggle-desc">Create new visuals with Higgsfield where assets are missing</div></div>
+              <label class="toggle-switch"><input type="checkbox" id="togAI"><span class="toggle-track"></span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="editor-footer">
+      <button class="footer-back" onclick="goBack()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+        Back to upload
+      </button>
+      <div style="display:flex;gap:12px;align-items:center;">
+        <span style="font-size:12px;color:var(--muted);" id="generateHint"></span>
+        <button class="btn-primary" id="generateBtn" onclick="generate()">
+          Generate presentation
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 3l14 9-14 9V3z"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PROCESSING -->
+  <div id="processing">
+    <img src="assets/PurchasePlus Logos/logo-horizontal-color.png" alt="PurchasePlus" class="proc-logo">
+    <div class="proc-spinner"></div>
+    <div class="proc-steps">
+      <div class="proc-step" data-step="0"><span class="proc-dot"></span>Analysing content and extracting key points</div>
+      <div class="proc-step" data-step="1"><span class="proc-dot"></span>Building slide structure and narrative arc</div>
+      <div class="proc-step" data-step="2"><span class="proc-dot"></span>Selecting assets, characters, and visual layout</div>
+      <div class="proc-step" data-step="3"><span class="proc-dot"></span>Assembling the branded HTML presentation</div>
+      <div class="proc-step" data-step="4"><span class="proc-dot"></span>Publishing to your shareable link</div>
+    </div>
+  </div>
+
+  <!-- STEP 3 — OUTPUT -->
+  <div id="step3">
+    <div class="output-layout">
+      <div class="output-check">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h2>Your presentation is ready.</h2>
+      <p>Share the link below. It opens as a fully branded, responsive presentation on any device.</p>
+      <div class="url-card">
+        <div class="url-card-url" id="outputUrl">—</div>
+        <button class="copy-btn" id="copyBtn" onclick="copyUrl()">Copy link</button>
+      </div>
+      <div class="output-actions">
+        <button class="btn-primary" onclick="openPresentation()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Open presentation
+        </button>
+        <button class="btn-secondary" onclick="copyUrl()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          Copy link
+        </button>
+      </div>
+      <div id="pwBadge" style="display:none;margin-bottom:20px;">
+        <span class="pw-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Password protected
+        </span>
+      </div>
+      <button class="output-restart" onclick="startOver()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.5"/></svg>
+        Create another presentation
+      </button>
+    </div>
+  </div>
+
+</div><!-- .page -->
+
+<!-- ══════════════════════════════
+     AUTH OVERLAY — blurred backdrop + centered modal
+     ══════════════════════════════ -->
+<div id="authOverlay">
+  <div class="auth-modal">
+
+    <div class="auth-chef-circle">
+      <div class="chef-av-bg"></div>
+    </div>
+
+    <div class="auth-modal-name">MasterChef</div>
+    <h2>Hi! I'm MasterChef.</h2>
+    <p>Connect your Google account and let's do some magic for your next presentation.</p>
+
+    <div id="googleBtnMount" style="display:flex;justify-content:center;margin:20px 0 4px;min-height:44px;"></div>
+
+    <p class="auth-domain-note">PurchasePlus team only · @marketboomer.com</p>
+  </div>
+</div>
+
+<div id="authErrorToast" class="auth-error-toast"></div>
+
+
+<!-- ══════════════════════════════
+     MASTERCHEF WIDGET (bottom-right)
+     ══════════════════════════════ -->
+<div id="chefWidget">
+  <div id="chefBubble" class="chef-bubble">
+    <div class="chef-bubble-name">MasterChef</div>
+    <div class="chef-bubble-text" id="chefBubbleText">Ready to cook.</div>
+  </div>
+  <div class="chef-avatar-btn" onclick="toggleChefBubble()" title="MasterChef">
+    <div class="chef-av-bg"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════
+     CHOICE MODAL
+     ══════════════════════════════ -->
+<div id="choiceModal">
+  <div class="choice-card">
+    <div class="choice-chef-avatar">
+      <div class="chef-av-bg"></div>
+    </div>
+    <h2>Alright, <span id="chefGreetName">there.</span></h2>
+    <p>What would you like me to do?</p>
+    <div class="choice-btns">
+      <button class="btn-cook" onclick="cookItGood()">Cook Something Good</button>
+      <button class="btn-create" onclick="createWithChef()">Create with MasterChef</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+(function() {
+
+  var files       = [];
+  var urls        = [];
+  var currentUser = null;
+  var bubbleVisible = true;
+  var chefMsgTimer  = null;
+  var DEMO_URL = 'https://akilalohan-lang.github.io/pp-pitch-2026/preso-demo.html';
+  var defaultSlides = [
+    'Cover / Title', 'The Challenge', 'The Platform',
+    'How It Works', 'What You Get', 'Proven at Scale', 'Get Started'
+  ];
+
+  function $(id) { return document.getElementById(id); }
+
+  /* ══ GOOGLE AUTH (real GSI) ══ */
+  var GSI_CLIENT_ID = '881844410924-iguaegujcnsnmjho90mslka2h3ttadjv.apps.googleusercontent.com';
+
+  function initGSI() {
+    google.accounts.id.initialize({
+      client_id: GSI_CLIENT_ID,
+      callback: handleCredentialResponse,
+      auto_select: false,
+      cancel_on_tap_outside: true,
+      context: 'signin'
+    });
+    google.accounts.id.renderButton(
+      $('googleBtnMount'),
+      {
+        theme: 'outline',
+        size: 'large',
+        text: 'continue_with',
+        shape: 'pill',
+        width: 280,
+        logo_alignment: 'left'
+      }
+    );
+  }
+
+  function handleCredentialResponse(response) {
+    try {
+      var base64 = response.credential.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+      var payload = JSON.parse(atob(base64));
+      var email = (payload.email || '').toLowerCase();
+      if (!email.endsWith('@marketboomer.com')) {
+        showAuthError('Please sign in with a @marketboomer.com account.');
+        return;
+      }
+      currentUser = {
+        email: email,
+        name: payload.name || nameFromEmail(email),
+        picture: payload.picture || null
+      };
+      showMainApp();
+    } catch (err) {
+      showAuthError('Sign-in failed. Please try again.');
+    }
+  }
+
+  function showAuthError(msg) {
+    var toast = $('authErrorToast');
+    toast.textContent = msg;
+    toast.style.display = 'block';
+    setTimeout(function() { toast.style.display = 'none'; }, 4000);
+  }
+
+  function nameFromEmail(email) {
+    return email.split('@')[0].split('.').map(function(p) {
+      return p.charAt(0).toUpperCase() + p.slice(1);
+    }).join(' ');
+  }
+
+  /* Init GSI once library is loaded */
+  if (window.google && window.google.accounts) {
+    initGSI();
+  } else {
+    document.querySelector('script[src*="accounts.google.com/gsi"]').addEventListener('load', initGSI);
+  }
+
+  function showMainApp() {
+    /* Remove auth overlay */
+    $('authOverlay').style.display = 'none';
+
+    /* Topbar user */
+    var parts    = currentUser.name.split(' ');
+    var initials = parts.map(function(p) { return p[0]; }).join('').slice(0, 2).toUpperCase();
+    $('topbarAvatar').textContent = initials;
+    $('topbarName').textContent   = parts[0];
+    $('topbarUser').style.display = 'flex';
+
+    /* Pre-fill presenter */
+    $('presenterInput').value = currentUser.name;
+
+    /* Show chef widget */
+    $('chefWidget').classList.add('visible');
+
+    /* Welcome message */
+    setChefMessage(
+      'Welcome, ' + parts[0] + '! Drop your files below or paste in some text and I\'ll get to work.',
+      200
+    );
+
+    checkReady();
+  }
+
+  /* ══ CHEF WIDGET ══ */
+  window.toggleChefBubble = function() {
+    bubbleVisible = !bubbleVisible;
+    $('chefBubble').classList.toggle('is-hidden', !bubbleVisible);
+  };
+
+  function setChefMessage(msg, delay) {
+    if (chefMsgTimer) clearTimeout(chefMsgTimer);
+    chefMsgTimer = setTimeout(function() {
+      var textEl = $('chefBubbleText');
+      textEl.innerHTML =
+        '<div class="chef-typing">' +
+          '<div class="chef-typing-dot"></div>' +
+          '<div class="chef-typing-dot"></div>' +
+          '<div class="chef-typing-dot"></div>' +
+        '</div>';
+      bubbleVisible = true;
+      $('chefBubble').classList.remove('is-hidden');
+      setTimeout(function() { textEl.textContent = msg; }, 900);
+    }, delay || 0);
+  }
+
+  /* ══ STEP PILLS ══ */
+  function setPills(active) {
+    ['pill1','pill2','pill3'].forEach(function(p, i) {
+      $(p).className = 'step-pill ' + (i < active ? 'done' : i === active ? 'active' : 'pending');
+    });
+  }
+
+  /* ══ UPLOAD READY ══ */
+  function hasContent() {
+    return files.length > 0 || urls.length > 0 || $('pasteArea').value.trim().length > 8;
+  }
+  function checkReady() {
+    var ready = hasContent();
+    $('analyseBtn').disabled = !ready;
+    $('uploadHint').style.opacity = ready ? '0' : '1';
+  }
+
+  /* ══ FILE CHIPS ══ */
+  function addFiles(newFiles) {
+    Array.from(newFiles).forEach(function(f) {
+      if (!files.find(function(x) { return x.name === f.name; })) {
+        files.push(f);
+        appendChip(f.name, 'fileList', function() {
+          files = files.filter(function(x) { return x.name !== f.name; });
+          checkReady();
+        });
+      }
+    });
+    checkReady();
+    if (currentUser && files.length > 0) {
+      setChefMessage('Nice! When you\'re ready, hit Analyse and I\'ll see what we\'re cooking with.', 400);
+    }
+  }
+
+  function appendChip(label, listId, onRemove) {
+    var c = document.createElement('div');
+    c.className = 'file-chip';
+    c.innerHTML =
+      '<svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' +
+      '<span>' + escHtml(label) + '</span>' +
+      '<span class="remove" title="Remove">&#x2715;</span>';
+    c.querySelector('.remove').addEventListener('click', function() { c.remove(); onRemove(); });
+    $(listId).appendChild(c);
+  }
+
+  $('fileInput').addEventListener('change',  function() { addFiles(this.files); this.value = ''; });
+  $('fileInput2').addEventListener('change', function() { addFiles(this.files); this.value = ''; });
+
+  ['dropZone','dropZone2'].forEach(function(id) {
+    var z = $(id);
+    z.addEventListener('dragover',  function(e) { e.preventDefault(); z.classList.add('drag-over'); });
+    z.addEventListener('dragleave', function()  { z.classList.remove('drag-over'); });
+    z.addEventListener('drop',      function(e) { e.preventDefault(); z.classList.remove('drag-over'); addFiles(e.dataTransfer.files); });
+  });
+
+  $('pasteArea').addEventListener('input', function() {
+    checkReady();
+    if (currentUser && this.value.trim().length > 20) {
+      setChefMessage('Text works great. Hit Analyse whenever you\'re ready.', 600);
+    }
+  });
+
+  /* ══ URLS ══ */
+  window.addUrl = function() {
+    var v = $('urlInput').value.trim();
+    if (!v) return;
+    if (!urls.includes(v)) {
+      urls.push(v);
+      appendChip(v.length > 52 ? v.slice(0,50)+'…' : v, 'urlList', function() {
+        urls = urls.filter(function(u) { return u !== v; }); checkReady();
+      });
+      if (currentUser) setChefMessage('Got it! I\'ll pull content from that link too.', 300);
+    }
+    $('urlInput').value = '';
+    checkReady();
+  };
+  $('urlInput').addEventListener('keydown', function(e) { if (e.key === 'Enter') window.addUrl(); });
+
+  /* ══ SLIDER ══ */
+  window.updateSlider = function(el) {
+    $('sliderVal').textContent = el.value;
+    rebuildOutline(+el.value);
+  };
+
+  /* ══ SLIDE OUTLINE ══ */
+  function buildOutline(n) {
+    $('slideOutline').innerHTML = '';
+    for (var i = 0; i < n; i++) appendOutlineItem(i + 1, defaultSlides[i] || 'Slide ' + (i + 1));
+  }
+  function appendOutlineItem(num, title) {
+    var item = document.createElement('div');
+    item.className = 'outline-item';
+    item.innerHTML =
+      '<span class="outline-num mono">' + String(num).padStart(2,'0') + '</span>' +
+      '<input class="outline-input" type="text" value="' + escHtml(title) + '">' +
+      '<span class="outline-handle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="8" y1="18" x2="16" y2="18"/></svg></span>';
+    $('slideOutline').appendChild(item);
+  }
+  function rebuildOutline(n) {
+    var ol = $('slideOutline');
+    while (ol.children.length > n) ol.removeChild(ol.lastChild);
+    while (ol.children.length < n) appendOutlineItem(ol.children.length + 1, defaultSlides[ol.children.length] || 'Slide ' + (ol.children.length + 1));
+    Array.from(ol.children).forEach(function(item, i) { item.querySelector('.outline-num').textContent = String(i+1).padStart(2,'0'); });
+  }
+  window.addSlide = function() {
+    var ol = $('slideOutline');
+    appendOutlineItem(ol.children.length + 1, 'New slide');
+    $('slideCount').value = ol.children.length;
+    $('sliderVal').textContent = ol.children.length;
+  };
+
+  function escHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  /* ══ VALIDATION ══ */
+  function getMissing() {
+    var m = [];
+    if (!$('titleInput').value.trim()) m.push('presentation title');
+    if (!$('audienceSelect').value)    m.push('audience');
+    return m;
+  }
+  function checkGenReady() {
+    var missing = getMissing();
+    $('missingBanner').style.display = missing.length ? 'flex' : 'none';
+    $('missingText').textContent = missing.length ? 'Required: ' + missing.join(' and ') + '.' : '';
+  }
+  $('titleInput').addEventListener('input', function() {
+    this.classList.toggle('warn', !this.value.trim()); checkGenReady();
+  });
+  $('audienceSelect').addEventListener('change', checkGenReady);
+
+  /* ══ ANALYSE ══ */
+  window.startAnalyse = function() {
+    if (!hasContent()) return;
+    setChefMessage('Hmm, let me see what we\'re working with...');
+    setTimeout(function() { showChoiceModal(); }, 1600);
+  };
+
+  /* ══ CHOICE MODAL ══ */
+  function showChoiceModal() {
+    var firstName = currentUser ? currentUser.name.split(' ')[0] : 'there';
+    $('chefGreetName').textContent = firstName + '.';
+    $('choiceModal').classList.add('open');
+  }
+
+  window.cookItGood = function() {
+    $('choiceModal').classList.remove('open');
+    $('togAI').checked = true;
+    goToEditorStep();
+    setChefMessage('On it! Fill in the title and audience on the right and I\'ll handle the rest.', 700);
+  };
+
+  window.createWithChef = function() {
+    $('choiceModal').classList.remove('open');
+    goToEditorStep();
+    setChefMessage('Let\'s build this together. Set the title and audience to get started.', 700);
+  };
+
+  function goToEditorStep() {
+    var sources = [];
+    files.forEach(function(f) { sources.push(f.name); });
+    urls.forEach(function(u) { sources.push(u.length > 40 ? u.slice(0,38)+'…' : u); });
+    if ($('pasteArea').value.trim()) sources.push('Pasted text');
+    $('analysisSources').textContent = sources.join(' · ');
+    buildOutline(+$('slideCount').value);
+    $('step1').style.display = 'none';
+    $('step2').style.display = '';
+    setPills(1); window.scrollTo(0,0); checkGenReady();
+  }
+
+  window.goBack = function() {
+    $('step2').style.display = 'none';
+    $('step1').style.display = '';
+    setPills(0); window.scrollTo(0,0);
+    if (currentUser) setChefMessage('No worries. Add more content or swap your files.');
+  };
+
+  /* ══ GENERATE ══ */
+  window.generate = function() {
+    var missing = getMissing();
+    if (missing.length) {
+      if (!$('titleInput').value.trim()) $('titleInput').classList.add('warn');
+      $('missingBanner').style.display = 'flex'; return;
+    }
+    $('processing').style.display = 'flex';
+    setPills(2);
+    if (currentUser) setChefMessage('I\'m cooking! This usually takes about 10 seconds...');
+    var steps  = document.querySelectorAll('.proc-step');
+    var starts = [0, 2200, 4600, 7000, 9200];
+    var ends   = [1800, 4200, 6600, 8800, 10800];
+    steps.forEach(function(s, i) {
+      setTimeout(function() { s.classList.add('active'); }, starts[i]);
+      setTimeout(function() { s.classList.remove('active'); s.classList.add('done'); }, ends[i]);
+    });
+    setTimeout(showOutput, 11600);
+  };
+
+  function showOutput() {
+    $('processing').style.display = 'none';
+    $('step2').style.display      = 'none';
+    $('step3').style.display      = '';
+    setPills(3);
+    $('outputUrl').textContent = DEMO_URL;
+    $('pwBadge').style.display = $('passwordInput').value.trim() ? '' : 'none';
+    window.scrollTo(0,0);
+    if (currentUser) setChefMessage(currentUser.name.split(' ')[0] + ', your presentation is ready. Bon appetit!');
+  }
+
+  window.copyUrl = function() {
+    navigator.clipboard.writeText($('outputUrl').textContent).then(function() {
+      var btn = $('copyBtn');
+      btn.textContent = 'Copied!'; btn.classList.add('copied');
+      setTimeout(function() { btn.textContent = 'Copy link'; btn.classList.remove('copied'); }, 2000);
+    });
+  };
+
+  window.openPresentation = function() { window.open($('outputUrl').textContent, '_blank'); };
+
+  window.startOver = function() {
+    files = []; urls = [];
+    ['fileList','urlList'].forEach(function(id) { $(id).innerHTML = ''; });
+    ['pasteArea','urlInput','titleInput','passwordInput'].forEach(function(id) { $(id).value = ''; });
+    $('presenterInput').value = currentUser ? currentUser.name : '';
+    $('audienceSelect').value = '';
+    $('titleInput').classList.remove('warn');
+    $('pwBadge').style.display = 'none';
+    $('step3').style.display = 'none';
+    $('step1').style.display = '';
+    setPills(0); checkReady(); window.scrollTo(0,0);
+    if (currentUser) setChefMessage('Ready for another one? Drop your files in.');
+  };
+
+  /* ══ INIT ══ */
+  setPills(0);
+  checkReady();
+
+})();
+</script>
+</body>
+</html>

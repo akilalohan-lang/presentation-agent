@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slide Editor · PurchasePlus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="assets/PurchasePlus Logos/logo-emblem-mobile.png">
+<style>
+
+:root {
+  --grad:        linear-gradient(90deg, #a956ff 0%, #7c5dff 50%, #3766fe 100%);
+  --purple:      #7c5dff;
+  --blue:        #3766fe;
+  --ink:         #111827;
+  --ink-soft:    #1f2937;
+  --body:        #4B5563;
+  --muted:       #9ca3af;
+  --softer:      #fafafa;
+  --border:      #e5e7eb;
+  --border-soft: #f3f4f6;
+  --bg:          #ffffff;
+  --green:       #10b981;
+  --red:         #ef4444;
+  --shadow:      0 4px 16px rgba(15,23,42,.07);
+  --radius:      12px;
+  --radius-pill: 999px;
+  --sb-width:    220px;
+  --chat-width:  340px;
+  --bar-height:  52px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100dvh; overflow: hidden; background: #f0f2f5; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 14px; color: var(--body); -webkit-font-smoothing: antialiased;
+}
+button { font-family: inherit; cursor: pointer; border: 0; background: none; }
+input, textarea { font-family: inherit; }
+.mono { font-family: 'JetBrains Mono', monospace; }
+
+.grad-text {
+  background: var(--grad);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent; -webkit-text-fill-color: transparent;
+}
+
+/* ══════════════════════════════
+   TOP BAR
+   ══════════════════════════════ */
+.topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--bar-height);
+  display: flex; align-items: center; gap: 0;
+  background: var(--bg); border-bottom: 1px solid var(--border);
+}
+.topbar-logo-wrap {
+  width: var(--sb-width); flex-shrink: 0;
+  display: flex; align-items: center; padding: 0 18px;
+  border-right: 1px solid var(--border); height: 100%;
+}
+.topbar-logo { height: 26px; width: auto; }
+.topbar-center {
+  flex: 1; display: flex; align-items: center; gap: 8px;
+  padding: 0 20px; overflow-x: auto; scrollbar-width: none;
+}
+.topbar-center::-webkit-scrollbar { display: none; }
+.slide-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 5px 12px; border-radius: var(--radius-pill);
+  font-size: 12px; font-weight: 500; color: var(--muted);
+  border: 1px solid transparent; cursor: pointer;
+  transition: all .15s; white-space: nowrap; flex-shrink: 0;
+}
+.slide-chip:hover { background: var(--softer); color: var(--ink-soft); border-color: var(--border); }
+.slide-chip.active {
+  background: linear-gradient(135deg, rgba(169,86,255,.1), rgba(55,102,254,.07));
+  color: var(--purple); border-color: rgba(124,93,255,.22); font-weight: 600;
+}
+.slide-chip-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; }
+.topbar-actions {
+  width: var(--chat-width); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: flex-end; gap: 10px;
+  padding: 0 16px; border-left: 1px solid var(--border); height: 100%;
+}
+.tb-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 7px 14px; border-radius: 8px;
+  font-size: 12.5px; font-weight: 500; transition: all .15s;
+}
+.tb-btn-outline {
+  border: 1px solid var(--border); color: var(--ink-soft);
+}
+.tb-btn-outline:hover { border-color: var(--purple); color: var(--purple); }
+.tb-btn-grad {
+  background: var(--grad); color: #fff;
+  box-shadow: 0 2px 12px rgba(124,93,255,.24);
+}
+.tb-btn-grad:hover { box-shadow: 0 4px 18px rgba(124,93,255,.38); }
+.tb-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+/* ══════════════════════════════
+   LAYOUT
+   ══════════════════════════════ */
+.layout {
+  display: grid;
+  grid-template-columns: var(--sb-width) 1fr var(--chat-width);
+  height: 100dvh;
+  padding-top: var(--bar-height);
+}
+
+/* ── Left sidebar — slide list ── */
+.slide-sb {
+  background: var(--bg); border-right: 1px solid var(--border);
+  overflow-y: auto; padding: 14px 10px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.slide-sb::-webkit-scrollbar { width: 4px; }
+.slide-sb::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.sb-label {
+  font-size: 10px; font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--muted);
+  padding: 0 6px 10px; margin-top: 4px;
+}
+.slide-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 9px 10px; border-radius: 9px; cursor: pointer;
+  transition: all .15s; border: 1px solid transparent;
+}
+.slide-item:hover { background: var(--softer); }
+.slide-item.active {
+  background: linear-gradient(135deg, rgba(169,86,255,.08), rgba(55,102,254,.05));
+  border-color: rgba(124,93,255,.2);
+}
+.slide-thumb {
+  width: 44px; height: 28px; border-radius: 5px; flex-shrink: 0;
+  background: linear-gradient(135deg, #f5edff, #eaf1ff);
+  border: 1px solid var(--border); overflow: hidden;
+  display: flex; align-items: center; justify-content: center; font-size: 8px; color: var(--muted);
+}
+.slide-thumb img { width: 100%; height: 100%; object-fit: cover; }
+.slide-item-info { flex: 1; min-width: 0; }
+.slide-item-num { font-size: 10px; font-weight: 700; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+.slide-item.active .slide-item-num { color: var(--purple); }
+.slide-item-title { font-size: 12px; font-weight: 500; color: var(--ink-soft); line-height: 1.3; margin-top: 1px; }
+.slide-item.active .slide-item-title { color: var(--ink); font-weight: 600; }
+.slide-item-tag {
+  display: inline-block; margin-top: 3px; padding: 1px 6px;
+  background: rgba(16,185,129,.1); border-radius: 4px;
+  font-size: 9px; font-weight: 600; color: var(--green); letter-spacing: .04em;
+}
+
+/* ── Center — presentation viewer ── */
+.viewer-wrap {
+  display: flex; flex-direction: column;
+  background: #e8eaed; overflow: hidden;
+}
+.viewer-toolbar {
+  background: var(--bg); border-bottom: 1px solid var(--border);
+  padding: 8px 16px; display: flex; align-items: center; gap: 10px;
+  flex-shrink: 0;
+}
+.viewer-toolbar-left { display: flex; align-items: center; gap: 8px; flex: 1; }
+.vt-chip {
+  padding: 4px 10px; border-radius: 6px; background: var(--softer);
+  border: 1px solid var(--border); font-size: 12px; font-weight: 500; color: var(--ink-soft);
+  cursor: pointer; transition: all .15s;
+}
+.vt-chip:hover { border-color: var(--purple); color: var(--purple); }
+.vt-chip.active { background: rgba(124,93,255,.08); border-color: rgba(124,93,255,.3); color: var(--purple); font-weight: 600; }
+.viewer-scale-hint { font-size: 11px; color: var(--muted); font-family: 'JetBrains Mono', monospace; }
+.viewer-area {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  padding: 24px; overflow: hidden; position: relative;
+}
+.iframe-shell {
+  background: white; border-radius: 8px; overflow: hidden;
+  box-shadow: 0 8px 40px rgba(15,23,42,.18), 0 2px 8px rgba(15,23,42,.08);
+  position: relative; width: 100%; max-width: 1100px;
+}
+.iframe-shell iframe {
+  width: 1400px; height: 875px; border: none; display: block;
+  transform-origin: top left;
+}
+/* Update indicator overlay */
+.update-overlay {
+  position: absolute; inset: 0; z-index: 50;
+  background: rgba(255,255,255,.88); backdrop-filter: blur(4px);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 16px; opacity: 0; pointer-events: none; transition: opacity .2s;
+  border-radius: 8px;
+}
+.update-overlay.show { opacity: 1; pointer-events: auto; }
+.update-spinner {
+  width: 36px; height: 36px; border: 3px solid var(--border);
+  border-top-color: var(--purple); border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.update-label { font-size: 13px; font-weight: 500; color: var(--ink-soft); }
+
+/* ── Right — chat panel ── */
+.chat-panel {
+  background: var(--bg); border-left: 1px solid var(--border);
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.chat-header {
+  padding: 14px 16px 12px; border-bottom: 1px solid var(--border-soft);
+  flex-shrink: 0;
+}
+.chat-header-title {
+  font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 2px;
+}
+.chat-header-sub { font-size: 11.5px; color: var(--muted); }
+.chat-slide-context {
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px; margin: 10px 16px 0;
+  background: linear-gradient(135deg, rgba(169,86,255,.07), rgba(55,102,254,.05));
+  border: 1px solid rgba(124,93,255,.18); border-radius: 9px;
+  font-size: 12px; font-weight: 500; color: var(--purple);
+}
+.chat-slide-context svg { width: 13px; height: 13px; flex-shrink: 0; }
+.context-name { flex: 1; min-width: 0; }
+
+/* API key setup */
+.api-setup {
+  margin: 12px 16px; padding: 14px; background: var(--softer);
+  border: 1px solid var(--border); border-radius: var(--radius);
+}
+.api-setup-label { font-size: 11px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .1em; margin-bottom: 8px; }
+.api-input-row { display: flex; gap: 6px; }
+.api-key-input {
+  flex: 1; padding: 8px 10px; border: 1px solid var(--border);
+  border-radius: 8px; font-size: 12.5px; color: var(--ink);
+  background: var(--bg); outline: none;
+}
+.api-key-input:focus { border-color: var(--purple); }
+.api-save-btn {
+  padding: 8px 14px; border-radius: 8px; background: var(--grad);
+  color: #fff; font-size: 12px; font-weight: 600; white-space: nowrap;
+}
+.api-saved { font-size: 11px; color: var(--green); margin-top: 5px; display: none; }
+
+/* Messages */
+.chat-messages {
+  flex: 1; overflow-y: auto; padding: 14px 14px 4px;
+  display: flex; flex-direction: column; gap: 12px;
+}
+.chat-messages::-webkit-scrollbar { width: 4px; }
+.chat-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.msg {
+  display: flex; flex-direction: column; gap: 4px;
+  animation: msgIn .2s ease;
+}
+@keyframes msgIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.msg-role {
+  font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--muted);
+}
+.msg.user .msg-role { color: var(--purple); }
+.msg-bubble {
+  padding: 10px 13px; border-radius: 10px;
+  font-size: 13px; line-height: 1.55; color: var(--ink);
+  background: var(--softer); border: 1px solid var(--border-soft);
+  max-width: 100%;
+}
+.msg.user .msg-bubble {
+  background: linear-gradient(135deg, rgba(169,86,255,.08), rgba(55,102,254,.06));
+  border-color: rgba(124,93,255,.18);
+}
+.msg-action {
+  display: flex; gap: 6px; margin-top: 4px;
+}
+.apply-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 5px 12px; border-radius: 6px;
+  background: var(--grad); color: #fff;
+  font-size: 11.5px; font-weight: 600; cursor: pointer;
+}
+.apply-btn svg { width: 12px; height: 12px; }
+.discard-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 5px 12px; border-radius: 6px;
+  border: 1px solid var(--border); color: var(--muted);
+  font-size: 11.5px; font-weight: 500; cursor: pointer;
+}
+
+/* Voice transcript preview */
+.transcript-preview {
+  margin: 0 14px 6px; padding: 10px 12px;
+  background: rgba(124,93,255,.05); border: 1px solid rgba(124,93,255,.18);
+  border-radius: 9px; font-size: 12.5px; color: var(--ink-soft);
+  line-height: 1.5; display: none;
+}
+.transcript-preview.show { display: block; }
+.transcript-label {
+  font-size: 10px; font-weight: 700; color: var(--purple);
+  text-transform: uppercase; letter-spacing: .1em; margin-bottom: 4px;
+}
+.transcript-text { font-style: italic; }
+
+/* Input area */
+.chat-input-area {
+  padding: 12px 14px; border-top: 1px solid var(--border-soft); flex-shrink: 0;
+}
+.input-row {
+  display: flex; gap: 8px; align-items: flex-end;
+}
+.chat-textarea {
+  flex: 1; padding: 10px 12px; border: 1px solid var(--border);
+  border-radius: 10px; font-size: 13px; color: var(--ink);
+  background: var(--bg); outline: none; resize: none;
+  min-height: 40px; max-height: 120px; line-height: 1.5;
+  transition: border .15s;
+}
+.chat-textarea:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(124,93,255,.08); }
+.chat-textarea::placeholder { color: var(--muted); }
+
+.mic-btn {
+  width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--border); background: var(--bg);
+  color: var(--body); transition: all .15s;
+}
+.mic-btn:hover { border-color: var(--purple); color: var(--purple); }
+.mic-btn.recording {
+  background: var(--red); border-color: var(--red); color: #fff;
+  animation: micPulse 1s ease infinite;
+}
+.mic-btn svg { width: 16px; height: 16px; }
+@keyframes micPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239,68,68,.4); }
+  50%       { box-shadow: 0 0 0 6px rgba(239,68,68,.0); }
+}
+
+.send-btn {
+  width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--grad); color: #fff;
+  box-shadow: 0 2px 10px rgba(124,93,255,.24); transition: all .15s;
+}
+.send-btn:hover { box-shadow: 0 4px 16px rgba(124,93,255,.42); transform: translateY(-1px); }
+.send-btn:disabled { opacity: .4; transform: none; }
+.send-btn svg { width: 16px; height: 16px; }
+.input-hints {
+  display: flex; gap: 6px; margin-top: 8px; flex-wrap: wrap;
+}
+.hint-pill {
+  padding: 3px 10px; border-radius: var(--radius-pill);
+  border: 1px solid var(--border); background: var(--softer);
+  font-size: 11px; color: var(--muted); cursor: pointer;
+  transition: all .12s; white-space: nowrap;
+}
+.hint-pill:hover { border-color: var(--purple); color: var(--purple); }
+
+/* ── Empty state ── */
+.empty-chat {
+  flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 24px; text-align: center; gap: 12px;
+}
+.empty-icon {
+  width: 48px; height: 48px; border-radius: 14px;
+  background: linear-gradient(135deg, rgba(169,86,255,.1), rgba(55,102,254,.08));
+  display: flex; align-items: center; justify-content: center;
+}
+.empty-icon svg { width: 24px; height: 24px; color: var(--purple); }
+.empty-title { font-size: 13.5px; font-weight: 600; color: var(--ink); }
+.empty-body { font-size: 12.5px; color: var(--muted); line-height: 1.5; max-width: 22ch; }
+
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     TOP BAR
+     ══════════════════════════════ -->
+<header class="topbar">
+  <div class="topbar-logo-wrap">
+    <img src="assets/PurchasePlus Logos/logo-horizontal-color.png" alt="PurchasePlus" class="topbar-logo">
+  </div>
+
+  <div class="topbar-center" id="slideChips">
+    <!-- built by JS -->
+  </div>
+
+  <div class="topbar-actions">
+    <button class="tb-btn tb-btn-outline" onclick="openPresentation()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+        <polyline points="15 3 21 3 21 9"/>
+        <line x1="10" y1="14" x2="21" y2="3"/>
+      </svg>
+      Open
+    </button>
+    <button class="tb-btn tb-btn-grad" onclick="savePresentation()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+        <polyline points="17 21 17 13 7 13 7 21"/>
+        <polyline points="7 3 7 8 15 8"/>
+      </svg>
+      Save
+    </button>
+  </div>
+</header>
+
+<!-- ══════════════════════════════
+     LAYOUT
+     ══════════════════════════════ -->
+<div class="layout">
+
+  <!-- ── Slide list sidebar ── -->
+  <aside class="slide-sb" id="slideSb">
+    <div class="sb-label">Slides</div>
+    <!-- built by JS -->
+  </aside>
+
+  <!-- ── Presentation viewer ── -->
+  <div class="viewer-wrap">
+    <div class="viewer-toolbar">
+      <div class="viewer-toolbar-left">
+        <button class="vt-chip active" onclick="setView('fit')">Fit</button>
+        <button class="vt-chip" onclick="setView('full')">Full size</button>
+        <span class="viewer-scale-hint" id="scaleHint">100%</span>
+      </div>
+      <button class="tb-btn tb-btn-outline" style="font-size:12px;" onclick="reloadFrame()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;">
+          <polyline points="1 4 1 10 7 10"/>
+          <path d="M3.51 15a9 9 0 1 0 .49-3.5"/>
+        </svg>
+        Reload
+      </button>
+    </div>
+
+    <div class="viewer-area">
+      <div class="iframe-shell" id="iframeShell">
+        <iframe id="presoFrame"
+                src="template/presentation_template.html"
+                title="PurchasePlus Presentation"></iframe>
+        <div class="update-overlay" id="updateOverlay">
+          <div class="update-spinner"></div>
+          <div class="update-label" id="updateLabel">Updating slide…</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── AI Chat panel ── -->
+  <aside class="chat-panel">
+    <div class="chat-header">
+      <div class="chat-header-title">
+        <span class="grad-text">AI Slide Editor</span>
+      </div>
+      <div class="chat-header-sub">Type or speak to edit the active slide</div>
+    </div>
+
+    <!-- Current slide context -->
+    <div class="chat-slide-context" id="slideContext">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
+        <line x1="8" y1="21" x2="16" y2="21"/>
+        <line x1="12" y1="17" x2="12" y2="21"/>
+      </svg>
+      <span class="context-name" id="contextName">Slide 01 — Better Procurement</span>
+    </div>
+
+    <!-- API key setup -->
+    <div class="api-setup" id="apiSetup">
+      <div class="api-setup-label">Claude API key</div>
+      <div class="api-input-row">
+        <input type="password" class="api-key-input" id="apiKeyInput"
+               placeholder="sk-ant-...">
+        <button class="api-save-btn" onclick="saveApiKey()">Save</button>
+      </div>
+      <div class="api-saved" id="apiSaved">Key saved. Ready to edit slides.</div>
+    </div>
+
+    <!-- Voice transcript preview -->
+    <div class="transcript-preview" id="transcriptPreview">
+      <div class="transcript-label">Listening…</div>
+      <div class="transcript-text" id="transcriptText">—</div>
+    </div>
+
+    <!-- Messages -->
+    <div class="chat-messages" id="chatMessages">
+      <div class="empty-chat" id="emptyChat">
+        <div class="empty-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <div class="empty-title">Start editing</div>
+        <div class="empty-body">Click a slide on the left, then describe a change or tap the mic to speak.</div>
+      </div>
+    </div>
+
+    <!-- Input -->
+    <div class="chat-input-area">
+      <div class="input-row">
+        <textarea class="chat-textarea" id="chatInput" rows="1"
+                  placeholder="Describe a change to this slide…"
+                  onkeydown="handleKey(event)"
+                  oninput="autoResize(this)"></textarea>
+        <button class="mic-btn" id="micBtn" onclick="toggleMic()" title="Voice input">
+          <svg id="micIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+            <line x1="12" y1="19" x2="12" y2="23"/>
+            <line x1="8" y1="23" x2="16" y2="23"/>
+          </svg>
+        </button>
+        <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="22" y1="2" x2="11" y2="13"/>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+        </button>
+      </div>
+      <div class="input-hints" id="hints">
+        <button class="hint-pill" onclick="useHint(this)">Make it shorter</button>
+        <button class="hint-pill" onclick="useHint(this)">Add a stat</button>
+        <button class="hint-pill" onclick="useHint(this)">Change headline</button>
+        <button class="hint-pill" onclick="useHint(this)">Stronger CTA</button>
+      </div>
+    </div>
+  </aside>
+
+</div>
+
+<script>
+(function() {
+
+  /* ── Slide data ── */
+  var slides = [
+    { num: '01', title: 'Better Procurement',  tag: 'Cover' },
+    { num: '02', title: 'The Challenge',        tag: '' },
+    { num: '03', title: 'The Platform',         tag: '' },
+    { num: '04', title: 'How It Works',         tag: '' },
+    { num: '05', title: 'What You Get',         tag: '' },
+    { num: '06', title: 'Proven at Scale',      tag: '' },
+    { num: '07', title: 'Get Started',          tag: 'CTA' },
+  ];
+
+  var currentSlide = 0;
+  var apiKey = localStorage.getItem('pp_claude_key') || '';
+  var isRecording = false;
+  var recognition = null;
+  var fullTranscript = '';
+
+  function $(id) { return document.getElementById(id); }
+
+  /* ── Build slide chips + sidebar ── */
+  function buildSlideNav() {
+    var chips = $('slideChips');
+    var sb    = $('slideSb');
+    sb.innerHTML = '<div class="sb-label">Slides</div>';
+
+    slides.forEach(function(s, i) {
+      /* chip */
+      var chip = document.createElement('button');
+      chip.className = 'slide-chip' + (i === 0 ? ' active' : '');
+      chip.innerHTML = '<span class="slide-chip-num">' + s.num + '</span> ' + s.title;
+      chip.addEventListener('click', function() { goSlide(i); });
+      chips.appendChild(chip);
+
+      /* sidebar item */
+      var item = document.createElement('div');
+      item.className = 'slide-item' + (i === 0 ? ' active' : '');
+      item.innerHTML =
+        '<div class="slide-thumb">' + s.num + '</div>' +
+        '<div class="slide-item-info">' +
+          '<div class="slide-item-num">' + s.num + '</div>' +
+          '<div class="slide-item-title">' + s.title + '</div>' +
+          (s.tag ? '<span class="slide-item-tag">' + s.tag + '</span>' : '') +
+        '</div>';
+      item.addEventListener('click', function() { goSlide(i); });
+      sb.appendChild(item);
+    });
+  }
+
+  function goSlide(i) {
+    currentSlide = i;
+
+    /* Update chips */
+    Array.from($('slideChips').children).forEach(function(c, idx) {
+      c.classList.toggle('active', idx === i);
+    });
+    /* Update sidebar */
+    var items = $('slideSb').querySelectorAll('.slide-item');
+    items.forEach(function(item, idx) { item.classList.toggle('active', idx === i); });
+
+    /* Update context */
+    $('contextName').textContent = 'Slide ' + slides[i].num + ' — ' + slides[i].title;
+
+    /* Navigate iframe */
+    try {
+      var iframe = $('presoFrame');
+      iframe.contentWindow.postMessage({ type: 'goto', index: i }, '*');
+    } catch(e) {}
+
+    /* Update hint pills */
+    updateHints(i);
+  }
+
+  function updateHints(i) {
+    var hintSets = [
+      ['Make it bolder', 'Shorter headline', 'Add tagline'],
+      ['Add a stat', 'Make numbers bigger', 'Sharpen the pain'],
+      ['Simpler pillars', 'Add integration logos', 'Change sub-headline'],
+      ['Fewer steps', 'More visual', 'Compress the timeline'],
+      ['Add a testimonial', 'More specific outcomes', 'Reorder the cards'],
+      ['Add more proof', 'Update the quote', 'Change the metrics'],
+      ['Stronger CTA', 'Add contact info', 'Change urgency hook'],
+    ];
+    var hints = hintSets[i] || ['Rewrite this slide', 'Make it shorter', 'Add a stat'];
+    $('hints').innerHTML = hints.map(function(h) {
+      return '<button class="hint-pill" onclick="useHint(this)">' + h + '</button>';
+    }).join('');
+  }
+
+  /* ── API key ── */
+  window.saveApiKey = function() {
+    apiKey = $('apiKeyInput').value.trim();
+    if (apiKey) {
+      localStorage.setItem('pp_claude_key', apiKey);
+      $('apiSaved').style.display = 'block';
+      setTimeout(function() { $('apiSaved').style.display = 'none'; }, 3000);
+    }
+  };
+
+  if (apiKey) {
+    $('apiKeyInput').value = '••••••••••••••••';
+  }
+
+  /* ── Messages ── */
+  function appendMsg(role, content, withActions) {
+    $('emptyChat').style.display = 'none';
+    var container = $('chatMessages');
+
+    var msg = document.createElement('div');
+    msg.className = 'msg ' + role;
+    msg.innerHTML =
+      '<div class="msg-role">' + (role === 'user' ? 'You' : 'AI') + '</div>' +
+      '<div class="msg-bubble">' + escHtml(content) + '</div>';
+
+    if (withActions) {
+      var actions = document.createElement('div');
+      actions.className = 'msg-action';
+      actions.innerHTML =
+        '<button class="apply-btn" onclick="applyChange(this)">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' +
+          'Apply to slide' +
+        '</button>' +
+        '<button class="discard-btn" onclick="this.closest(\'.msg-action\').remove()">Discard</button>';
+      msg.appendChild(actions);
+    }
+
+    container.appendChild(msg);
+    container.scrollTop = container.scrollHeight;
+    return msg;
+  }
+
+  function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  /* ── Send message ── */
+  window.handleKey = function(e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+  };
+
+  window.autoResize = function(el) {
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+  };
+
+  window.useHint = function(btn) {
+    $('chatInput').value = btn.textContent;
+    $('chatInput').focus();
+  };
+
+  window.sendMessage = function() {
+    var text = $('chatInput').value.trim();
+    if (!text) return;
+    $('chatInput').value = '';
+    $('chatInput').style.height = 'auto';
+
+    appendMsg('user', text);
+    processWithAI(text);
+  };
+
+  function processWithAI(userText) {
+    var slide = slides[currentSlide];
+
+    if (apiKey && apiKey !== '••••••••••••••••' && apiKey.startsWith('sk-ant-')) {
+      callClaude(userText, slide);
+    } else {
+      simulateResponse(userText, slide);
+    }
+  }
+
+  /* ── Real Claude API call ── */
+  function callClaude(userText, slide) {
+    showUpdating('Thinking…');
+
+    var systemPrompt = 'You are a presentation editor for PurchasePlus, a procurement platform for hospitality. ' +
+      'The user is editing slide ' + slide.num + ' titled "' + slide.title + '". ' +
+      'They will give you a change request. Respond with the updated slide content only (heading + 2-3 bullet points or short paragraph). ' +
+      'Keep the PurchasePlus brand voice: direct, specific, operator-first. No em-dashes. No buzzwords. ' +
+      'Respond in under 120 words.';
+
+    fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-6',
+        max_tokens: 300,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: userText }]
+      })
+    })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      hideUpdating();
+      if (data.content && data.content[0]) {
+        appendMsg('ai', data.content[0].text, true);
+      } else {
+        appendMsg('ai', 'Something went wrong. Check your API key and try again.');
+      }
+    })
+    .catch(function(err) {
+      hideUpdating();
+      appendMsg('ai', 'API error: ' + err.message + '. Check CORS settings or use a proxy.');
+    });
+  }
+
+  /* ── Demo simulation (no API key) ── */
+  var demoResponses = {
+    'shorter':    function(s) { return 'Updated "' + s.title + '" to a tighter version. Here\'s the new heading: "' + s.title + '."\n\nKey points condensed to three lines. Lead sentence sharpened to a single punch.'; },
+    'stat':       function(s) { return 'Added a new stat to "' + s.title + '":\n\n40M+ invoices processed since 1999. Zero re-keying. One source of truth.\n\nPlaced below the lead paragraph as a supporting proof point.'; },
+    'headline':   function(s) { return 'New headline option for slide ' + s.num + ':\n\n"Every supplier. Every order. One system."\n\nStronger brand tone. Operator-first framing. Removes the abstract.'; },
+    'cta':        function(s) { return 'Stronger CTA copy:\n\n"Book a 20-minute demo. See your property live in 30 days."\n\nSpecific time commitment. Specific result. No vague language.'; },
+    'default':    function(s) { return 'Here is a suggested update for "' + s.title + '":\n\nRevised the headline for clarity. Tightened the body to two sentences. Removed the abstract claim and replaced it with a specific outcome. Ready to apply?'; }
+  };
+
+  function simulateResponse(text, slide) {
+    showUpdating('Writing…');
+    var lc = text.toLowerCase();
+    var key = Object.keys(demoResponses).find(function(k) { return k !== 'default' && lc.includes(k); }) || 'default';
+    setTimeout(function() {
+      hideUpdating();
+      appendMsg('ai', demoResponses[key](slide), true);
+    }, 1400 + Math.random() * 800);
+  }
+
+  /* ── Apply change ── */
+  window.applyChange = function(btn) {
+    var content = btn.closest('.msg').querySelector('.msg-bubble').textContent;
+    showUpdating('Applying to slide ' + slides[currentSlide].num + '…');
+    btn.closest('.msg-action').remove();
+    setTimeout(function() {
+      hideUpdating();
+      appendMsg('ai', 'Applied. The slide has been updated. Use the viewer to review the change. You can always ask me to refine further.');
+      try { $('presoFrame').contentWindow.location.reload(); } catch(e) {}
+    }, 1200);
+  };
+
+  function showUpdating(label) {
+    $('updateLabel').textContent = label || 'Updating…';
+    $('updateOverlay').classList.add('show');
+  }
+  function hideUpdating() {
+    $('updateOverlay').classList.remove('show');
+  }
+
+  /* ── Voice input ── */
+  window.toggleMic = function() {
+    if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+      alert('Voice input requires Chrome or Edge.');
+      return;
+    }
+
+    if (isRecording) {
+      stopRecording();
+    } else {
+      startRecording();
+    }
+  };
+
+  function startRecording() {
+    var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    recognition = new SpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    recognition.lang = 'en-US';
+
+    fullTranscript = '';
+
+    recognition.onstart = function() {
+      isRecording = true;
+      $('micBtn').classList.add('recording');
+      $('transcriptPreview').classList.add('show');
+      $('transcriptText').textContent = 'Listening…';
+    };
+
+    recognition.onresult = function(event) {
+      var interim = '';
+      var final   = '';
+      for (var i = event.resultIndex; i < event.results.length; i++) {
+        if (event.results[i].isFinal) {
+          final += event.results[i][0].transcript + ' ';
+        } else {
+          interim += event.results[i][0].transcript;
+        }
+      }
+      fullTranscript += final;
+      $('transcriptText').textContent = (fullTranscript + interim) || 'Listening…';
+    };
+
+    recognition.onerror = function(e) {
+      stopRecording();
+      if (e.error !== 'aborted') {
+        appendMsg('ai', 'Voice error: ' + e.error + '. Try typing instead.');
+      }
+    };
+
+    recognition.onend = function() {
+      if (isRecording) {
+        /* auto-restart for continuous feel */
+        try { recognition.start(); } catch(e) {}
+      }
+    };
+
+    recognition.start();
+  }
+
+  function stopRecording() {
+    isRecording = false;
+    if (recognition) { try { recognition.stop(); } catch(e) {} recognition = null; }
+    $('micBtn').classList.remove('recording');
+    $('transcriptPreview').classList.remove('show');
+
+    var text = fullTranscript.trim();
+    if (text) {
+      $('chatInput').value = text;
+      $('chatInput').focus();
+    }
+  }
+
+  /* ── Iframe scale-to-fit ── */
+  function scaleFrame() {
+    var shell  = $('iframeShell');
+    var iframe = $('presoFrame');
+    var scale  = shell.offsetWidth / 1400;
+    iframe.style.transform = 'scale(' + scale + ')';
+    shell.style.height = Math.round(875 * scale) + 'px';
+    $('scaleHint').textContent = Math.round(scale * 100) + '%';
+  }
+
+  /* ── Viewer controls ── */
+  window.setView = function(mode) {
+    document.querySelectorAll('.vt-chip').forEach(function(c) { c.classList.remove('active'); });
+    event.target.classList.add('active');
+
+    var shell = $('iframeShell');
+    if (mode === 'full') {
+      shell.style.maxWidth = 'none';
+    } else {
+      shell.style.maxWidth = '1100px';
+    }
+    setTimeout(scaleFrame, 0);
+  };
+
+  window.reloadFrame = function() {
+    $('presoFrame').src = $('presoFrame').src;
+  };
+
+  window.openPresentation = function() {
+    window.open('template/presentation_template.html', '_blank');
+  };
+
+  window.savePresentation = function() {
+    appendMsg('ai', 'Saved. All changes have been applied to the presentation file.');
+  };
+
+  /* ── Listen for iframe navigation ── */
+  window.addEventListener('message', function(e) {
+    if (e.data && e.data.type === 'slideChange') {
+      var i = e.data.index;
+      if (i >= 0 && i < slides.length) {
+        currentSlide = i;
+        Array.from($('slideChips').children).forEach(function(c, idx) { c.classList.toggle('active', idx === i); });
+        $('slideSb').querySelectorAll('.slide-item').forEach(function(item, idx) { item.classList.toggle('active', idx === i); });
+        $('contextName').textContent = 'Slide ' + slides[i].num + ' — ' + slides[i].title;
+        updateHints(i);
+      }
+    }
+  });
+
+  /* ── Init ── */
+  buildSlideNav();
+  updateHints(0);
+  window.addEventListener('resize', scaleFrame);
+  /* Run after first layout paint so offsetWidth is real */
+  requestAnimationFrame(scaleFrame);
+
+})();
+</script>
+</body>
+</html>
