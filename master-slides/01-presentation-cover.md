@@ -41,8 +41,9 @@ Text in the left panel always renders above the mockup (z-index: 10 on slide-lef
 - Labels shown in master template only: `PRESENTER NAME`, `JOB TITLE · COMPANY`, `MONTH YEAR` in `#ee2b62`
 
 ### 5. Client Logo Slot (optional)
+- **RULE: This entire section — including the "Prepared for" label, the border-top divider, and the logo placeholder — is only rendered when a client logo is provided in the briefing. If no client is specified, omit it completely. Do not show an empty placeholder.**
 - Section: "Prepared for" label (uppercase, muted, 10px)
-- Dashed placeholder box shown in master template
+- Dashed placeholder box shown in master template only (for layout reference)
 - When a client logo is provided in the briefing, the AI replaces the placeholder with the actual logo (height: 36px, object-fit: contain, left-aligned)
 - When no client is specified, this entire section is omitted from the generated presentation
 
