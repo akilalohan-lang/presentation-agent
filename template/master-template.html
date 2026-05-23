@@ -606,7 +606,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 .screen-hint { display:flex; align-items:center; gap:6px; font-size:11px; color:var(--muted); margin-top:9px; }
 
 /* Lightbox */
-.lb { position:fixed; inset:0; z-index:9999; background:rgba(5,5,10,.94); display:flex; align-items:center; justify-content:center; }
+.lb { position:fixed; inset:0; z-index:9999; background:linear-gradient(155deg,#1a0630 0%,#0f1628 50%,#081420 100%); display:flex; align-items:center; justify-content:center; }
 .lb-vp { position:relative; overflow:hidden; width:88vw; height:84vh; cursor:grab; border-radius:10px; background:#0a0a12; }
 .lb-vp.grabbing { cursor:grabbing; }
 .lb-img { position:absolute; top:0; left:0; transform-origin:0 0; max-width:none; user-select:none; pointer-events:none; display:block; }
@@ -800,7 +800,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
             <div style="font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);white-space:nowrap;">Chapter 01 — The Problem</div>
             <div style="flex:1;height:1px;background:var(--border-soft);"></div>
           </div>
-          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;flex-shrink:0;">
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px;flex-shrink:0;">
             <div class="sum-card" style="animation-delay:0s;">
               <div class="sum-slide">Slide 03</div>
               <div class="sum-num">03</div>
@@ -810,18 +810,12 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
             <div class="sum-card" style="animation-delay:-0.6s;">
               <div class="sum-slide">Slide 04</div>
               <div class="sum-num">04</div>
-              <div class="sum-title">The Challenge</div>
+              <div class="sum-title">Text + Longarms</div>
               <div class="sum-desc">Why manual procurement drains hospitality margins every day.</div>
             </div>
             <div class="sum-card" style="animation-delay:-1.2s;">
               <div class="sum-slide">Slide 05</div>
               <div class="sum-num">05</div>
-              <div class="sum-title">The Platform</div>
-              <div class="sum-desc">One system from supplier catalog to invoice reconciliation.</div>
-            </div>
-            <div class="sum-card" style="animation-delay:-1.8s;">
-              <div class="sum-slide">Slide 06</div>
-              <div class="sum-num">06</div>
               <div class="sum-title">App Screen</div>
               <div class="sum-desc">A live walkthrough of the interface with zoom capability.</div>
             </div>
@@ -833,27 +827,27 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
             <div style="flex:1;height:1px;background:var(--border-soft);"></div>
           </div>
           <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;flex-shrink:0;">
+            <div class="sum-card" style="animation-delay:-1.8s;">
+              <div class="sum-slide">Slide 06</div>
+              <div class="sum-num">06</div>
+              <div class="sum-title">Feature Highlight</div>
+              <div class="sum-desc">The supplier catalog built for hospitality operations.</div>
+            </div>
             <div class="sum-card" style="animation-delay:-2.4s;">
               <div class="sum-slide">Slide 07</div>
               <div class="sum-num">07</div>
-              <div class="sum-title">Feature Highlight</div>
-              <div class="sum-desc">The supplier catalog built for hospitality operations.</div>
+              <div class="sum-title">How It Works</div>
+              <div class="sum-desc">Four steps from order to reconciled invoice in under 30 days live.</div>
             </div>
             <div class="sum-card" style="animation-delay:-3.0s;">
               <div class="sum-slide">Slide 08</div>
               <div class="sum-num">08</div>
-              <div class="sum-title">How It Works</div>
-              <div class="sum-desc">Four steps from order to reconciled invoice in under 30 days live.</div>
+              <div class="sum-title">Analytics</div>
+              <div class="sum-desc">Real-time spend intelligence, budgets, and compliance reports.</div>
             </div>
             <div class="sum-card" style="animation-delay:-3.6s;">
               <div class="sum-slide">Slide 09</div>
               <div class="sum-num">09</div>
-              <div class="sum-title">Analytics</div>
-              <div class="sum-desc">Real-time spend intelligence, budgets, and compliance reports.</div>
-            </div>
-            <div class="sum-card" style="animation-delay:-4.2s;">
-              <div class="sum-slide">Slide 10</div>
-              <div class="sum-num">10</div>
               <div class="sum-title">What You Get</div>
               <div class="sum-desc">Measurable outcomes from day one across every property.</div>
             </div>
@@ -865,21 +859,21 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
             <div style="flex:1;height:1px;background:var(--border-soft);"></div>
           </div>
           <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;flex-shrink:0;">
+            <div class="sum-card" style="animation-delay:-4.2s;">
+              <div class="sum-slide">Slide 10</div>
+              <div class="sum-num">10</div>
+              <div class="sum-title">Customer Quote</div>
+              <div class="sum-desc">Real results from properties already running on PurchasePlus.</div>
+            </div>
             <div class="sum-card" style="animation-delay:-4.8s;">
               <div class="sum-slide">Slide 11</div>
               <div class="sum-num">11</div>
-              <div class="sum-title">Customer Quote</div>
-              <div class="sum-desc">Real results from properties already running on PurchasePlus.</div>
+              <div class="sum-title">Proven at Scale</div>
+              <div class="sum-desc">5,000+ properties and $2.4B in annual procurement processed globally.</div>
             </div>
             <div class="sum-card" style="animation-delay:-5.4s;">
               <div class="sum-slide">Slide 12</div>
               <div class="sum-num">12</div>
-              <div class="sum-title">Proven at Scale</div>
-              <div class="sum-desc">5,000+ properties and $2.4B in annual procurement processed globally.</div>
-            </div>
-            <div class="sum-card" style="animation-delay:-6.0s;">
-              <div class="sum-slide">Slide 13</div>
-              <div class="sum-num">13</div>
               <div class="sum-title">Meet the Team</div>
               <div class="sum-desc">The hospitality and technology experts building PurchasePlus.</div>
             </div>
@@ -908,13 +902,13 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       </section>
 
       <!-- ══════════════════════════════
-           SLIDE 02 — THE CHALLENGE
-           Dashboard screen + Bargain Brian
+           SLIDE — TEXT + LONGARMS
+           Text content left, Longarms character right
            ══════════════════════════════ -->
-      <section class="slide" data-title="The Challenge">
+      <section class="slide" data-title="Text + Longarms">
 
         <div class="slide-left">
-          <div class="slide-eyebrow"><span class="grad">01 / The Challenge</span></div>
+          <div class="slide-eyebrow"><span class="grad">The Challenge</span></div>
           <h2>Procurement is still<br><span class="grad">costing you.</span></h2>
           <p class="lead">Manual ordering, disconnected suppliers, and zero visibility into spend are draining hospitality margins every day.</p>
           <div class="stats-row">
@@ -935,75 +929,30 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
         </div>
 
         <div class="slide-right">
-          <!-- Requisitions / approval screen as context -->
-          <img class="sr-screen"
+          <!-- Screen background — dimmed for context -->
+          <img class="sr-bg-screen"
                src="../assets/PurchasePlus Web Application Screens/Artboard 3_PurchasePlu.png"
-               alt="Requisitions awaiting approval"
-               style="top:46%;transform:translate(-50%,-50%) rotate(2deg);">
-          <!-- Bargain Brian standing in front -->
-          <img class="sr-char"
-               src="../assets/Longarms Characters/Named Characters/98-084 PurchasePlus Longarm Illustration Bargain Brian Retina.png"
-               alt=""
-               style="right:2%;">
-          <!-- Floating KPI card -->
+               alt="">
+          <!-- Total Spend card — top left -->
           <img class="sr-card"
                src="../assets/Colourful UI UX/Stand Alone/Total Spend.png"
                alt=""
-               style="top:12%; left:8%; width:36%; max-width:160px;">
-        </div>
-
-      </section>
-
-      <!-- ══════════════════════════════
-           SLIDE 03 — THE PLATFORM
-           Dashboard artboard + Manager character
-           ══════════════════════════════ -->
-      <section class="slide" data-title="The Platform">
-
-        <div class="slide-left">
-          <div class="slide-eyebrow"><span class="grad">02 / The Platform</span></div>
-          <h2>One platform.<br><span class="grad">Everything connected.</span></h2>
-          <p class="lead">PurchasePlus replaces fragmented supplier relationships, manual POs, and paper invoices with a single intelligent procurement layer.</p>
-          <div class="pillars">
-            <div class="pillar">
-              <div class="pillar-num mono">01</div>
-              <div class="pillar-title">Smart Marketplace</div>
-              <div class="pillar-body">5,000+ suppliers. Real-time pricing. Order from any device.</div>
-            </div>
-            <div class="pillar">
-              <div class="pillar-num mono">02</div>
-              <div class="pillar-title">AI Invoicing</div>
-              <div class="pillar-body">3-way match, automated approval, AP sync in under 60 seconds.</div>
-            </div>
-            <div class="pillar">
-              <div class="pillar-num mono">03</div>
-              <div class="pillar-title">Full Visibility</div>
-              <div class="pillar-body">Spend analytics, budget tracking, and compliance reporting.</div>
-            </div>
-          </div>
-          <p class="kicker">Integrates with 40+ POS and accounting systems including Xero, Oracle, and MYOB.</p>
-        </div>
-
-        <div class="slide-right">
-          <!-- Dashboard home screen dimmed as background layer -->
-          <img class="sr-bg-screen"
-               src="../assets/PurchasePlus Web Application Screens/Artboard 2_PurchasePlu.png"
-               alt="">
-          <!-- Dashboard card floating -->
+               style="top:8%;left:6%;width:38%;max-width:156px;">
+          <!-- Closed Invoices card — mid right -->
           <img class="sr-card"
-               src="../assets/Colourful UI UX/Stand Alone/Amount Spent Per Category.png"
+               src="../assets/Colourful UI UX/Stand Alone/Closed Invoices.png"
                alt=""
-               style="top:10%; left:50%; transform:translateX(-50%); width:58%; max-width:240px;">
-          <!-- Procurement savings chart -->
+               style="top:36%;right:4%;width:40%;max-width:162px;transform:rotate(1.5deg);">
+          <!-- Food Cost card — lower left -->
           <img class="sr-card"
-               src="../assets/Colourful UI UX/Stand Alone/Procurement Savings.png"
+               src="../assets/Colourful UI UX/Stand Alone/Food Cost.png"
                alt=""
-               style="top:42%; right:6%; width:44%; max-width:180px; transform:rotate(1.5deg);">
-          <!-- Manager character -->
+               style="bottom:18%;left:5%;width:34%;max-width:138px;transform:rotate(-2deg);">
+          <!-- Bargain Brian — prominent, bottom right -->
           <img class="sr-char"
-               src="../assets/Longarms Characters/Stand Alone/98-084 PurchasePlus Longarm Illustration Manager Retina.png"
+               src="../assets/Longarms Characters/Named Characters/98-084 PurchasePlus Longarm Illustration Bargain Brian Retina.png"
                alt=""
-               style="right:0%; height:64%;">
+               style="right:0%;height:70%;">
         </div>
 
       </section>
@@ -1040,16 +989,14 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
           </div>
         </div>
 
-        <div class="slide-right" style="display:flex;align-items:center;justify-content:center;padding:32px 28px;background:#f8fafc;">
-          <div style="width:100%;">
-            <div class="screen-clickable" onclick="openLightbox(this.querySelector('img').src)">
-              <img src="../assets/PurchasePlus Web Application Screens/Artboard 2_PurchasePlu.png"
-                   alt="PurchasePlus dashboard">
-            </div>
-            <div class="screen-hint" style="justify-content:center;">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
-              Scroll to zoom · Drag to pan · Click outside to close
-            </div>
+        <div class="slide-right" style="display:flex;flex-direction:column;align-items:stretch;justify-content:center;padding:12px 0 0;">
+          <div class="screen-clickable" onclick="openLightbox(this.querySelector('img').src)" style="width:100%;border-radius:0;flex:1;">
+            <img src="../assets/PurchasePlus Web Application Screens/Artboard 2_PurchasePlu.png"
+                 alt="PurchasePlus dashboard">
+          </div>
+          <div class="screen-hint" style="justify-content:center;padding:8px 16px;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
+            Scroll to zoom · Drag to pan · Click outside to close
           </div>
         </div>
 
@@ -1674,7 +1621,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 
   /* ── Lightbox (Application Screen slide) ── */
   (function() {
-    var lb, vp, img, scale, tx, ty, dragging, dsx, dsy;
+    var lb, vp, img, scale, tx, ty, dragging, dsx, dsy, fitScale, fitTx, fitTy;
     window.openLightbox = function(src) {
       lb = document.createElement('div');
       lb.className = 'lb';
@@ -1683,7 +1630,8 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
         '<button class="lb-btn" id="lbZi">+</button>' +
         '<div class="lb-pct" id="lbPct">100%</div>' +
         '<button class="lb-btn" id="lbZo">−</button>' +
-        '<button class="lb-btn" id="lbCl" style="margin-left:8px;">×</button>' +
+        '<button class="lb-btn" id="lbNv" style="margin-left:8px;font-size:13px;width:auto;padding:0 12px;">Fit</button>' +
+        '<button class="lb-btn" id="lbCl" style="margin-left:6px;">×</button>' +
         '</div>';
       document.body.appendChild(lb);
       vp  = document.getElementById('lbVp');
@@ -1691,9 +1639,10 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       scale = 1; tx = 0; ty = 0;
       img.onload = function() {
         var cw = vp.offsetWidth, ch = vp.offsetHeight;
-        scale = Math.min(1, Math.min(cw / img.naturalWidth, ch / img.naturalHeight));
-        tx = (cw - img.naturalWidth  * scale) / 2;
-        ty = (ch - img.naturalHeight * scale) / 2;
+        fitScale = Math.min(1, Math.min(cw / img.naturalWidth, ch / img.naturalHeight));
+        fitTx = (cw - img.naturalWidth  * fitScale) / 2;
+        fitTy = (ch - img.naturalHeight * fitScale) / 2;
+        scale = fitScale; tx = fitTx; ty = fitTy;
         applyT();
       };
       if (img.complete && img.naturalWidth) img.onload();
@@ -1703,6 +1652,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       document.addEventListener('mouseup', onMu);
       document.getElementById('lbZi').addEventListener('click', function() { zoom(1.25); });
       document.getElementById('lbZo').addEventListener('click', function() { zoom(0.8); });
+      document.getElementById('lbNv').addEventListener('click', resetView);
       document.getElementById('lbCl').addEventListener('click', closeLb);
       lb.addEventListener('click', function(e) { if (e.target === lb) closeLb(); });
       lb.addEventListener('wheel', function(e) { e.stopPropagation(); }, { passive: false });
@@ -1713,6 +1663,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       var el = document.getElementById('lbPct');
       if (el) el.textContent = Math.round(scale * 100) + '%';
     }
+    function resetView() { scale = fitScale; tx = fitTx; ty = fitTy; applyT(); }
     function zoom(f, cx, cy) {
       if (!cx) cx = vp.offsetWidth / 2;
       if (!cy) cy = vp.offsetHeight / 2;
@@ -1733,6 +1684,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       if (e.key === 'Escape') closeLb();
       if (e.key === '+' || e.key === '=') zoom(1.2);
       if (e.key === '-') zoom(0.8);
+      if (e.key === '0') resetView();
     }
     function closeLb() {
       if (lb) { lb.remove(); lb = vp = img = null; }
