@@ -800,8 +800,11 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 .sum-chap-label { font-size: 10px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
 .sum-chap-rule  { flex: 1; height: 1px; background: var(--border-soft); }
 /* Multi-screen scrollable panel */
-.ms-scroll { position: absolute; inset: 0; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; scrollbar-width: thin; scrollbar-color: rgba(124,93,255,.4) transparent; }
-.ms-arrow  { display: flex; justify-content: center; align-items: center; padding: 10px 0; flex-shrink: 0; }
+.ms-scroll { position: absolute; inset: 0; overflow-y: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 0; scrollbar-width: thin; scrollbar-color: rgba(124,93,255,.4) transparent; }
+.ms-arrow  { display: flex; justify-content: center; align-items: center; padding: 6px 0; flex-shrink: 0; }
+.ms-step-label { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; margin-top: 2px; flex-shrink: 0; }
+.ms-step-num { background: linear-gradient(90deg,#a956ff,#3766fe); color: #fff; font-size: 12px; font-weight: 700; letter-spacing: .06em; padding: 4px 12px; border-radius: 20px; white-space: nowrap; }
+.ms-step-desc { font-size: 12px; font-weight: 500; color: var(--body); }
 @media (max-width: 1100px) { .sum-card { padding: 12px 14px; gap: 6px; } .sum-num { font-size: 40px; } .sum-title { font-size: 17px; } .sum-desc { font-size: 13px; } }
 </style>
 </head>
@@ -1099,10 +1102,18 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
           </div>
         </div>
 
-        <div class="slide-right" style="display:flex;align-items:center;justify-content:center;padding:0 14px;">
-          <div class="screen-clickable" onclick="openLightbox(this.querySelector('img').src)" style="width:120%;max-width:120%;box-shadow:0 32px 80px rgba(15,23,42,.38),0 8px 32px rgba(124,93,255,.22);">
+        <div class="slide-right" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 18px 16px;gap:10px;">
+          <div style="text-align:center;flex-shrink:0;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);margin-bottom:5px;">Dashboard Overview</div>
+            <div style="font-size:clamp(13px,1.4vw,17px);font-weight:300;color:var(--body);max-width:32ch;text-wrap:balance;line-height:1.4;">Real-time visibility across orders, invoices, and supplier relationships — updated live.</div>
+          </div>
+          <div onclick="openLightbox(this.querySelector('img').src)" style="cursor:zoom-in;width:105%;max-width:105%;box-shadow:0 32px 80px rgba(15,23,42,.38),0 8px 32px rgba(124,93,255,.22);border-radius:8px;overflow:hidden;transition:transform .2s;flex-shrink:0;" onmouseover="this.style.transform='scale(1.012)'" onmouseout="this.style.transform=''">
             <img src="../assets/PurchasePlus Web Application Screens/Artboard 2_PurchasePlu.png"
-                 alt="PurchasePlus dashboard">
+                 alt="PurchasePlus dashboard" style="width:100%;height:auto;display:block;">
+          </div>
+          <div style="font-size:11px;color:var(--muted);display:flex;align-items:center;gap:5px;flex-shrink:0;">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            Click to zoom
           </div>
         </div>
 
@@ -1141,34 +1152,75 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
         </div>
 
         <div class="slide-right" style="position:relative;overflow:hidden;">
-          <div class="ms-scroll">
-            <div class="screen-clickable" onclick="openLightbox(this.querySelector('img').src)" style="flex-shrink:0;width:100%;">
-              <img src="../assets/PurchasePlus Web Application Screens/Artboard 2_PurchasePlu.png" alt="PurchasePlus dashboard">
+          <div class="ms-scroll" id="msScrollPanel">
+
+            <!-- Zoom hint — very top -->
+            <div style="display:flex;align-items:center;justify-content:center;gap:6px;padding:6px 0 12px;flex-shrink:0;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(124,93,255,.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+              <span style="font-size:11px;font-weight:600;color:rgba(124,93,255,.75);letter-spacing:.04em;">Click any screen to zoom</span>
             </div>
+
+            <!-- Step 1 -->
+            <div class="ms-step-label">
+              <div class="ms-step-num">Step 1</div>
+              <div class="ms-step-desc">Dashboard home</div>
+            </div>
+            <div onclick="openLightbox(this.querySelector('img').src)" style="cursor:zoom-in;flex-shrink:0;width:100%;border-radius:8px;overflow:hidden;box-shadow:0 12px 40px rgba(15,23,42,.22);transition:transform .2s;" onmouseover="this.style.transform='scale(1.012)'" onmouseout="this.style.transform=''">
+              <img src="../assets/PurchasePlus Web Application Screens/Artboard 2_PurchasePlu.png" alt="PurchasePlus dashboard" style="width:100%;height:auto;display:block;">
+            </div>
+
             <div class="ms-arrow">
-              <svg width="22" height="32" viewBox="0 0 22 32" fill="none"><line x1="11" y1="0" x2="11" y2="20" stroke="rgba(124,93,255,.45)" stroke-width="1.5"/><polyline points="4,14 11,24 18,14" fill="none" stroke="rgba(124,93,255,.65)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg width="44" height="56" viewBox="0 0 44 56" fill="none"><line x1="22" y1="2" x2="22" y2="36" stroke="url(#msGrad1)" stroke-width="2.5" stroke-linecap="round"/><polyline points="8,26 22,46 36,26" fill="none" stroke="url(#msGrad1)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="msGrad1" x1="22" y1="2" x2="22" y2="46" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#a956ff" stop-opacity=".35"/><stop offset="100%" stop-color="#3766fe" stop-opacity=".8"/></linearGradient></defs></svg>
             </div>
-            <div class="screen-clickable" onclick="openLightbox(this.querySelector('img').src)" style="flex-shrink:0;width:100%;">
-              <img src="../assets/PurchasePlus Web Application Screens/Artboard 3_PurchasePlu.png" alt="Invoice approval queue">
+
+            <!-- Step 2 -->
+            <div class="ms-step-label">
+              <div class="ms-step-num">Step 2</div>
+              <div class="ms-step-desc">Approval queue</div>
             </div>
+            <div onclick="openLightbox(this.querySelector('img').src)" style="cursor:zoom-in;flex-shrink:0;width:100%;border-radius:8px;overflow:hidden;box-shadow:0 12px 40px rgba(15,23,42,.22);transition:transform .2s;" onmouseover="this.style.transform='scale(1.012)'" onmouseout="this.style.transform=''">
+              <img src="../assets/PurchasePlus Web Application Screens/Artboard 3_PurchasePlu.png" alt="Invoice approval queue" style="width:100%;height:auto;display:block;">
+            </div>
+
             <div class="ms-arrow">
-              <svg width="22" height="32" viewBox="0 0 22 32" fill="none"><line x1="11" y1="0" x2="11" y2="20" stroke="rgba(124,93,255,.45)" stroke-width="1.5"/><polyline points="4,14 11,24 18,14" fill="none" stroke="rgba(124,93,255,.65)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg width="44" height="56" viewBox="0 0 44 56" fill="none"><line x1="22" y1="2" x2="22" y2="36" stroke="url(#msGrad2)" stroke-width="2.5" stroke-linecap="round"/><polyline points="8,26 22,46 36,26" fill="none" stroke="url(#msGrad2)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="msGrad2" x1="22" y1="2" x2="22" y2="46" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#a956ff" stop-opacity=".35"/><stop offset="100%" stop-color="#3766fe" stop-opacity=".8"/></linearGradient></defs></svg>
             </div>
-            <div class="screen-clickable" onclick="openLightbox(this.querySelector('img').src)" style="flex-shrink:0;width:100%;">
-              <img src="../assets/PurchasePlus Web Application Screens/Artboard 4_PurchasePlu.png" alt="Purchase order detail">
+
+            <!-- Step 3 -->
+            <div class="ms-step-label">
+              <div class="ms-step-num">Step 3</div>
+              <div class="ms-step-desc">Supplier management</div>
             </div>
+            <div onclick="openLightbox(this.querySelector('img').src)" style="cursor:zoom-in;flex-shrink:0;width:100%;border-radius:8px;overflow:hidden;box-shadow:0 12px 40px rgba(15,23,42,.22);transition:transform .2s;" onmouseover="this.style.transform='scale(1.012)'" onmouseout="this.style.transform=''">
+              <img src="../assets/PurchasePlus Web Application Screens/Artboard 4_PurchasePlu.png" alt="Supplier management" style="width:100%;height:auto;display:block;">
+            </div>
+
             <div class="ms-arrow">
-              <svg width="22" height="32" viewBox="0 0 22 32" fill="none"><line x1="11" y1="0" x2="11" y2="20" stroke="rgba(124,93,255,.45)" stroke-width="1.5"/><polyline points="4,14 11,24 18,14" fill="none" stroke="rgba(124,93,255,.65)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg width="44" height="56" viewBox="0 0 44 56" fill="none"><line x1="22" y1="2" x2="22" y2="36" stroke="url(#msGrad3)" stroke-width="2.5" stroke-linecap="round"/><polyline points="8,26 22,46 36,26" fill="none" stroke="url(#msGrad3)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="msGrad3" x1="22" y1="2" x2="22" y2="46" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#a956ff" stop-opacity=".35"/><stop offset="100%" stop-color="#3766fe" stop-opacity=".8"/></linearGradient></defs></svg>
             </div>
-            <div class="screen-clickable" onclick="openLightbox(this.querySelector('img').src)" style="flex-shrink:0;width:100%;">
-              <img src="../assets/PurchasePlus Web Application Screens/Artboard 5_PurchasePlu.png" alt="All purchase orders">
+
+            <!-- Step 4 -->
+            <div class="ms-step-label">
+              <div class="ms-step-num">Step 4</div>
+              <div class="ms-step-desc">Purchase orders</div>
             </div>
+            <div onclick="openLightbox(this.querySelector('img').src)" style="cursor:zoom-in;flex-shrink:0;width:100%;border-radius:8px;overflow:hidden;box-shadow:0 12px 40px rgba(15,23,42,.22);transition:transform .2s;" onmouseover="this.style.transform='scale(1.012)'" onmouseout="this.style.transform=''">
+              <img src="../assets/PurchasePlus Web Application Screens/Artboard 5_PurchasePlu.png" alt="All purchase orders" style="width:100%;height:auto;display:block;">
+            </div>
+
             <div class="ms-arrow">
-              <svg width="22" height="32" viewBox="0 0 22 32" fill="none"><line x1="11" y1="0" x2="11" y2="20" stroke="rgba(124,93,255,.45)" stroke-width="1.5"/><polyline points="4,14 11,24 18,14" fill="none" stroke="rgba(124,93,255,.65)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <svg width="44" height="56" viewBox="0 0 44 56" fill="none"><line x1="22" y1="2" x2="22" y2="36" stroke="url(#msGrad4)" stroke-width="2.5" stroke-linecap="round"/><polyline points="8,26 22,46 36,26" fill="none" stroke="url(#msGrad4)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="msGrad4" x1="22" y1="2" x2="22" y2="46" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#a956ff" stop-opacity=".35"/><stop offset="100%" stop-color="#3766fe" stop-opacity=".8"/></linearGradient></defs></svg>
             </div>
-            <div class="screen-clickable" onclick="openLightbox(this.querySelector('img').src)" style="flex-shrink:0;width:100%;">
-              <img src="../assets/PurchasePlus Web Application Screens/Artboard 6_PurchasePlu.png" alt="Spend analytics">
+
+            <!-- Step 5 -->
+            <div class="ms-step-label">
+              <div class="ms-step-num">Step 5</div>
+              <div class="ms-step-desc">Spend analytics</div>
             </div>
+            <div onclick="openLightbox(this.querySelector('img').src)" style="cursor:zoom-in;flex-shrink:0;width:100%;border-radius:8px;overflow:hidden;box-shadow:0 12px 40px rgba(15,23,42,.22);transition:transform .2s;" onmouseover="this.style.transform='scale(1.012)'" onmouseout="this.style.transform=''" style="margin-bottom:16px;">
+              <img src="../assets/PurchasePlus Web Application Screens/Artboard 6_PurchasePlu.png" alt="Spend analytics" style="width:100%;height:auto;display:block;">
+            </div>
+
           </div>
         </div>
 
@@ -1720,8 +1772,15 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
   });
 
   var wheelCooldown = false;
+  var msScrollHovered = false;
+  var msPanel = document.getElementById('msScrollPanel');
+  if (msPanel) {
+    msPanel.addEventListener('mouseenter', function() { msScrollHovered = true; });
+    msPanel.addEventListener('mouseleave', function() { msScrollHovered = false; });
+  }
   document.addEventListener('wheel', function(e) {
     if (isMobile()) return;
+    if (msScrollHovered) return;
     var scrollable = e.target.closest('.slide-left');
     if (scrollable) {
       var atBottom = scrollable.scrollTop + scrollable.clientHeight >= scrollable.scrollHeight - 10;
