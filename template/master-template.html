@@ -620,32 +620,33 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 .feature-pill { display:inline-flex; align-items:center; gap:6px; padding:5px 11px; background:var(--softer); border:1px solid var(--border); border-radius:var(--radius-pill); font-size:13px; font-weight:500; color:var(--ink-soft); }
 .feature-pill::before { content:''; width:5px; height:5px; border-radius:50%; background:var(--grad); flex-shrink:0; display:inline-block; }
 .feature-metric-row { display:flex; gap:28px; margin-top:20px; padding-top:20px; border-top:1px solid var(--border-soft); }
-.feature-metric-num { font-size:26px; font-weight:200; letter-spacing:-1px; color:var(--ink); line-height:1; margin-bottom:4px; }
-.feature-metric-label { font-size:12px; color:var(--body); line-height:1.4; }
+.feature-metric-num { font-size:clamp(32px,4vw,52px); font-weight:200; letter-spacing:-1.5px; color:var(--ink); line-height:1; margin-bottom:6px; }
+.feature-metric-label { font-size:clamp(13px,1.5vw,17px); color:var(--body); line-height:1.4; }
 
 /* KPI strip */
 .kpi-strip { display:flex; border:1px solid var(--border-soft); border-radius:var(--radius); overflow:hidden; margin-bottom:18px; }
-.kpi-cell { flex:1; padding:12px 14px; border-right:1px solid var(--border-soft); }
+.kpi-cell { flex:1; padding:14px 16px; border-right:1px solid var(--border-soft); }
 .kpi-cell:last-child { border-right:none; }
-.kpi-num { font-size:20px; font-weight:200; letter-spacing:-1px; color:var(--ink); line-height:1; margin-bottom:2px; }
-.kpi-label { font-size:11px; color:var(--muted); }
-.kpi-delta { font-size:10.5px; font-weight:600; color:var(--green); margin-top:2px; }
+.kpi-num { font-size:clamp(28px,3.5vw,46px); font-weight:200; letter-spacing:-1.5px; color:var(--ink); line-height:1; margin-bottom:4px; }
+.kpi-label { font-size:clamp(11px,1.2vw,14px); color:var(--muted); }
+.kpi-delta { font-size:clamp(11px,1.2vw,14px); font-weight:600; color:var(--green); margin-top:3px; }
 
 /* Analytics chart panel */
-.chart-panel { position:relative; width:100%; height:100%; background:linear-gradient(155deg,#0d0820 0%,#120a2c 45%,#0a1020 100%); display:flex; flex-direction:column; padding:28px 24px; overflow:hidden; }
-.chart-label { font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.3); margin-bottom:10px; }
-.bar-chart { display:flex; align-items:flex-end; gap:8px; height:96px; flex-shrink:0; }
+.chart-panel { position:relative; width:100%; height:100%; background:var(--grad-img); display:flex; flex-direction:column; align-items:stretch; justify-content:center; gap:12px; padding:20px 22px; overflow:hidden; }
+.chart-card { background:#fff; border-radius:12px; padding:16px 18px; box-shadow:var(--shadow); flex-shrink:0; }
+.chart-label { font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-bottom:12px; }
+.bar-chart { display:flex; align-items:flex-end; gap:8px; height:120px; flex-shrink:0; }
 .bar-group { display:flex; flex-direction:column; align-items:center; gap:5px; flex:1; }
 .bar-fill { width:100%; border-radius:4px 4px 0 0; }
-.bar-lbl { font-size:9px; color:rgba(255,255,255,.35); text-align:center; }
-.chart-sep { height:1px; background:rgba(255,255,255,.05); margin:14px 0; flex-shrink:0; }
+.bar-lbl { font-size:9px; color:var(--muted); text-align:center; }
+.chart-sep { height:1px; background:var(--border-soft); margin:8px 0; flex-shrink:0; }
 .donut-row { display:flex; gap:16px; align-items:center; flex-shrink:0; }
-.donut-wrap { width:80px; height:80px; border-radius:50%; flex-shrink:0; position:relative; display:flex; align-items:center; justify-content:center; }
-.donut-hole { position:absolute; inset:11px; border-radius:50%; background:#0d0820; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; }
-.donut-legend { display:flex; flex-direction:column; gap:6px; flex:1; }
-.legend-item { display:flex; align-items:center; gap:7px; font-size:10.5px; color:rgba(255,255,255,.5); }
-.legend-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
-.legend-pct { margin-left:auto; font-size:11px; font-weight:600; color:rgba(255,255,255,.75); font-family:'JetBrains Mono',monospace; }
+.donut-wrap { width:120px; height:120px; border-radius:50%; flex-shrink:0; position:relative; display:flex; align-items:center; justify-content:center; }
+.donut-hole { position:absolute; inset:16px; border-radius:50%; background:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; }
+.donut-legend { display:flex; flex-direction:column; gap:8px; flex:1; }
+.legend-item { display:flex; align-items:center; gap:7px; font-size:12px; color:var(--body); }
+.legend-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+.legend-pct { margin-left:auto; font-size:12px; font-weight:600; color:var(--ink); font-family:'JetBrains Mono',monospace; }
 
 /* Customer quote */
 .quote-mark { font-size:64px; font-weight:200; line-height:.75; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; -webkit-text-fill-color:transparent; margin-bottom:10px; display:block; }
@@ -835,7 +836,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
             <!-- CHAPTER 2: The Solution -->
             <div style="flex:1;display:flex;flex-direction:column;gap:8px;min-height:0;">
               <div class="sum-chap"><div class="sum-chap-label">Chapter 02 — The Solution</div><div class="sum-chap-rule"></div></div>
-              <div style="flex:1;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;min-height:0;">
+              <div style="flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;min-height:0;">
                 <div class="sum-card" style="animation-delay:-2.4s;">
                   <div class="sum-num">07</div>
                   <div class="sum-title">Feature Highlight</div>
@@ -843,16 +844,11 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
                 </div>
                 <div class="sum-card" style="animation-delay:-3.0s;">
                   <div class="sum-num">08</div>
-                  <div class="sum-title">How It Works</div>
-                  <div class="sum-desc">Four steps from order to reconciled invoice in under 30 days.</div>
-                </div>
-                <div class="sum-card" style="animation-delay:-3.6s;">
-                  <div class="sum-num">09</div>
                   <div class="sum-title">Analytics</div>
                   <div class="sum-desc">Real-time spend intelligence, budgets, and compliance reports.</div>
                 </div>
-                <div class="sum-card" style="animation-delay:-4.2s;">
-                  <div class="sum-num">10</div>
+                <div class="sum-card" style="animation-delay:-3.6s;">
+                  <div class="sum-num">09</div>
                   <div class="sum-title">What You Get</div>
                   <div class="sum-desc">Measurable outcomes from day one across every property.</div>
                 </div>
@@ -863,18 +859,18 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
             <div style="flex:1;display:flex;flex-direction:column;gap:8px;min-height:0;">
               <div class="sum-chap"><div class="sum-chap-label">Chapter 03 — The Proof</div><div class="sum-chap-rule"></div></div>
               <div style="flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;min-height:0;">
-                <div class="sum-card" style="animation-delay:-4.8s;">
-                  <div class="sum-num">11</div>
+                <div class="sum-card" style="animation-delay:-4.2s;">
+                  <div class="sum-num">10</div>
                   <div class="sum-title">Customer Quote</div>
                   <div class="sum-desc">Real results from properties already running on PurchasePlus.</div>
                 </div>
-                <div class="sum-card" style="animation-delay:-5.4s;">
-                  <div class="sum-num">12</div>
+                <div class="sum-card" style="animation-delay:-4.8s;">
+                  <div class="sum-num">11</div>
                   <div class="sum-title">Proven at Scale</div>
                   <div class="sum-desc">5,000+ properties and $2.4B in annual procurement processed globally.</div>
                 </div>
-                <div class="sum-card" style="animation-delay:-6.0s;">
-                  <div class="sum-num">13</div>
+                <div class="sum-card" style="animation-delay:-5.4s;">
+                  <div class="sum-num">12</div>
                   <div class="sum-title">Meet the Team</div>
                   <div class="sum-desc">The hospitality and technology experts building PurchasePlus.</div>
                 </div>
@@ -1128,68 +1124,6 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       </section>
 
       <!-- ══════════════════════════════
-           SLIDE 04 — HOW IT WORKS
-           PO screen + Speedy Simon
-           ══════════════════════════════ -->
-      <section class="slide" data-title="How It Works">
-
-        <div class="slide-left">
-          <div class="slide-eyebrow"><span class="grad">03 / How It Works</span></div>
-          <h2>From order to invoice<br><span class="grad">in four steps.</span></h2>
-          <p class="lead">PurchasePlus handles the full procurement cycle so your team can focus on hospitality, not paperwork.</p>
-          <div class="timeline">
-            <div class="tl-item active">
-              <div class="tl-num mono grad">01</div>
-              <div>
-                <div class="tl-title">Browse and order from the marketplace</div>
-                <div class="tl-body">Staff place orders on any device. Real-time pricing from 5,000+ verified suppliers.</div>
-              </div>
-            </div>
-            <div class="tl-item">
-              <div class="tl-num mono">02</div>
-              <div>
-                <div class="tl-title">Approve in seconds, not days</div>
-                <div class="tl-body">Automated approval workflows route POs to the right person based on value and category.</div>
-              </div>
-            </div>
-            <div class="tl-item">
-              <div class="tl-num mono">03</div>
-              <div>
-                <div class="tl-title">Receive goods and confirm delivery</div>
-                <div class="tl-body">Mobile receiving confirms delivery against the original order. Discrepancies flagged instantly.</div>
-              </div>
-            </div>
-            <div class="tl-item">
-              <div class="tl-num mono">04</div>
-              <div>
-                <div class="tl-title">AI matches and syncs the invoice</div>
-                <div class="tl-body">3-way match against PO and delivery note. Auto-coded and posted to your accounting system.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="slide-right">
-          <!-- Purchase orders list with green approvals -->
-          <img class="sr-screen"
-               src="../assets/PurchasePlus Web Application Screens/Artboard 5_PurchasePlu.png"
-               alt="Purchase orders list"
-               style="top:42%; transform:translate(-50%,-50%) rotate(-1.5deg); width:80%;">
-          <!-- Closed invoices KPI -->
-          <img class="sr-card"
-               src="../assets/Colourful UI UX/Stand Alone/Closed Invoices.png"
-               alt=""
-               style="top:8%; right:8%; width:40%; max-width:160px;">
-          <!-- Speedy Simon — efficiency character -->
-          <img class="sr-char"
-               src="../assets/Longarms Characters/Named Characters/98-084 PurchasePlus Longarm Illustration Speedy Simon Retina.png"
-               alt=""
-               style="height:66%; right:1%;">
-        </div>
-
-      </section>
-
-      <!-- ══════════════════════════════
            SLIDE — ANALYTICS DASHBOARD
            KPIs + gradient HTML charts
            ══════════════════════════════ -->
@@ -1235,75 +1169,76 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
           </div>
         </div>
 
-        <!-- Gradient dark panel with HTML/CSS charts -->
+        <!-- Gradient background with white chart cards -->
         <div class="slide-right" style="padding:0;border-left:none;">
           <div class="chart-panel">
-            <div class="chart-glow" style="width:280px;height:280px;top:-80px;right:-60px;opacity:.9;"></div>
-            <div class="chart-glow" style="width:180px;height:180px;bottom:-50px;left:10%;background:radial-gradient(circle,rgba(55,102,254,.22) 0%,transparent 70%);"></div>
 
-            <!-- Bar chart -->
-            <div class="chart-label">Monthly Spend by Category</div>
-            <div class="bar-chart">
-              <div class="bar-group">
-                <div class="bar-fill" style="height:88%;background:linear-gradient(to top,#a956ff,#7c5dff);"></div>
-                <div class="bar-lbl">Food</div>
-              </div>
-              <div class="bar-group">
-                <div class="bar-fill" style="height:62%;background:linear-gradient(to top,#7c5dff,#3766fe);"></div>
-                <div class="bar-lbl">Bev</div>
-              </div>
-              <div class="bar-group">
-                <div class="bar-fill" style="height:45%;background:linear-gradient(to top,#3766fe,#5b8aff);"></div>
-                <div class="bar-lbl">Equip</div>
-              </div>
-              <div class="bar-group">
-                <div class="bar-fill" style="height:34%;background:linear-gradient(to top,#a956ff,#7c5dff);"></div>
-                <div class="bar-lbl">Linen</div>
-              </div>
-              <div class="bar-group">
-                <div class="bar-fill" style="height:26%;background:linear-gradient(to top,#7c5dff,#3766fe);"></div>
-                <div class="bar-lbl">Clean</div>
-              </div>
-              <div class="bar-group">
-                <div class="bar-fill" style="height:18%;background:linear-gradient(to top,#3766fe,#5b8aff);"></div>
-                <div class="bar-lbl">Other</div>
-              </div>
-            </div>
-
-            <div class="chart-sep"></div>
-
-            <!-- Donut + legend -->
-            <div class="chart-label">Spend Distribution</div>
-            <div class="donut-row">
-              <div class="donut-wrap">
-                <div style="width:80px;height:80px;border-radius:50%;background:conic-gradient(#a956ff 0% 42%, #3766fe 42% 66%, #5b8aff 66% 84%, rgba(255,255,255,.1) 84% 100%);"></div>
-                <div class="donut-hole">
-                  <div style="font-size:10px;font-weight:200;color:#fff;line-height:1;">Total</div>
-                  <div style="font-size:8px;color:rgba(255,255,255,.4);font-family:'JetBrains Mono',monospace;">$2.4B</div>
+            <!-- Bar chart card -->
+            <div class="chart-card">
+              <div class="chart-label">Monthly Spend by Category</div>
+              <div class="bar-chart">
+                <div class="bar-group">
+                  <div class="bar-fill" style="height:88%;background:linear-gradient(to top,#a956ff,#7c5dff);"></div>
+                  <div class="bar-lbl">Food</div>
+                </div>
+                <div class="bar-group">
+                  <div class="bar-fill" style="height:62%;background:linear-gradient(to top,#7c5dff,#3766fe);"></div>
+                  <div class="bar-lbl">Bev</div>
+                </div>
+                <div class="bar-group">
+                  <div class="bar-fill" style="height:45%;background:linear-gradient(to top,#3766fe,#5b8aff);"></div>
+                  <div class="bar-lbl">Equip</div>
+                </div>
+                <div class="bar-group">
+                  <div class="bar-fill" style="height:34%;background:linear-gradient(to top,#a956ff,#7c5dff);"></div>
+                  <div class="bar-lbl">Linen</div>
+                </div>
+                <div class="bar-group">
+                  <div class="bar-fill" style="height:26%;background:linear-gradient(to top,#7c5dff,#3766fe);"></div>
+                  <div class="bar-lbl">Clean</div>
+                </div>
+                <div class="bar-group">
+                  <div class="bar-fill" style="height:18%;background:linear-gradient(to top,#3766fe,#5b8aff);"></div>
+                  <div class="bar-lbl">Other</div>
                 </div>
               </div>
-              <div class="donut-legend">
-                <div class="legend-item"><div class="legend-dot" style="background:#a956ff;"></div>Food &amp; Beverage<span class="legend-pct">42%</span></div>
-                <div class="legend-item"><div class="legend-dot" style="background:#3766fe;"></div>Beverages<span class="legend-pct">24%</span></div>
-                <div class="legend-item"><div class="legend-dot" style="background:#5b8aff;"></div>Equipment<span class="legend-pct">18%</span></div>
-                <div class="legend-item"><div class="legend-dot" style="background:rgba(255,255,255,.18);"></div>Other<span class="legend-pct">16%</span></div>
+            </div>
+
+            <!-- Donut + legend card -->
+            <div class="chart-card">
+              <div class="chart-label">Spend Distribution</div>
+              <div class="donut-row">
+                <div class="donut-wrap">
+                  <div style="width:120px;height:120px;border-radius:50%;background:conic-gradient(#a956ff 0% 42%, #3766fe 42% 66%, #5b8aff 66% 84%, #e5e7eb 84% 100%);"></div>
+                  <div class="donut-hole">
+                    <div style="font-size:11px;font-weight:400;color:var(--muted);line-height:1;">Total</div>
+                    <div style="font-size:13px;font-weight:600;color:var(--ink);font-family:'JetBrains Mono',monospace;">$2.4B</div>
+                  </div>
+                </div>
+                <div class="donut-legend">
+                  <div class="legend-item"><div class="legend-dot" style="background:#a956ff;"></div>Food &amp; Bev<span class="legend-pct">42%</span></div>
+                  <div class="legend-item"><div class="legend-dot" style="background:#3766fe;"></div>Beverages<span class="legend-pct">24%</span></div>
+                  <div class="legend-item"><div class="legend-dot" style="background:#5b8aff;"></div>Equipment<span class="legend-pct">18%</span></div>
+                  <div class="legend-item"><div class="legend-dot" style="background:#e5e7eb;"></div>Other<span class="legend-pct">16%</span></div>
+                </div>
               </div>
             </div>
 
-            <div class="chart-sep"></div>
+            <!-- Sparkline card -->
+            <div class="chart-card">
+              <div class="chart-label">Invoice Processing Time (days avg)</div>
+              <svg width="100%" height="64" viewBox="0 0 280 64" preserveAspectRatio="none" style="flex-shrink:0;display:block;">
+                <defs>
+                  <linearGradient id="lg2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#a956ff"/><stop offset="100%" stop-color="#3766fe"/></linearGradient>
+                  <linearGradient id="ag2" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#7c5dff" stop-opacity=".15"/><stop offset="100%" stop-color="#7c5dff" stop-opacity="0"/></linearGradient>
+                </defs>
+                <path d="M0,52 C40,50 80,46 120,36 C160,26 200,16 240,9 C256,6 268,5 280,4 L280,64 L0,64 Z" fill="url(#ag2)"/>
+                <path d="M0,52 C40,50 80,46 120,36 C160,26 200,16 240,9 C256,6 268,5 280,4" fill="none" stroke="url(#lg2)" stroke-width="2.5" stroke-linecap="round"/>
+                <text x="2" y="62" fill="var(--muted)" font-size="9" font-family="JetBrains Mono">14d</text>
+                <text x="242" y="18" fill="var(--purple)" font-size="9" font-weight="600" font-family="JetBrains Mono">1.8d</text>
+              </svg>
+            </div>
 
-            <!-- Sparkline: invoice processing time -->
-            <div class="chart-label">Invoice Processing Time (days avg)</div>
-            <svg width="100%" height="52" viewBox="0 0 280 52" preserveAspectRatio="none" style="flex-shrink:0;">
-              <defs>
-                <linearGradient id="lg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#a956ff"/><stop offset="100%" stop-color="#3766fe"/></linearGradient>
-                <linearGradient id="ag" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#7c5dff" stop-opacity=".28"/><stop offset="100%" stop-color="#7c5dff" stop-opacity="0"/></linearGradient>
-              </defs>
-              <path d="M0,42 C40,40 80,36 120,28 C160,20 200,12 240,7 C256,5 268,4 280,3 L280,52 L0,52 Z" fill="url(#ag)"/>
-              <path d="M0,42 C40,40 80,36 120,28 C160,20 200,12 240,7 C256,5 268,4 280,3" fill="none" stroke="url(#lg)" stroke-width="2.5" stroke-linecap="round"/>
-              <text x="2" y="50" fill="rgba(255,255,255,.3)" font-size="8" font-family="JetBrains Mono">14d</text>
-              <text x="246" y="12" fill="rgba(255,255,255,.6)" font-size="8" font-family="JetBrains Mono">1.8d</text>
-            </svg>
           </div>
         </div>
 
@@ -1701,16 +1636,39 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
     var zoom    = document.getElementById('fhZoom');
     var tracker = document.getElementById('fhTracker');
     if (!screen || !zoom) return;
-    var ZOOM = 3.5;
-    function init() {
-      var src = imgEl.src;
-      zoom.style.backgroundImage = 'url(' + src + ')';
+    var ZOOM   = 3.5;
+    var locked = false;
+    var COL_DEFAULT = 'rgba(124,93,255,.9)';
+    var COL_LOCKED  = '#ee2b62';
+    var COL_UNLOCKED = '#10b981';
+
+    function setTrackerColor(col) {
+      tracker.style.borderColor = col;
+      tracker.style.boxShadow   = '0 0 0 1px ' + col + '40, 0 0 12px ' + col + '50';
+    }
+
+    function resetToTopLeft() {
       var sw = screen.offsetWidth, sh = screen.offsetHeight;
-      zoom.style.backgroundSize = (sw * ZOOM) + 'px ' + (sh * ZOOM) + 'px';
-      zoom.style.backgroundPosition = '50% 50%';
+      var zw = zoom.offsetWidth,   zh = zoom.offsetHeight;
+      zoom.style.backgroundSize     = (sw * ZOOM) + 'px ' + (sh * ZOOM) + 'px';
+      zoom.style.backgroundPosition = '0px 0px';
+      var tw = zw / ZOOM, th = zh / ZOOM;
+      tracker.style.left   = '0px';
+      tracker.style.top    = '0px';
+      tracker.style.width  = tw + 'px';
+      tracker.style.height = th + 'px';
+      tracker.style.display = 'block';
+      setTrackerColor(locked ? COL_LOCKED : COL_DEFAULT);
+    }
+
+    function init() {
+      zoom.style.backgroundImage = 'url(' + imgEl.src + ')';
+      resetToTopLeft();
     }
     if (imgEl.complete) { init(); } else { imgEl.addEventListener('load', init); }
+
     screen.addEventListener('mousemove', function(e) {
+      if (locked) return;
       var r  = screen.getBoundingClientRect();
       var mx = e.clientX - r.left;
       var my = e.clientY - r.top;
@@ -1719,7 +1677,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       var bw = sw * ZOOM, bh = sh * ZOOM;
       var bx = -(mx * ZOOM - zw / 2);
       var by = -(my * ZOOM - zh / 2);
-      zoom.style.backgroundSize   = bw + 'px ' + bh + 'px';
+      zoom.style.backgroundSize     = bw + 'px ' + bh + 'px';
       zoom.style.backgroundPosition = bx + 'px ' + by + 'px';
       var tw = zw / ZOOM, th = zh / ZOOM;
       var tx = Math.max(0, Math.min(sw - tw, mx - tw / 2));
@@ -1729,14 +1687,25 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       tracker.style.width   = tw + 'px';
       tracker.style.height  = th + 'px';
       tracker.style.display = 'block';
+      setTrackerColor(COL_DEFAULT);
     });
+
     screen.addEventListener('mouseleave', function() {
-      var sw = screen.offsetWidth, sh = screen.offsetHeight;
-      zoom.style.backgroundSize     = (sw * ZOOM) + 'px ' + (sh * ZOOM) + 'px';
-      zoom.style.backgroundPosition = '50% 50%';
-      tracker.style.display = 'none';
+      if (locked) return;
+      resetToTopLeft();
     });
-    window.addEventListener('resize', function() { init(); });
+
+    screen.addEventListener('click', function() {
+      locked = !locked;
+      if (locked) {
+        setTrackerColor(COL_LOCKED);
+      } else {
+        setTrackerColor(COL_UNLOCKED);
+        setTimeout(function() { setTrackerColor(COL_DEFAULT); }, 600);
+      }
+    });
+
+    window.addEventListener('resize', function() { if (!locked) init(); });
   })();
 
   /* ── Lightbox (Application Screen slide) ── */
