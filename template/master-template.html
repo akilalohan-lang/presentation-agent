@@ -1313,11 +1313,14 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 
           <!-- MasterChef-style control bar — inside slide-left only -->
           <div style="display:flex;align-items:center;gap:8px;padding:8px 0 12px;flex-shrink:0;border-bottom:1px solid var(--border-soft);margin-bottom:16px;">
-            <div style="display:flex;align-items:center;gap:6px;flex-shrink:0;">
-              <div style="width:26px;height:26px;border-radius:50%;background:var(--grad);flex-shrink:0;"></div>
-              <span style="font-size:11px;font-weight:600;color:var(--ink);">MasterChef</span>
-              <div style="width:1px;height:16px;background:var(--border);margin:0 2px;"></div>
+            <div class="tl-brand" style="padding:0;">
+              <div class="tl-brand-icon"></div>
+              <div class="tl-brand-text">
+                <div class="tl-brand-name">MasterChef</div>
+                <div class="tl-brand-sub">generates for you</div>
+              </div>
             </div>
+            <div class="tl-sep"></div>
             <button class="tl-btn" style="height:26px;font-size:11px;padding:0 12px;" onclick="adGenerate()">
               <svg width="10" height="10" viewBox="0 0 13 13" fill="none"><path d="M2 4.5c0-1.38 1.12-2.5 2.5-2.5h4.09l-1.3-1.3.71-.7L10.5 2.5 8 5l-.71-.71 1.3-1.29H4.5a1.5 1.5 0 0 0-1.5 1.5v1H2V4.5zm9 4c0 1.38-1.12 2.5-2.5 2.5H4.41l1.3 1.3-.71.7L2.5 10.5 5 8l.71.71-1.3 1.29H8.5A1.5 1.5 0 0 0 10 8.5v-1h1v1z" fill="currentColor"/></svg>
               Generate
@@ -1325,6 +1328,10 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
             <button class="tl-btn-secondary" style="height:26px;font-size:11px;padding:0 10px;" onclick="adNewText()">
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
               New Text
+            </button>
+            <button class="tl-btn-secondary" style="height:26px;font-size:11px;padding:0 10px;" onclick="adNewImage()">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              New Image
             </button>
             <span id="adHint" style="font-size:11px;color:var(--muted);margin-left:auto;flex-shrink:0;">1 / 3</span>
           </div>
@@ -2458,6 +2465,10 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
     window.adNewText = function() {
       adIdx = (adIdx + 1) % adTextVariants.length;
       adApplyText(adTextVariants[adIdx]);
+    };
+
+    window.adNewImage = function() {
+      adFetchNewImage();
     };
   })();
 
