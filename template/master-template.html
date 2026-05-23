@@ -952,7 +952,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
             <!-- CHAPTER 2: The Solution -->
             <div style="flex:1;display:flex;flex-direction:column;gap:8px;min-height:0;">
               <div class="sum-chap"><div class="sum-chap-label">Chapter 02 — The Solution</div><div class="sum-chap-rule"></div></div>
-              <div style="flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;min-height:0;">
+              <div style="flex:1;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;min-height:0;">
                 <div class="sum-card" style="animation-delay:-2.4s;">
                   <div class="sum-num">07</div>
                   <div class="sum-title">Feature Highlight</div>
@@ -960,12 +960,17 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
                 </div>
                 <div class="sum-card" style="animation-delay:-3.0s;">
                   <div class="sum-num">08</div>
-                  <div class="sum-title">Analytics</div>
-                  <div class="sum-desc">Real-time spend intelligence, budgets, and compliance reports.</div>
+                  <div class="sum-title">Analytics AI</div>
+                  <div class="sum-desc">Real-time spend intelligence with AI-generated dashboard visuals.</div>
                 </div>
                 <div class="sum-card" style="animation-delay:-3.6s;">
                   <div class="sum-num">09</div>
-                  <div class="sum-title">What You Get</div>
+                  <div class="sum-title">Analytics Report</div>
+                  <div class="sum-desc">Live charts: category spend, distribution, and invoice cycle trends.</div>
+                </div>
+                <div class="sum-card" style="animation-delay:-4.0s;">
+                  <div class="sum-num">10</div>
+                  <div class="sum-title">Text + Longarms + Colorful UI</div>
                   <div class="sum-desc">Measurable outcomes from day one across every property.</div>
                 </div>
               </div>
@@ -976,12 +981,12 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
               <div class="sum-chap"><div class="sum-chap-label">Chapter 03 — The Close</div><div class="sum-chap-rule"></div></div>
               <div style="flex:1;display:grid;grid-template-columns:repeat(2,1fr);gap:10px;min-height:0;">
                 <div class="sum-card" style="animation-delay:-4.2s;">
-                  <div class="sum-num">10</div>
+                  <div class="sum-num">11</div>
                   <div class="sum-title">People</div>
                   <div class="sum-desc">The hospitality and technology experts building PurchasePlus.</div>
                 </div>
                 <div class="sum-card" style="animation-delay:-4.8s;">
-                  <div class="sum-num">11</div>
+                  <div class="sum-num">12</div>
                   <div class="sum-title">Get Started</div>
                   <div class="sum-desc">Next steps, contact details, and how to get PurchasePlus live.</div>
                 </div>
@@ -1290,10 +1295,10 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       </section>
 
       <!-- ══════════════════════════════
-           SLIDE — ANALYTICS DASHBOARD
-           KPIs + gradient HTML charts
+           SLIDE — ANALYTICS DASHBOARD AI
+           KPIs + AI-generated dashboard image
            ══════════════════════════════ -->
-      <section class="slide" data-title="Analytics Dashboard">
+      <section class="slide" data-title="Analytics Dashboard AI">
 
         <div class="slide-left">
           <div class="slide-eyebrow"><span class="grad">Spend Intelligence</span></div>
@@ -1336,14 +1341,183 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
         </div>
 
         <div class="slide-right" style="padding:0;overflow:hidden;">
-          <img src="../assets/Colourful UI UX/Illustrations/Hero Videos/002_spend-analytics-dashboard-hero.png"
-               alt="Spend analytics dashboard"
-               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;">
-          <!-- Food Cost KPI card floating bottom-left -->
-          <img class="sr-card"
-               src="../assets/Colourful UI UX/Stand Alone/Amount Spent Per Category.png"
-               alt=""
-               style="bottom:10%;right:4%;width:44%;max-width:180px;transform:rotate(1.5deg);z-index:3;">
+          <img src="../assets/Generated/analytics-dashboard-ai.png"
+               alt="Analytics dashboard AI"
+               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;">
+        </div>
+
+      </section>
+
+      <!-- ══════════════════════════════
+           SLIDE — ANALYTICS DASHBOARD REPORT
+           Live HTML/SVG chart panel
+           ══════════════════════════════ -->
+      <section class="slide" data-title="Analytics Dashboard Report">
+
+        <div class="slide-left">
+          <div class="slide-eyebrow"><span class="grad">Reporting &amp; Insights</span></div>
+          <h2>Every metric,<br><span class="grad">live and auditable.</span></h2>
+          <p class="lead">Boards, GMs, and finance teams get the same real-time view across every property. No spreadsheets. No manual exports.</p>
+          <div class="pillars" style="margin-top:0;">
+            <div class="pillar">
+              <div class="pillar-num mono" style="font-size:15px;">01</div>
+              <div class="pillar-title">Category spend breakdown</div>
+              <div class="pillar-body">Food, beverage, linen, equipment — benchmarked against targets and peer properties.</div>
+            </div>
+            <div class="pillar">
+              <div class="pillar-num mono" style="font-size:15px;">02</div>
+              <div class="pillar-title">Invoice cycle analytics</div>
+              <div class="pillar-body">Track processing time from PO to payment. Identify bottlenecks before they become costs.</div>
+            </div>
+            <div class="pillar">
+              <div class="pillar-num mono" style="font-size:15px;">03</div>
+              <div class="pillar-title">Export-ready compliance</div>
+              <div class="pillar-body">Audit-ready reports with a full digital trail. SOC2 and ISO 27001 certified data handling.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide-right" style="padding:0;overflow:hidden;">
+          <div style="position:absolute;inset:0;background:#0d1224;display:flex;flex-direction:column;padding:18px;gap:10px;font-family:'Inter',sans-serif;">
+
+            <!-- Header -->
+            <div style="display:flex;align-items:center;justify-content:space-between;flex-shrink:0;">
+              <div>
+                <div style="font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#a956ff;margin-bottom:2px;">PurchasePlus Analytics</div>
+                <div style="font-size:15px;font-weight:600;color:#fff;letter-spacing:-.3px;">Spend Intelligence Report</div>
+              </div>
+              <div style="font-size:9px;color:#4a5568;font-weight:500;text-align:right;">FY 2025-26 · Q4<br><span style="color:#00bdc5;">Live</span></div>
+            </div>
+
+            <!-- KPI Cards -->
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:7px;flex-shrink:0;">
+              <div style="background:#151d35;border:1px solid rgba(169,86,255,.22);border-radius:9px;padding:11px 9px;">
+                <div style="font-size:8px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:5px;">Total Spend</div>
+                <div style="font-size:18px;font-weight:700;background:linear-gradient(90deg,#a956ff,#3766fe);-webkit-background-clip:text;-webkit-text-fill-color:transparent;letter-spacing:-.5px;line-height:1;">$2.4B</div>
+                <div style="font-size:8px;color:#34d399;margin-top:3px;">+12% YoY</div>
+              </div>
+              <div style="background:#151d35;border:1px solid rgba(0,189,197,.22);border-radius:9px;padding:11px 9px;">
+                <div style="font-size:8px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:5px;">Invoices</div>
+                <div style="font-size:18px;font-weight:700;color:#00bdc5;letter-spacing:-.5px;line-height:1;">40M+</div>
+                <div style="font-size:8px;color:#00bdc5;margin-top:3px;">99.9% accuracy</div>
+              </div>
+              <div style="background:#151d35;border:1px solid rgba(55,102,254,.22);border-radius:9px;padding:11px 9px;">
+                <div style="font-size:8px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:5px;">Cost Savings</div>
+                <div style="font-size:18px;font-weight:700;color:#3766fe;letter-spacing:-.5px;line-height:1;">18%</div>
+                <div style="font-size:8px;color:#6b7280;margin-top:3px;">vs pre-platform</div>
+              </div>
+              <div style="background:#151d35;border:1px solid rgba(238,43,98,.18);border-radius:9px;padding:11px 9px;">
+                <div style="font-size:8px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:5px;">Invoice Cycle</div>
+                <div style="font-size:18px;font-weight:700;color:#ee2b62;letter-spacing:-.5px;line-height:1;">1.8d</div>
+                <div style="font-size:8px;color:#6b7280;margin-top:3px;">from 14 days</div>
+              </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div style="flex:1;display:grid;grid-template-columns:1.55fr 1fr;gap:10px;min-height:0;">
+
+              <!-- Bar Chart -->
+              <div style="background:#151d35;border:1px solid rgba(255,255,255,.06);border-radius:11px;padding:13px;display:flex;flex-direction:column;min-height:0;overflow:hidden;">
+                <div style="font-size:9.5px;font-weight:600;color:#9ca3af;margin-bottom:8px;flex-shrink:0;">Monthly Spend by Category</div>
+                <svg viewBox="0 0 280 150" preserveAspectRatio="none" style="flex:1;width:100%;display:block;">
+                  <defs>
+                    <linearGradient id="rpt-rg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a956ff"/><stop offset="100%" stop-color="#7c5dff" stop-opacity=".35"/></linearGradient>
+                    <linearGradient id="rpt-rg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3766fe"/><stop offset="100%" stop-color="#3766fe" stop-opacity=".35"/></linearGradient>
+                    <linearGradient id="rpt-rg3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#00bdc5"/><stop offset="100%" stop-color="#00bdc5" stop-opacity=".35"/></linearGradient>
+                  </defs>
+                  <line x1="30" y1="8" x2="278" y2="8" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
+                  <line x1="30" y1="38" x2="278" y2="38" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
+                  <line x1="30" y1="68" x2="278" y2="68" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
+                  <line x1="30" y1="98" x2="278" y2="98" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
+                  <line x1="30" y1="128" x2="278" y2="128" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
+                  <text x="26" y="11" text-anchor="end" font-size="7.5" fill="#4a5568">$800k</text>
+                  <text x="26" y="41" text-anchor="end" font-size="7.5" fill="#4a5568">$600k</text>
+                  <text x="26" y="71" text-anchor="end" font-size="7.5" fill="#4a5568">$400k</text>
+                  <text x="26" y="101" text-anchor="end" font-size="7.5" fill="#4a5568">$200k</text>
+                  <!-- Food: 750k → 93.75% of 800k → height 112.5 → y=15.5 -->
+                  <rect x="38" y="15" width="26" height="113" rx="4" fill="url(#rpt-rg1)"/>
+                  <text x="51" y="143" text-anchor="middle" font-size="7" fill="#6b7280">Food</text>
+                  <text x="51" y="11" text-anchor="middle" font-size="6.5" fill="#a956ff" font-weight="600">$750k</text>
+                  <!-- Beverages: 520k → 65% → height 78 → y=50 -->
+                  <rect x="76" y="50" width="26" height="78" rx="4" fill="url(#rpt-rg2)"/>
+                  <text x="89" y="143" text-anchor="middle" font-size="7" fill="#6b7280">Bev.</text>
+                  <text x="89" y="46" text-anchor="middle" font-size="6.5" fill="#3766fe" font-weight="600">$520k</text>
+                  <!-- Equipment: 380k → 47.5% → height 57 → y=71 -->
+                  <rect x="114" y="71" width="26" height="57" rx="4" fill="url(#rpt-rg3)"/>
+                  <text x="127" y="143" text-anchor="middle" font-size="7" fill="#6b7280">Equip.</text>
+                  <text x="127" y="67" text-anchor="middle" font-size="6.5" fill="#00bdc5" font-weight="600">$380k</text>
+                  <!-- Linen: 240k → 30% → height 36 → y=92 -->
+                  <rect x="152" y="92" width="26" height="36" rx="4" fill="url(#rpt-rg1)"/>
+                  <text x="165" y="143" text-anchor="middle" font-size="7" fill="#6b7280">Linen</text>
+                  <text x="165" y="88" text-anchor="middle" font-size="6.5" fill="#a956ff" font-weight="600">$240k</text>
+                  <!-- Cleaning: 180k → 22.5% → height 27 → y=101 -->
+                  <rect x="190" y="101" width="26" height="27" rx="4" fill="url(#rpt-rg2)"/>
+                  <text x="203" y="143" text-anchor="middle" font-size="7" fill="#6b7280">Clean.</text>
+                  <text x="203" y="97" text-anchor="middle" font-size="6.5" fill="#3766fe" font-weight="600">$180k</text>
+                  <!-- Other: 120k → 15% → height 18 → y=110 -->
+                  <rect x="228" y="110" width="26" height="18" rx="4" fill="url(#rpt-rg3)"/>
+                  <text x="241" y="143" text-anchor="middle" font-size="7" fill="#6b7280">Other</text>
+                  <text x="241" y="106" text-anchor="middle" font-size="6.5" fill="#00bdc5" font-weight="600">$120k</text>
+                </svg>
+              </div>
+
+              <!-- Right column: Donut + Sparkline -->
+              <div style="display:flex;flex-direction:column;gap:10px;min-height:0;">
+
+                <!-- Donut Chart -->
+                <div style="flex:1;background:#151d35;border:1px solid rgba(255,255,255,.06);border-radius:11px;padding:12px;display:flex;flex-direction:column;min-height:0;overflow:hidden;">
+                  <div style="font-size:9.5px;font-weight:600;color:#9ca3af;margin-bottom:7px;flex-shrink:0;">Spend Distribution</div>
+                  <div style="flex:1;display:flex;align-items:center;gap:9px;min-height:0;">
+                    <svg viewBox="0 0 100 100" style="width:64px;height:64px;flex-shrink:0;">
+                      <!-- r=35, circumference=219.91, quarter=54.98 -->
+                      <circle cx="50" cy="50" r="35" fill="none" stroke="#1e2a45" stroke-width="14"/>
+                      <!-- Food 42%: arc=92.36, offset=54.98 -->
+                      <circle cx="50" cy="50" r="35" fill="none" stroke="#a956ff" stroke-width="14" stroke-dasharray="92.4 127.5" stroke-dashoffset="54.98"/>
+                      <!-- Beverages 26%: arc=57.18, offset=54.98-92.36=-37.38 -->
+                      <circle cx="50" cy="50" r="35" fill="none" stroke="#3766fe" stroke-width="14" stroke-dasharray="57.2 162.7" stroke-dashoffset="-37.4"/>
+                      <!-- Equipment 19%: arc=41.78, offset=-37.38-57.18=-94.56 -->
+                      <circle cx="50" cy="50" r="35" fill="none" stroke="#00bdc5" stroke-width="14" stroke-dasharray="41.8 178.1" stroke-dashoffset="-94.6"/>
+                      <!-- Other 13%: arc=28.59, offset=-94.56-41.78=-136.34 -->
+                      <circle cx="50" cy="50" r="35" fill="none" stroke="#ee2b62" stroke-width="14" stroke-dasharray="28.6 191.3" stroke-dashoffset="-136.3"/>
+                      <text x="50" y="46" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">42%</text>
+                      <text x="50" y="58" text-anchor="middle" font-size="7" fill="#6b7280">Food</text>
+                    </svg>
+                    <div style="flex:1;display:flex;flex-direction:column;gap:5px;">
+                      <div style="display:flex;align-items:center;gap:5px;"><div style="width:6px;height:6px;border-radius:50%;background:#a956ff;flex-shrink:0;"></div><div style="font-size:8px;color:#9ca3af;flex:1;">Food</div><div style="font-size:8px;font-weight:700;color:#fff;">42%</div></div>
+                      <div style="display:flex;align-items:center;gap:5px;"><div style="width:6px;height:6px;border-radius:50%;background:#3766fe;flex-shrink:0;"></div><div style="font-size:8px;color:#9ca3af;flex:1;">Beverages</div><div style="font-size:8px;font-weight:700;color:#fff;">26%</div></div>
+                      <div style="display:flex;align-items:center;gap:5px;"><div style="width:6px;height:6px;border-radius:50%;background:#00bdc5;flex-shrink:0;"></div><div style="font-size:8px;color:#9ca3af;flex:1;">Equipment</div><div style="font-size:8px;font-weight:700;color:#fff;">19%</div></div>
+                      <div style="display:flex;align-items:center;gap:5px;"><div style="width:6px;height:6px;border-radius:50%;background:#ee2b62;flex-shrink:0;"></div><div style="font-size:8px;color:#9ca3af;flex:1;">Other</div><div style="font-size:8px;font-weight:700;color:#fff;">13%</div></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Sparkline -->
+                <div style="flex:1;background:#151d35;border:1px solid rgba(255,255,255,.06);border-radius:11px;padding:12px;display:flex;flex-direction:column;min-height:0;overflow:hidden;">
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-shrink:0;">
+                    <div style="font-size:9.5px;font-weight:600;color:#9ca3af;">Invoice Cycle Time</div>
+                    <div style="font-size:11px;font-weight:700;color:#00bdc5;">1.8d</div>
+                  </div>
+                  <svg viewBox="0 0 140 55" preserveAspectRatio="none" style="flex:1;width:100%;display:block;">
+                    <defs>
+                      <linearGradient id="rpt-sg1" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#a956ff"/><stop offset="100%" stop-color="#00bdc5"/></linearGradient>
+                      <linearGradient id="rpt-sfill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a956ff" stop-opacity=".25"/><stop offset="100%" stop-color="#00bdc5" stop-opacity="0"/></linearGradient>
+                    </defs>
+                    <!-- Data: 14→12→10.5→8.8→7.2→5.6→4.1→3.2→2.5→1.8 days
+                         y = (14-val)/14*50, x evenly spaced 0–140 (step 15.6) -->
+                    <path d="M 0,0 L 15.6,7.1 L 31.1,12.5 L 46.7,18.6 L 62.2,24.3 L 77.8,30.0 L 93.3,35.4 L 108.9,38.6 L 124.4,41.1 L 140,43.6 L 140,55 L 0,55 Z" fill="url(#rpt-sfill)"/>
+                    <polyline points="0,0 15.6,7.1 31.1,12.5 46.7,18.6 62.2,24.3 77.8,30.0 93.3,35.4 108.9,38.6 124.4,41.1 140,43.6" fill="none" stroke="url(#rpt-sg1)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+                    <circle cx="140" cy="43.6" r="3" fill="#00bdc5"/>
+                  </svg>
+                  <div style="display:flex;justify-content:space-between;margin-top:3px;flex-shrink:0;">
+                    <div style="font-size:7px;color:#4a5568;">14 days (start)</div>
+                    <div style="font-size:7px;color:#4a5568;">1.8 days (now)</div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
         </div>
 
       </section>
@@ -1352,10 +1526,10 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
            SLIDE 05 — WHAT YOU GET
            Spend analytics hero + UI cards collage
            ══════════════════════════════ -->
-      <section class="slide" data-title="What You Get">
+      <section class="slide" data-title="Text + Longarms + Colorful UI">
 
         <div class="slide-left">
-          <div class="slide-eyebrow"><span class="grad">04 / What You Get</span></div>
+          <div class="slide-eyebrow"><span class="grad">Text + Longarms + Colorful UI</span></div>
           <h2>Real outcomes.<br><span class="grad">Not promises.</span></h2>
           <p class="lead">Every PurchasePlus property sees measurable results within the first 90 days of going live.</p>
           <div class="show-grid">
