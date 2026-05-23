@@ -359,12 +359,12 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .stat-card { padding: 18px 0 4px; border-top: 2px solid var(--ink); }
 .stat-num {
-  font-size: clamp(22px, 2.6vw, 34px); font-weight: 200;
-  letter-spacing: -1px; line-height: 1; color: var(--ink); margin-bottom: 10px;
+  font-size: clamp(36px, 4.8vw, 60px); font-weight: 200;
+  letter-spacing: -1.8px; line-height: 1; color: var(--ink); margin-bottom: 12px;
   white-space: nowrap;
 }
 .stat-num .grad { font-weight: 300; }
-.stat-label { font-size: 13.5px; line-height: 1.5; color: var(--body); font-weight: 400; }
+.stat-label { font-size: 18px; line-height: 1.5; color: var(--body); font-weight: 300; }
 
 /* Pillars (3-col) */
 .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 8px; }
@@ -524,7 +524,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
   .stats-row { grid-template-columns: 1fr; gap: 0; }
   .stat-card { padding: 12px 0; border-top: 1px solid var(--border-soft); }
   .stat-card:first-child { border-top: 2px solid var(--ink); }
-  .stat-num { font-size: 28px; margin-bottom: 4px; }
+  .stat-num { font-size: clamp(28px, 5vw, 44px); margin-bottom: 6px; }
 
   .pillars { grid-template-columns: 1fr; gap: 0; }
   .pillar { border-top: 1px solid var(--border-soft); padding: 12px 0; }
