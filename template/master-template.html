@@ -1040,19 +1040,22 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
           </div>
           <div class="tl-sep"></div>
           <input class="tl-input" id="tlInput" type="text" placeholder="Type a topic or use the buttons to generate…" autocomplete="off">
-          <button class="tl-btn" onclick="tlNewTopic()">
+          <button class="tl-btn" onclick="tlGenerate()">
             <svg width="12" height="12" viewBox="0 0 13 13" fill="none"><path d="M2 4.5c0-1.38 1.12-2.5 2.5-2.5h4.09l-1.3-1.3.71-.7L10.5 2.5 8 5l-.71-.71 1.3-1.29H4.5a1.5 1.5 0 0 0-1.5 1.5v1H2V4.5zm9 4c0 1.38-1.12 2.5-2.5 2.5H4.41l1.3 1.3-.71.7L2.5 10.5 5 8l.71.71-1.3 1.29H8.5A1.5 1.5 0 0 0 10 8.5v-1h1v1z" fill="currentColor"/></svg>
-            New Topic
+            Generate
           </button>
           <button class="tl-btn-secondary" onclick="tlNewText()">
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
             New Text
           </button>
-          <button class="tl-btn-secondary" onclick="tlNewImage()">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-            New Image
-          </button>
-          <span class="tl-hint" id="tlHint">1 / 5</span>
+          <!-- Character count control -->
+          <div style="display:inline-flex;align-items:center;gap:3px;flex-shrink:0;border:1.5px solid rgba(124,93,255,.28);border-radius:8px;padding:0 6px;height:28px;background:rgba(124,93,255,.04);">
+            <button onclick="tlCharAdjust(-1)" style="border:0;background:none;color:var(--purple);font-size:15px;font-weight:600;cursor:pointer;padding:0 2px;line-height:1;font-family:inherit;">−</button>
+            <span id="tlCharCount" style="font-size:13px;font-weight:700;color:var(--ink);min-width:14px;text-align:center;">3</span>
+            <button onclick="tlCharAdjust(1)" style="border:0;background:none;color:var(--purple);font-size:15px;font-weight:600;cursor:pointer;padding:0 2px;line-height:1;font-family:inherit;">+</button>
+            <span style="font-size:10px;color:var(--muted);white-space:nowrap;margin-left:2px;letter-spacing:.04em;">chars</span>
+          </div>
+          <span class="tl-hint" id="tlHint">1 / 10</span>
         </div>
 
         <!-- Main content row -->
@@ -2086,29 +2089,74 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       'Character with extremely long arms curved upward making an arch shape, surrounded by floating abstract cloud and connectivity shapes'
     ];
 
-    function tlBuildPrompt(scene) {
-      return 'Flat vector illustration. Cartoon character with EXTREMELY long curved arms far beyond normal human proportions, wearing a navy dark blue business suit, white shirt, small red tie. Abstract minimal face: NO nose whatsoever, only two small dot eyes and a simple curved smile line. ' + scene + '. Pure white background. Colors strictly: purple rgb(124,93,255), teal rgb(0,189,197), blue rgb(55,102,254). ABSOLUTELY NO text, NO logos, NO written words, NO letters, NO brand names, NO numbers, NO labels, NO watermarks anywhere in the image at all. Flat design style, portrait.';
+    // 11 Stand Alone PNG characters available (max for char count control)
+    var TL_MAX_CHARS = 11;
+
+    function tlGetCharCount() {
+      var el = document.getElementById('tlCharCount');
+      return el ? Math.max(1, Math.min(TL_MAX_CHARS, parseInt(el.textContent) || 3)) : 3;
+    }
+
+    window.tlCharAdjust = function(delta) {
+      var el = document.getElementById('tlCharCount');
+      if (!el) return;
+      var val = Math.max(1, Math.min(TL_MAX_CHARS, parseInt(el.textContent) + delta));
+      el.textContent = val;
+    };
+
+    function tlBuildPrompt(scene, n) {
+      var count = n || tlGetCharCount();
+      var groupDesc = count === 1
+        ? 'A single cartoon character with EXTREMELY long curved arms far beyond normal human proportions, wearing a navy dark blue business suit, white shirt, small red tie'
+        : 'A group of exactly ' + count + ' cartoon characters, each with EXTREMELY long curved arms far beyond normal human proportions. Characters wear different hospitality uniforms: navy business suit, chef whites, waiter uniform, bellhop uniform, casual — vary the outfits. All have abstract minimal faces with NO nose, only two small dot eyes and a simple curved smile line';
+      return 'Flat vector illustration. ' + groupDesc + '. ' + scene + '. Pure white background. Colors strictly: purple rgb(124,93,255), teal rgb(0,189,197), blue rgb(55,102,254), dark navy. ABSOLUTELY NO text, NO logos, NO written words, NO letters, NO brand names, NO numbers, NO labels, NO watermarks anywhere in the image at all. Flat design style, portrait.';
     }
 
     // ── Queue and state ──
-    var tlQueue = tlTopics.map(function(t) { return { text: t, img: t.img, ready: true, jobId: null }; });
+    var tlQueue = tlTopics.map(function(t) { return { text: t, img: t.img, ready: true, jobId: null, startedAt: 0 }; });
     var tlQueueIdx = 0;
-    var tlGenCount = 0; // total items ever generated (for "Topic N" display)
-    var tlGenerating = false;
 
-    // ── Loading overlay helpers ──
-    function tlSetImgLoading(on) {
+    // ── Loading overlay with progress bar ──
+    function tlSetImgLoading(on, startedAt) {
       var right = document.getElementById('tl-right');
       if (!right) return;
       var overlay = right.querySelector('.tl-loading-overlay');
       if (on && !overlay) {
         overlay = document.createElement('div');
         overlay.className = 'tl-loading-overlay';
-        overlay.style.cssText = 'position:absolute;inset:0;background:rgba(124,93,255,.18);display:flex;align-items:center;justify-content:center;z-index:10;backdrop-filter:blur(3px);';
-        overlay.innerHTML = '<svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="16" stroke="rgba(124,93,255,.25)" stroke-width="3"/><circle cx="20" cy="20" r="16" stroke="url(#tlSpinGrad)" stroke-width="3" stroke-dasharray="60 40" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="0.9s" repeatCount="indefinite"/></circle><defs><linearGradient id="tlSpinGrad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#a956ff"/><stop offset="100%" stop-color="#3766fe"/></linearGradient></defs></svg>';
+        overlay.style.cssText = 'position:absolute;inset:0;background:rgba(245,237,255,.85);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:10;backdrop-filter:blur(4px);gap:14px;';
+        overlay.innerHTML =
+          '<svg width="36" height="36" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="16" stroke="rgba(124,93,255,.2)" stroke-width="3"/><circle cx="20" cy="20" r="16" stroke="url(#tlSpinGrad)" stroke-width="3" stroke-dasharray="60 40" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="0.9s" repeatCount="indefinite"/></circle><defs><linearGradient id="tlSpinGrad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#a956ff"/><stop offset="100%" stop-color="#3766fe"/></linearGradient></defs></svg>' +
+          '<div style="width:220px;">' +
+            '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">' +
+              '<span style="font-size:11px;font-weight:600;color:#7c5dff;">Generating image</span>' +
+              '<span class="tl-eta" style="font-size:11px;color:#9ca3af;"></span>' +
+            '</div>' +
+            '<div style="height:5px;background:rgba(124,93,255,.15);border-radius:3px;overflow:hidden;">' +
+              '<div class="tl-prog-fill" style="height:100%;width:0%;background:linear-gradient(90deg,#a956ff,#3766fe);border-radius:3px;transition:width .6s ease;"></div>' +
+            '</div>' +
+          '</div>';
         right.appendChild(overlay);
+        var t0 = startedAt || Date.now();
+        var expected = 70000;
+        overlay._iv = setInterval(function() {
+          var ov = right.querySelector('.tl-loading-overlay');
+          if (!ov) { clearInterval(overlay._iv); return; }
+          var elapsed = Date.now() - t0;
+          var pct = Math.min(92, (elapsed / expected) * 100);
+          var remSec = Math.max(0, Math.ceil((expected - elapsed) / 1000));
+          var fill = ov.querySelector('.tl-prog-fill');
+          var eta  = ov.querySelector('.tl-eta');
+          if (fill) fill.style.width = pct + '%';
+          if (eta)  eta.textContent  = remSec > 3 ? '~' + remSec + 's' : 'almost done…';
+        }, 800);
       } else if (!on && overlay) {
-        overlay.remove();
+        clearInterval(overlay._iv);
+        var fill = overlay.querySelector('.tl-prog-fill');
+        var eta  = overlay.querySelector('.tl-eta');
+        if (fill) fill.style.width = '100%';
+        if (eta)  eta.textContent  = 'Done!';
+        setTimeout(function() { if (overlay.parentNode) overlay.remove(); }, 350);
       }
     }
 
@@ -2152,8 +2200,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
         tlSetImgLoading(false);
         tlApplyImg(item.img);
       } else {
-        tlSetImgLoading(true);
-        // poll until ready
+        tlSetImgLoading(true, item.startedAt || Date.now());
         (function poll() {
           if (!tlQueue[idx]) return;
           var q = tlQueue[idx];
@@ -2180,38 +2227,45 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
           }
         })();
       }
-      tlUpdateHint('Topic ' + (idx + 1));
+      tlUpdateHint((idx + 1) + ' / ' + tlQueue.length);
     }
 
-    // Always prefetch the next item
-    function tlPrefetch() {
-      var needed = tlQueueIdx + 1;
-      if (needed < tlQueue.length) return; // already have it
-      if (tlGenerating) return;
-      tlGenerating = true;
+    // Queue a new item in the background — sequential chaining avoids rate limits
+    function tlEnqueue(n) {
       var textT = tlTextPool[Math.floor(Math.random() * tlTextPool.length)];
       var sceneStr = tlScenes[Math.floor(Math.random() * tlScenes.length)];
-      var prompt = tlBuildPrompt(sceneStr);
+      var prompt = tlBuildPrompt(sceneStr, n);
       var pendingIdx = tlQueue.length;
-      tlQueue.push({ text: textT, img: null, ready: false, jobId: null });
-      fetch('/api/hf-start', {
+      var t0 = Date.now();
+      tlQueue.push({ text: textT, img: null, ready: false, jobId: null, startedAt: t0 });
+      return fetch('/api/hf-start', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ prompt: prompt })
       }).then(function(r) { return r.json(); }).then(function(d) {
-        if (d.jobId && tlQueue[pendingIdx]) {
-          tlQueue[pendingIdx].jobId = d.jobId;
-        }
-        tlGenerating = false;
-      }).catch(function() { tlGenerating = false; });
+        if (d.jobId && tlQueue[pendingIdx]) tlQueue[pendingIdx].jobId = d.jobId;
+      }).catch(function() {});
     }
 
-    // Button: New Topic — advance queue + prefetch next
-    window.tlNewTopic = function() {
+    // Pre-warm N items sequentially (fires hf-start calls one after another to avoid rate limits)
+    function tlWarmup(remaining) {
+      if (remaining <= 0) return;
+      var n = tlGetCharCount();
+      tlEnqueue(n).then(function() { tlWarmup(remaining - 1); });
+    }
+
+    // Button: Generate — advance queue and warm up more behind it
+    window.tlGenerate = function() {
       tlQueueIdx++;
+      // If we've consumed ahead of the queue, enqueue one more immediately
+      if (tlQueueIdx >= tlQueue.length - 2) tlEnqueue(tlGetCharCount());
       tlShowQueueItem(tlQueueIdx);
-      tlPrefetch();
+      tlUpdateHint(tlQueueIdx + 1 + ' / ' + tlQueue.length);
     };
+
+    // Legacy aliases so any hardcoded onclick still works
+    window.tlNewTopic = window.tlGenerate;
+    window.tlShuffle  = window.tlGenerate;
 
     // Button: New Text — pick random text, keep current image
     window.tlNewText = function() {
@@ -2224,51 +2278,18 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
         tlApplyText(t);
         [ey, document.getElementById('tl-heading'), document.getElementById('tl-lead'), document.getElementById('tl-kicker')]
           .forEach(function(el) { if (el) el.style.opacity = '1'; });
-        tlUpdateHint('Topic ' + (tlQueueIdx + 1));
       }, 160);
     };
-
-    // Button: New Image — generate fresh image, keep current text
-    window.tlNewImage = function() {
-      tlSetImgLoading(true);
-      var sceneStr = tlScenes[Math.floor(Math.random() * tlScenes.length)];
-      var prompt = tlBuildPrompt(sceneStr);
-      fetch('/api/hf-start', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: prompt })
-      }).then(function(r) { return r.json(); }).then(function(d) {
-        if (!d.jobId) { tlSetImgLoading(false); return; }
-        var jobId = d.jobId;
-        (function poll() {
-          setTimeout(function() {
-            fetch('/api/hf-poll?id=' + jobId)
-              .then(function(r) { return r.json(); })
-              .then(function(d) {
-                if (d.status === 'completed' && d.url) {
-                  tlSetImgLoading(false);
-                  tlApplyImg(d.url);
-                  if (tlQueue[tlQueueIdx]) tlQueue[tlQueueIdx].img = d.url;
-                } else if (d.status !== 'failed') { poll(); }
-                else { tlSetImgLoading(false); }
-              }).catch(function() { tlSetImgLoading(false); });
-          }, 3000);
-        })();
-      }).catch(function() { tlSetImgLoading(false); });
-    };
-
-    // Legacy alias
-    window.tlShuffle = window.tlNewTopic;
 
     var inp = document.getElementById('tlInput');
     if (inp) {
       inp.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') window.tlNewTopic();
+        if (e.key === 'Enter') window.tlGenerate();
       });
     }
 
-    // Prefetch topic 2 on load
-    tlPrefetch();
+    // On load: pre-warm 10 images in background so queue is ready
+    tlWarmup(10);
   })();
 
   /* ── Feature Highlight magnifier ── */
