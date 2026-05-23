@@ -678,6 +678,25 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
   .agenda-item { grid-template-columns:40px 1fr; }
   .feature-metric-row { gap:16px; }
 }
+
+/* Summary slide */
+.sum-card {
+  background: linear-gradient(-45deg, #a956ff, #7c5dff, #3766fe, #5b8aff, #7c5dff);
+  background-size: 300% 300%;
+  animation: sumGrad 6s ease infinite;
+  border-radius: 12px; padding: 18px 16px 14px;
+  display: flex; flex-direction: column; gap: 5px;
+}
+@keyframes sumGrad {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.sum-slide { font-size: 9px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: rgba(255,255,255,.42); font-family: 'JetBrains Mono', monospace; }
+.sum-num   { font-size: clamp(32px,3.2vw,48px); font-weight: 200; color: #fff; line-height: 1; letter-spacing: -2px; margin-bottom: 2px; }
+.sum-title { font-size: 13px; font-weight: 600; color: #fff; line-height: 1.3; }
+.sum-desc  { font-size: 11.5px; color: rgba(255,255,255,.65); line-height: 1.5; font-weight: 300; }
+@media (max-width: 1100px) { .sum-card { padding: 14px 12px; } .sum-num { font-size: 28px; } }
 </style>
 </head>
 <body>
@@ -763,63 +782,109 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       </section>
 
       <!-- ══════════════════════════════
-           SLIDE 02 — AGENDA / SUMMARY
+           SLIDE 02 — SUMMARY
+           Full-width gradient card grid with chapter dividers
            ══════════════════════════════ -->
-      <section class="slide" data-title="Agenda">
+      <section class="slide" data-title="Summary">
 
-        <div class="slide-left">
-          <div class="slide-eyebrow"><span class="grad">Today's Agenda</span></div>
-          <h2>What we will <span class="grad">cover today.</span></h2>
-          <p class="lead">A focused walkthrough of the PurchasePlus platform and what it means for your operation.</p>
-          <div class="agenda-list">
-            <div class="agenda-item">
-              <div class="agenda-num">01</div>
-              <div>
-                <div class="agenda-title">The Procurement Challenge</div>
-                <div class="agenda-desc">Why manual procurement is costing hospitality operators time and margin.</div>
-              </div>
+        <div style="flex:1;display:flex;flex-direction:column;padding:32px 52px 40px;overflow-y:auto;background:#fff;">
+
+          <!-- Header -->
+          <div style="text-align:center;margin-bottom:24px;flex-shrink:0;">
+            <div style="font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;margin-bottom:10px;display:flex;justify-content:center;"><span class="grad">Summary</span></div>
+            <h2 style="max-width:none;margin-bottom:0;text-align:center;">Here's what we'll <span class="grad">cover today.</span></h2>
+          </div>
+
+          <!-- CHAPTER 1: The Problem -->
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:10px;flex-shrink:0;">
+            <div style="font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);white-space:nowrap;">Chapter 01 — The Problem</div>
+            <div style="flex:1;height:1px;background:var(--border-soft);"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;flex-shrink:0;">
+            <div class="sum-card" style="animation-delay:0s;">
+              <div class="sum-slide">Slide 03</div>
+              <div class="sum-num">03</div>
+              <div class="sum-title">Section Intro</div>
+              <div class="sum-desc">Chapter break opening the problem statement.</div>
             </div>
-            <div class="agenda-item">
-              <div class="agenda-num">02</div>
-              <div>
-                <div class="agenda-title">The PurchasePlus Platform</div>
-                <div class="agenda-desc">One connected system from supplier catalog through to invoice reconciliation.</div>
-              </div>
+            <div class="sum-card" style="animation-delay:-0.6s;">
+              <div class="sum-slide">Slide 04</div>
+              <div class="sum-num">04</div>
+              <div class="sum-title">The Challenge</div>
+              <div class="sum-desc">Why manual procurement drains hospitality margins every day.</div>
             </div>
-            <div class="agenda-item">
-              <div class="agenda-num">03</div>
-              <div>
-                <div class="agenda-title">How It Works</div>
-                <div class="agenda-desc">The four-step procurement cycle, live in your operation in under 30 days.</div>
-              </div>
+            <div class="sum-card" style="animation-delay:-1.2s;">
+              <div class="sum-slide">Slide 05</div>
+              <div class="sum-num">05</div>
+              <div class="sum-title">The Platform</div>
+              <div class="sum-desc">One system from supplier catalog to invoice reconciliation.</div>
             </div>
-            <div class="agenda-item">
-              <div class="agenda-num">04</div>
-              <div>
-                <div class="agenda-title">Real Results</div>
-                <div class="agenda-desc">Outcomes from 5,000+ properties across APAC, EMEA, and North America.</div>
-              </div>
-            </div>
-            <div class="agenda-item">
-              <div class="agenda-num">05</div>
-              <div>
-                <div class="agenda-title">Getting Started</div>
-                <div class="agenda-desc">Your 30-day onboarding path and what to expect from week one.</div>
-              </div>
+            <div class="sum-card" style="animation-delay:-1.8s;">
+              <div class="sum-slide">Slide 06</div>
+              <div class="sum-num">06</div>
+              <div class="sum-title">App Screen</div>
+              <div class="sum-desc">A live walkthrough of the interface with zoom capability.</div>
             </div>
           </div>
-        </div>
 
-        <div class="slide-right">
-          <img class="sr-char"
-               src="../assets/Longarms Characters/Stand Alone/98-084 PurchasePlus Longarm Illustration Manager Retina.png"
-               alt="" style="right:0%;height:78%;">
-          <img class="sr-card"
-               src="../assets/Colourful UI UX/Stand Alone/Amount Spent Per Category.png"
-               alt="" style="top:8%;left:8%;width:52%;max-width:200px;">
-          <img class="sr-card"
-               src="../assets/Colourful UI UX/Stand Alone/Procurement Savings.png"
-               alt="" style="top:50%;right:4%;width:42%;max-width:162px;transform:rotate(2deg);">
+          <!-- CHAPTER 2: The Solution -->
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:10px;flex-shrink:0;">
+            <div style="font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);white-space:nowrap;">Chapter 02 — The Solution</div>
+            <div style="flex:1;height:1px;background:var(--border-soft);"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;flex-shrink:0;">
+            <div class="sum-card" style="animation-delay:-2.4s;">
+              <div class="sum-slide">Slide 07</div>
+              <div class="sum-num">07</div>
+              <div class="sum-title">Feature Highlight</div>
+              <div class="sum-desc">The supplier catalog built for hospitality operations.</div>
+            </div>
+            <div class="sum-card" style="animation-delay:-3.0s;">
+              <div class="sum-slide">Slide 08</div>
+              <div class="sum-num">08</div>
+              <div class="sum-title">How It Works</div>
+              <div class="sum-desc">Four steps from order to reconciled invoice in under 30 days live.</div>
+            </div>
+            <div class="sum-card" style="animation-delay:-3.6s;">
+              <div class="sum-slide">Slide 09</div>
+              <div class="sum-num">09</div>
+              <div class="sum-title">Analytics</div>
+              <div class="sum-desc">Real-time spend intelligence, budgets, and compliance reports.</div>
+            </div>
+            <div class="sum-card" style="animation-delay:-4.2s;">
+              <div class="sum-slide">Slide 10</div>
+              <div class="sum-num">10</div>
+              <div class="sum-title">What You Get</div>
+              <div class="sum-desc">Measurable outcomes from day one across every property.</div>
+            </div>
+          </div>
+
+          <!-- CHAPTER 3: The Proof -->
+          <div style="display:flex;align-items:center;gap:14px;margin-bottom:10px;flex-shrink:0;">
+            <div style="font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);white-space:nowrap;">Chapter 03 — The Proof</div>
+            <div style="flex:1;height:1px;background:var(--border-soft);"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;flex-shrink:0;">
+            <div class="sum-card" style="animation-delay:-4.8s;">
+              <div class="sum-slide">Slide 11</div>
+              <div class="sum-num">11</div>
+              <div class="sum-title">Customer Quote</div>
+              <div class="sum-desc">Real results from properties already running on PurchasePlus.</div>
+            </div>
+            <div class="sum-card" style="animation-delay:-5.4s;">
+              <div class="sum-slide">Slide 12</div>
+              <div class="sum-num">12</div>
+              <div class="sum-title">Proven at Scale</div>
+              <div class="sum-desc">5,000+ properties and $2.4B in annual procurement processed globally.</div>
+            </div>
+            <div class="sum-card" style="animation-delay:-6.0s;">
+              <div class="sum-slide">Slide 13</div>
+              <div class="sum-num">13</div>
+              <div class="sum-title">Meet the Team</div>
+              <div class="sum-desc">The hospitality and technology experts building PurchasePlus.</div>
+            </div>
+          </div>
+
         </div>
 
       </section>
@@ -1434,11 +1499,11 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
            SLIDE 07 — GET STARTED
            Concept cards + dark CTA panel
            ══════════════════════════════ -->
-      <section class="slide" data-title="Get Started">
+      <section class="slide" data-title="Call to Action">
 
         <div class="slide-left">
-          <div class="slide-eyebrow"><span class="grad">06 / Get Started</span></div>
-          <h2>Ready when<br><span class="grad">you are.</span></h2>
+          <div class="slide-eyebrow"><span class="grad">Call to Action</span></div>
+          <h2>Ready to transform<br><span class="grad">your procurement?</span></h2>
           <p class="lead">PurchasePlus is live in under 30 days. No disruption to current operations. Your team is supported every step of the way.</p>
           <div class="concept-grid">
             <div class="concept-card">
