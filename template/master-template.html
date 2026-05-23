@@ -41,7 +41,7 @@
   --border:      #e5e7eb;
   --border-soft: #f3f4f6;
   --bg:          #ffffff;
-  --green:       #10b981;
+  --green:       #00bdc5;
   --shadow:      0 4px 16px rgba(15,23,42,.07), 0 1px 3px rgba(15,23,42,.05);
   --shadow-lg:   0 24px 56px rgba(15,23,42,.10), 0 4px 12px rgba(15,23,42,.06);
   --radius:      12px;
@@ -687,12 +687,26 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
   padding: 0 4px;
 }
 .tl-brand-icon {
-  width: 26px; height: 26px;
-  border-radius: 6px;
-  background: var(--grad);
-  display: flex; align-items: center; justify-content: center;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background-image: url('../assets/Longarms Characters/Stand Alone/98-084 PurchasePlus Longarm Illustration Chef 1 Retina.png');
+  background-size: 210%;
+  background-position: center 10%;
+  background-repeat: no-repeat;
+  border: 2px solid #fff;
+  box-shadow: 0 2px 8px rgba(124,93,255,.3);
   flex-shrink: 0;
 }
+.tl-btn-secondary {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 0 12px; height: 28px; border-radius: var(--radius-pill);
+  background: transparent; color: var(--purple);
+  font-size: 12px; font-weight: 600; white-space: nowrap;
+  cursor: pointer; border: 1.5px solid rgba(124,93,255,.35);
+  font-family: inherit; transition: border-color .15s, background .15s;
+  flex-shrink: 0;
+}
+.tl-btn-secondary:hover { border-color: var(--purple); background: rgba(124,93,255,.06); }
 .tl-brand-text { display:flex; flex-direction:column; gap:1px; }
 .tl-brand-name { font-size:11px; font-weight:700; color:var(--ink); letter-spacing:-.1px; line-height:1; }
 .tl-brand-sub  { font-size:10px; color:var(--muted); line-height:1; white-space:nowrap; }
@@ -758,12 +772,13 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 .client-logo-strip img { height:18px; opacity:.45; filter:grayscale(1); object-fit:contain; }
 
 /* Team */
-.team-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px; }
-.person-card { display:flex; align-items:center; gap:10px; padding:11px 13px; background:var(--softer); border:1px solid var(--border-soft); border-radius:10px; transition:border-color .15s; }
+.team-grid { display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-top:8px; }
+.person-card { display:flex; align-items:flex-start; gap:12px; padding:12px 14px; background:var(--softer); border:1px solid var(--border-soft); border-radius:12px; transition:border-color .15s; }
 .person-card:hover { border-color:rgba(124,93,255,.28); }
-.person-photo { width:40px; height:40px; border-radius:50%; object-fit:cover; object-position:top center; flex-shrink:0; }
-.person-name { font-size:13px; font-weight:600; color:var(--ink); margin-bottom:1px; line-height:1.25; }
-.person-role { font-size:11px; color:var(--body); }
+.person-photo { width:72px; height:72px; border-radius:50%; object-fit:cover; object-position:top center; flex-shrink:0; box-shadow:0 2px 8px rgba(15,23,42,.12); }
+.person-name { font-size:clamp(13px,1.4vw,17px); font-weight:600; color:var(--ink); margin-bottom:2px; line-height:1.2; }
+.person-role { font-size:clamp(11px,1.1vw,14px); color:var(--body); margin-bottom:4px; }
+.person-bio  { font-size:clamp(10px,0.95vw,12px); color:var(--muted); line-height:1.45; text-wrap:balance; }
 
 @media (max-width:1100px) {
   .divider-inner { padding:60px 48px; }
@@ -956,24 +971,19 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
               </div>
             </div>
 
-            <!-- CHAPTER 3: The Proof -->
+            <!-- CHAPTER 3: The Close -->
             <div style="flex:1;display:flex;flex-direction:column;gap:8px;min-height:0;">
-              <div class="sum-chap"><div class="sum-chap-label">Chapter 03 — The Proof</div><div class="sum-chap-rule"></div></div>
-              <div style="flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;min-height:0;">
+              <div class="sum-chap"><div class="sum-chap-label">Chapter 03 — The Close</div><div class="sum-chap-rule"></div></div>
+              <div style="flex:1;display:grid;grid-template-columns:repeat(2,1fr);gap:10px;min-height:0;">
                 <div class="sum-card" style="animation-delay:-4.2s;">
                   <div class="sum-num">10</div>
-                  <div class="sum-title">Customer Quote</div>
-                  <div class="sum-desc">Real results from properties already running on PurchasePlus.</div>
+                  <div class="sum-title">People</div>
+                  <div class="sum-desc">The hospitality and technology experts building PurchasePlus.</div>
                 </div>
                 <div class="sum-card" style="animation-delay:-4.8s;">
                   <div class="sum-num">11</div>
-                  <div class="sum-title">Proven at Scale</div>
-                  <div class="sum-desc">5,000+ properties and $2.4B in annual procurement processed globally.</div>
-                </div>
-                <div class="sum-card" style="animation-delay:-5.4s;">
-                  <div class="sum-num">12</div>
-                  <div class="sum-title">Meet the Team</div>
-                  <div class="sum-desc">The hospitality and technology experts building PurchasePlus.</div>
+                  <div class="sum-title">Get Started</div>
+                  <div class="sum-desc">Next steps, contact details, and how to get PurchasePlus live.</div>
                 </div>
               </div>
             </div>
@@ -1010,30 +1020,28 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 
         <!-- Topic Shuffler Bar -->
         <div class="tl-bar">
-          <span class="tl-label">Topic</span>
-          <input class="tl-input" id="tlInput" type="text" placeholder="Type a topic to explore, or hit Shuffle…" autocomplete="off">
-          <button class="tl-btn" onclick="tlShuffle()">
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 4.5c0-1.38 1.12-2.5 2.5-2.5h4.09l-1.3-1.3.71-.7L10.5 2.5 8 5l-.71-.71 1.3-1.29H4.5a1.5 1.5 0 0 0-1.5 1.5v1H2V4.5zm9 4c0 1.38-1.12 2.5-2.5 2.5H4.41l1.3 1.3-.71.7L2.5 10.5 5 8l.71.71-1.3 1.29H8.5A1.5 1.5 0 0 0 10 8.5v-1h1v1z" fill="currentColor"/></svg>
-            Shuffle
-          </button>
-          <span class="tl-hint" id="tlHint">1 / 5</span>
-          <div class="tl-sep"></div>
           <div class="tl-brand">
-            <div class="tl-brand-icon">
-              <!-- Chef hat icon -->
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <rect x="3" y="11.5" width="10" height="3" rx="1" fill="white" opacity=".9"/>
-                <ellipse cx="8" cy="8" rx="5" ry="4.5" fill="white" opacity=".9"/>
-                <ellipse cx="4" cy="9.5" rx="3" ry="2.5" fill="white" opacity=".9"/>
-                <ellipse cx="12" cy="9.5" rx="3" ry="2.5" fill="white" opacity=".9"/>
-                <ellipse cx="6" cy="6.5" rx="1.5" ry="1.2" fill="white" opacity=".25"/>
-              </svg>
-            </div>
+            <div class="tl-brand-icon"></div>
             <div class="tl-brand-text">
               <div class="tl-brand-name">MasterChef</div>
-              <div class="tl-brand-sub">shuffle topics for you</div>
+              <div class="tl-brand-sub">generates topics for you</div>
             </div>
           </div>
+          <div class="tl-sep"></div>
+          <input class="tl-input" id="tlInput" type="text" placeholder="Type a topic or use the buttons to generate…" autocomplete="off">
+          <button class="tl-btn" onclick="tlNewTopic()">
+            <svg width="12" height="12" viewBox="0 0 13 13" fill="none"><path d="M2 4.5c0-1.38 1.12-2.5 2.5-2.5h4.09l-1.3-1.3.71-.7L10.5 2.5 8 5l-.71-.71 1.3-1.29H4.5a1.5 1.5 0 0 0-1.5 1.5v1H2V4.5zm9 4c0 1.38-1.12 2.5-2.5 2.5H4.41l1.3 1.3-.71.7L2.5 10.5 5 8l.71.71-1.3 1.29H8.5A1.5 1.5 0 0 0 10 8.5v-1h1v1z" fill="currentColor"/></svg>
+            New Topic
+          </button>
+          <button class="tl-btn-secondary" onclick="tlNewText()">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+            New Text
+          </button>
+          <button class="tl-btn-secondary" onclick="tlNewImage()">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+            New Image
+          </button>
+          <span class="tl-hint" id="tlHint">1 / 5</span>
         </div>
 
         <!-- Main content row -->
@@ -1268,7 +1276,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
                  alt="PurchasePlus supplier catalog"
                  style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block;user-select:none;pointer-events:none;">
             <!-- Tracker box — shows region being zoomed -->
-            <div id="fhTracker" style="display:none;position:absolute;border:3px solid #10b981;box-shadow:0 0 0 1px rgba(16,185,129,.3),0 0 16px rgba(16,185,129,.5);border-radius:4px;pointer-events:none;z-index:10;transition:none;"></div>
+            <div id="fhTracker" style="display:none;position:absolute;border:3px solid #00bdc5;box-shadow:0 0 0 1px rgba(0,189,197,.3),0 0 16px rgba(0,189,197,.5);border-radius:4px;pointer-events:none;z-index:10;transition:none;"></div>
           </div>
           <!-- Bottom: zoom window -->
           <div style="flex:1;position:relative;background:linear-gradient(160deg,#1a0630 0%,#0d1422 100%);overflow:hidden;">
@@ -1327,77 +1335,15 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
           </div>
         </div>
 
-        <!-- Gradient background with white chart cards -->
-        <div class="slide-right" style="padding:0;border-left:none;">
-          <div class="chart-panel">
-
-            <!-- Bar chart card -->
-            <div class="chart-card">
-              <div class="chart-label">Monthly Spend by Category</div>
-              <div class="bar-chart">
-                <div class="bar-group">
-                  <div class="bar-fill" style="height:88%;background:linear-gradient(to top,#a956ff,#7c5dff);"></div>
-                  <div class="bar-lbl">Food</div>
-                </div>
-                <div class="bar-group">
-                  <div class="bar-fill" style="height:62%;background:linear-gradient(to top,#7c5dff,#3766fe);"></div>
-                  <div class="bar-lbl">Bev</div>
-                </div>
-                <div class="bar-group">
-                  <div class="bar-fill" style="height:45%;background:linear-gradient(to top,#3766fe,#5b8aff);"></div>
-                  <div class="bar-lbl">Equip</div>
-                </div>
-                <div class="bar-group">
-                  <div class="bar-fill" style="height:34%;background:linear-gradient(to top,#a956ff,#7c5dff);"></div>
-                  <div class="bar-lbl">Linen</div>
-                </div>
-                <div class="bar-group">
-                  <div class="bar-fill" style="height:26%;background:linear-gradient(to top,#7c5dff,#3766fe);"></div>
-                  <div class="bar-lbl">Clean</div>
-                </div>
-                <div class="bar-group">
-                  <div class="bar-fill" style="height:18%;background:linear-gradient(to top,#3766fe,#5b8aff);"></div>
-                  <div class="bar-lbl">Other</div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Donut + legend card -->
-            <div class="chart-card">
-              <div class="chart-label">Spend Distribution</div>
-              <div class="donut-row">
-                <div class="donut-wrap">
-                  <div style="width:120px;height:120px;border-radius:50%;background:conic-gradient(#a956ff 0% 42%, #3766fe 42% 66%, #5b8aff 66% 84%, #e5e7eb 84% 100%);"></div>
-                  <div class="donut-hole">
-                    <div style="font-size:11px;font-weight:400;color:var(--muted);line-height:1;">Total</div>
-                    <div style="font-size:13px;font-weight:600;color:var(--ink);font-family:'JetBrains Mono',monospace;">$2.4B</div>
-                  </div>
-                </div>
-                <div class="donut-legend">
-                  <div class="legend-item"><div class="legend-dot" style="background:#a956ff;"></div>Food &amp; Bev<span class="legend-pct">42%</span></div>
-                  <div class="legend-item"><div class="legend-dot" style="background:#3766fe;"></div>Beverages<span class="legend-pct">24%</span></div>
-                  <div class="legend-item"><div class="legend-dot" style="background:#5b8aff;"></div>Equipment<span class="legend-pct">18%</span></div>
-                  <div class="legend-item"><div class="legend-dot" style="background:#e5e7eb;"></div>Other<span class="legend-pct">16%</span></div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Sparkline card -->
-            <div class="chart-card">
-              <div class="chart-label">Invoice Processing Time (days avg)</div>
-              <svg width="100%" height="64" viewBox="0 0 280 64" preserveAspectRatio="none" style="flex-shrink:0;display:block;">
-                <defs>
-                  <linearGradient id="lg2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#a956ff"/><stop offset="100%" stop-color="#3766fe"/></linearGradient>
-                  <linearGradient id="ag2" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#7c5dff" stop-opacity=".15"/><stop offset="100%" stop-color="#7c5dff" stop-opacity="0"/></linearGradient>
-                </defs>
-                <path d="M0,52 C40,50 80,46 120,36 C160,26 200,16 240,9 C256,6 268,5 280,4 L280,64 L0,64 Z" fill="url(#ag2)"/>
-                <path d="M0,52 C40,50 80,46 120,36 C160,26 200,16 240,9 C256,6 268,5 280,4" fill="none" stroke="url(#lg2)" stroke-width="2.5" stroke-linecap="round"/>
-                <text x="2" y="62" fill="var(--muted)" font-size="9" font-family="JetBrains Mono">14d</text>
-                <text x="242" y="18" fill="var(--purple)" font-size="9" font-weight="600" font-family="JetBrains Mono">1.8d</text>
-              </svg>
-            </div>
-
-          </div>
+        <div class="slide-right" style="padding:0;overflow:hidden;">
+          <img src="../assets/Colourful UI UX/Illustrations/Hero Videos/002_spend-analytics-dashboard-hero.png"
+               alt="Spend analytics dashboard"
+               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;">
+          <!-- Food Cost KPI card floating bottom-left -->
+          <img class="sr-card"
+               src="../assets/Colourful UI UX/Stand Alone/Amount Spent Per Category.png"
+               alt=""
+               style="bottom:10%;right:4%;width:44%;max-width:180px;transform:rotate(1.5deg);z-index:3;">
         </div>
 
       </section>
@@ -1451,112 +1397,24 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 
       </section>
 
-      <!-- ══════════════════════════════
-           SLIDE — CUSTOMER QUOTE
-           Pull quote + client logos
-           ══════════════════════════════ -->
-      <section class="slide" data-title="Customer Quote">
-
-        <div class="slide-left">
-          <div class="slide-eyebrow"><span class="grad">Client Voice</span></div>
-          <span class="quote-mark">"</span>
-          <p class="quote-body">We cut our invoice processing time from 14 days to under 48 hours in the first month. PurchasePlus didn't just save us money, it gave us back control of our operation.</p>
-          <div class="quote-attr">
-            <div class="quote-avatar">H</div>
-            <div>
-              <div class="quote-name">Head of Procurement</div>
-              <div class="quote-company">Asia-Pacific hotel group · 12 properties</div>
-            </div>
-          </div>
-          <div class="client-logo-strip">
-            <div class="client-logo-strip-label">Trusted by</div>
-            <img src="https://cdn.prod.website-files.com/62b4fd72b25b1bcbcba262e8/62ce4bed6cb0ca68f6af67a5_Accor.png" alt="Accor">
-            <img src="https://cdn.prod.website-files.com/62b4fd72b25b1bcbcba262e8/62ce4c8b09417a38dd3146ed_IHG.png" alt="IHG">
-            <img src="https://cdn.prod.website-files.com/62b4fd72b25b1bcbcba262e8/62ce50032ab9f2684a39e592_Sofitel.png" alt="Sofitel">
-            <img src="https://cdn.prod.website-files.com/62b4fd72b25b1bcbcba262e8/62ce4c4d9e01c683a9139aaf_Marriott.png" alt="Marriott">
-          </div>
-        </div>
-
-        <div class="slide-right">
-          <img class="sr-scene"
-               src="../assets/Longarms Scenes/98-084 PurchasePlus Scene Illustration Buyer and Seller Interaction Transparent 300dpi.png"
-               alt="" style="padding:10% 4px 0;opacity:.88;">
-          <div style="position:absolute;top:10%;left:0;right:0;display:flex;justify-content:center;z-index:3;">
-            <div style="background:rgba(255,255,255,.94);border:1px solid var(--border);border-radius:12px;padding:14px 18px;max-width:195px;box-shadow:0 8px 32px rgba(15,23,42,.12);">
-              <div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Invoice Cycle Time</div>
-              <div style="font-size:24px;font-weight:200;letter-spacing:-1px;color:var(--ink);line-height:1;">1.8 <span style="font-size:13px;color:var(--green);font-weight:500;">days</span></div>
-              <div style="font-size:11px;color:var(--muted);margin-top:2px;">Down from 14 days &darr; 87%</div>
-            </div>
-          </div>
-        </div>
-
-      </section>
 
       <!-- ══════════════════════════════
-           SLIDE 06 — PROVEN AT SCALE
-           Buyer + Seller scene
-           ══════════════════════════════ -->
-      <section class="slide" data-title="Proven at Scale">
-
-        <div class="slide-left">
-          <div class="slide-eyebrow"><span class="grad">05 / Proven at Scale</span></div>
-          <h2>5,000 properties.<br><span class="grad">One platform.</span></h2>
-          <div class="statement-block">
-            <p>"We cut our invoice processing time from 14 days to under 48 hours in the first month. PurchasePlus didn't just save us money, it gave us back control of our operation."</p>
-          </div>
-          <p class="kicker" style="margin-top:4px;">Head of Procurement, leading Asia-Pacific hotel group.</p>
-          <div class="metrics-row">
-            <div class="metric">
-              <div class="metric-num"><span class="grad">5,000+</span></div>
-              <div class="metric-label">Properties live across APAC, EMEA, and North America.</div>
-            </div>
-            <div class="metric">
-              <div class="metric-num">$2.4B</div>
-              <div class="metric-label">Annual procurement processed through the platform.</div>
-            </div>
-            <div class="metric">
-              <div class="metric-num"><span class="grad">99.9%</span></div>
-              <div class="metric-label">Platform uptime SLA. SOC2 and ISO 27001 certified.</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="slide-right">
-          <!-- Decorative cloud — top left -->
-          <img src="../assets/Colourful UI UX/Stand Alone/CLOUDS.png" alt=""
-               style="position:absolute; top:-4%; left:-8%; width:52%; opacity:.55; z-index:1; transform:rotate(-12deg);">
-          <!-- Decorative cloud — top right -->
-          <img src="../assets/Colourful UI UX/Stand Alone/CLOUDS.png" alt=""
-               style="position:absolute; top:-2%; right:-12%; width:44%; opacity:.4; z-index:1; transform:rotate(18deg) scaleX(-1);">
-          <!-- Procurement Savings card — top center -->
-          <img class="sr-card"
-               src="../assets/Colourful UI UX/Stand Alone/Procurement Savings.png" alt=""
-               style="top:6%; left:50%; transform:translateX(-50%); width:54%; max-width:210px; z-index:3;">
-          <!-- Buyer and Seller scene — anchored bottom, fills lower two-thirds -->
-          <img class="sr-scene"
-               src="../assets/Longarms Scenes/98-084 PurchasePlus Scene Illustration Buyer and Seller Interaction Transparent 300dpi.png"
-               alt="Buyer and supplier connected"
-               style="padding:28% 4px 0; object-position:bottom center; opacity:.96;">
-        </div>
-
-      </section>
-
-      <!-- ══════════════════════════════
-           SLIDE — MEET THE TEAM
+           SLIDE — PEOPLE
            Leadership team grid
            ══════════════════════════════ -->
-      <section class="slide" data-title="Meet the Team">
+      <section class="slide" data-title="People">
 
         <div class="slide-left">
           <div class="slide-eyebrow"><span class="grad">Our People</span></div>
           <h2>The team <span class="grad">behind the platform.</span></h2>
-          <p class="lead">Built by hospitality and technology experts who understand procurement from the inside out.</p>
+          <p class="lead">Hospitality operators and technology builders who've lived the problem and built the solution.</p>
           <div class="team-grid">
             <div class="person-card">
               <img class="person-photo" src="../assets/Team/nathan.avif" alt="Nathan Gyaneshwar">
               <div>
                 <div class="person-name">Nathan Gyaneshwar</div>
                 <div class="person-role">Founder</div>
+                <div class="person-bio">Hospitality technology entrepreneur. 20 years building procurement solutions for global hotel groups.</div>
               </div>
             </div>
             <div class="person-card">
@@ -1564,6 +1422,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
               <div>
                 <div class="person-name">Malcolm Jull</div>
                 <div class="person-role">Chief Executive Officer</div>
+                <div class="person-bio">Former hospitality operator turned tech CEO. Led PurchasePlus from startup to global platform.</div>
               </div>
             </div>
             <div class="person-card">
@@ -1571,6 +1430,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
               <div>
                 <div class="person-name">Karny Dhah</div>
                 <div class="person-role">Chief Financial Officer</div>
+                <div class="person-bio">Finance leader in SaaS and hospitality. Drives financial strategy and investor relations.</div>
               </div>
             </div>
             <div class="person-card">
@@ -1578,6 +1438,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
               <div>
                 <div class="person-name">Mitch Hulst</div>
                 <div class="person-role">Chief Operating Officer</div>
+                <div class="person-bio">Scales systems and teams across APAC, EMEA, and North America. Obsessed with operational excellence.</div>
               </div>
             </div>
             <div class="person-card">
@@ -1585,27 +1446,25 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
               <div>
                 <div class="person-name">Peter Hubbard</div>
                 <div class="person-role">Chief Product Officer</div>
+                <div class="person-bio">Shaped the PurchasePlus product from its first build to enterprise-grade platform. Deep domain knowledge.</div>
               </div>
             </div>
             <div class="person-card" style="background:var(--grad-soft);border-color:rgba(124,93,255,.2);">
-              <div style="width:40px;height:40px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:#fff;flex-shrink:0;letter-spacing:.04em;">AL</div>
+              <div style="width:72px;height:72px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:500;color:#fff;flex-shrink:0;letter-spacing:.04em;">AL</div>
               <div>
                 <div class="person-name">Akila Lohan</div>
                 <div class="person-role"><span class="grad">Head of Marketing</span></div>
+                <div class="person-bio">Building the global go-to-market engine for PurchasePlus. Hospitality marketing and brand strategist.</div>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="slide-right">
-          <div style="position:absolute;top:0;left:0;right:0;height:60%;z-index:1;background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(169,86,255,.18) 0%,transparent 70%);"></div>
-          <img src="../assets/Colourful UI UX/Stand Alone/CLOUDS.png" alt=""
-               style="position:absolute;top:-6%;left:-14%;width:64%;opacity:.45;z-index:2;transform:rotate(-8deg);">
-          <img src="../assets/Colourful UI UX/Stand Alone/CLOUDS.png" alt=""
-               style="position:absolute;bottom:-8%;right:-10%;width:50%;opacity:.35;z-index:2;transform:rotate(12deg) scaleX(-1);">
-          <img class="sr-char"
-               src="../assets/Longarms Characters/Stand Alone/98-084 PurchasePlus Longarm Illustration Manager Retina.png"
-               alt="" style="height:72%;right:0%;z-index:3;">
+        <div class="slide-right" style="padding:0;overflow:hidden;">
+          <div style="position:absolute;inset:0;background:linear-gradient(160deg,#f5edff 0%,#eaf1ff 100%);z-index:0;"></div>
+          <img src="../assets/Longarms Characters/Lonagarm Cloche/98-084 PurchasePlus Longarm Illustration Longarms in Cloche Reveal Retina.png"
+               alt="The full Longarms team"
+               style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center center;z-index:2;padding:4% 2%;">
         </div>
 
       </section>
@@ -1887,10 +1746,9 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       if (hint) hint.textContent = (idx + 1) + ' / ' + tlTopics.length;
     }
 
-    window.tlShuffle = function() {
+    function tlPickByQuery() {
       var input = document.getElementById('tlInput');
       var query = input ? input.value.toLowerCase().trim() : '';
-      var next;
       if (query.length > 1) {
         var best = -1, bestIdx = (tlCurrent + 1) % tlTopics.length;
         tlTopics.forEach(function(t, i) {
@@ -1899,17 +1757,72 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
           }).length;
           if (score > best) { best = score; bestIdx = i; }
         });
-        next = bestIdx;
+        return bestIdx;
+      }
+      return -1;
+    }
+
+    // New Topic: picks a new topic (text + image change together)
+    window.tlNewTopic = function() {
+      var byQuery = tlPickByQuery();
+      var next;
+      if (byQuery >= 0) {
+        next = byQuery;
       } else {
-        next = (tlCurrent + 1) % tlTopics.length;
+        next = tlCurrent;
+        if (tlTopics.length > 1) while (next === tlCurrent) next = Math.floor(Math.random() * tlTopics.length);
       }
       tlApply(next);
     };
 
+    // New Text: keeps current image, applies text from a different topic
+    window.tlNewText = function() {
+      var textIdx = tlCurrent;
+      if (tlTopics.length > 1) while (textIdx === tlCurrent) textIdx = Math.floor(Math.random() * tlTopics.length);
+      var t = tlTopics[textIdx];
+      var ey = document.getElementById('tl-eyebrow');
+      var hd = document.getElementById('tl-heading');
+      var ld = document.getElementById('tl-lead');
+      var ki = document.getElementById('tl-kicker');
+      if (!ey) return;
+      // Flash text area
+      [ey, hd, ld, ki].forEach(function(el) { if (el) { el.style.transition = 'opacity .15s'; el.style.opacity = '0.3'; } });
+      setTimeout(function() {
+        ey.innerHTML = t.eyebrow;
+        hd.innerHTML = t.heading;
+        ld.textContent = t.lead;
+        if (ki) ki.textContent = t.kicker;
+        for (var i = 0; i < 3; i++) {
+          document.getElementById('tl-s' + (i + 1) + 'n').innerHTML  = t.stats[i].num;
+          document.getElementById('tl-s' + (i + 1) + 'l').textContent = t.stats[i].label;
+        }
+        [ey, hd, ld, ki].forEach(function(el) { if (el) el.style.opacity = '1'; });
+        document.getElementById('tlHint').textContent = (textIdx + 1) + ' / ' + tlTopics.length;
+      }, 160);
+    };
+
+    // New Image: keeps current text, swaps to a different topic's image
+    window.tlNewImage = function() {
+      var imgIdx = tlCurrent;
+      if (tlTopics.length > 1) while (imgIdx === tlCurrent) imgIdx = Math.floor(Math.random() * tlTopics.length);
+      var imgEl = document.getElementById('tl-img');
+      if (!imgEl) return;
+      imgEl.style.transition = 'opacity .25s';
+      imgEl.style.opacity = '0.2';
+      setTimeout(function() {
+        imgEl.src = tlTopics[imgIdx].img;
+        imgEl.alt = tlTopics[imgIdx].alt || '';
+        imgEl.style.opacity = '1';
+      }, 250);
+    };
+
+    // Legacy alias
+    window.tlShuffle = window.tlNewTopic;
+
     var inp = document.getElementById('tlInput');
     if (inp) {
       inp.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') window.tlShuffle();
+        if (e.key === 'Enter') window.tlNewTopic();
       });
     }
   })();
@@ -1923,9 +1836,9 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
     if (!screen || !zoom) return;
     var ZOOM   = 3.5;
     var locked = false;
-    var COL_DEFAULT  = '#10b981';
+    var COL_DEFAULT  = '#00bdc5';
     var COL_LOCKED   = '#ee2b62';
-    var COL_UNLOCKED = '#10b981';
+    var COL_UNLOCKED = '#00bdc5';
 
     function setTrackerColor(col) {
       tracker.style.borderColor = col;
