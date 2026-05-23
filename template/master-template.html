@@ -617,14 +617,13 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
            SLIDE 01 — COVER
            Device mockup + Longarms scene layered
            ══════════════════════════════ -->
-      <section class="slide is-active" data-title="Better Procurement">
+      <section class="slide is-active" data-title="Presentation Cover">
 
         <div class="slide-left">
           <h1>Better Procurement.<br><span class="grad">Better Hospitality.</span></h1>
           <p class="lead">PurchasePlus is the procurement platform built for hospitality. One marketplace, every supplier, full visibility from order to invoice.</p>
           <div class="cover-meta">
             <img src="../assets/PurchasePlus Logos/98-082 PurchasePlus Logo Emblem RGB 72dpi.png" alt="PurchasePlus" class="cover-logo">
-            <!-- Update: presenter name, date, audience -->
             <div class="cover-meta-text"><strong>PurchasePlus</strong> · Platform Overview · 2026</div>
           </div>
         </div>
@@ -638,12 +637,12 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
                style="position:absolute;top:-8%;left:-12%;width:58%;opacity:.72;z-index:2;transform:rotate(-8deg);">
           <img src="../assets/Colourful UI UX/Stand Alone/CLOUDS.png" alt=""
                style="position:absolute;top:-5%;right:-16%;width:52%;opacity:.55;z-index:2;transform:rotate(15deg) scaleX(-1);">
-          <!-- Device mockup — laptop + phone -->
-          <img class="sr-device"
-               src="../assets/PurchasePlus UI %26 UX/004_longarms_mockup.png"
-               alt="PurchasePlus platform"
-               style="position:absolute;width:auto;height:92%;top:4%;left:50%;transform:translateX(-50%);max-width:none;z-index:3;">
         </div>
+
+        <!-- Device mockup — positioned relative to full slide so it overlaps both panels -->
+        <img src="../assets/PurchasePlus UI %26 UX/004_longarms_mockup.png"
+             alt="PurchasePlus platform"
+             style="position:absolute;left:36%;bottom:-2%;height:90%;width:auto;max-width:none;z-index:5;pointer-events:none;">
 
       </section>
 
