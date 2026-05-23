@@ -579,6 +579,105 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
   .slide-left { padding: 40px 14px 70px; }
   .slide-left h2 { font-size: clamp(19px, 5.5vw, 24px); }
 }
+
+/* ══════════════════════════════════════════════════════════
+   EXTENDED COMPONENTS — new slide types
+   ══════════════════════════════════════════════════════════ */
+
+/* Agenda */
+.agenda-list { display:flex; flex-direction:column; gap:0; margin-top:6px; }
+.agenda-item { display:grid; grid-template-columns:52px 1fr; padding:12px 0; border-bottom:1px solid var(--border-soft); align-items:flex-start; }
+.agenda-item:last-child { border-bottom:none; }
+.agenda-num { font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700; color:var(--purple); letter-spacing:.08em; padding-top:2px; }
+.agenda-title { font-size:14.5px; font-weight:600; color:var(--ink); margin-bottom:2px; line-height:1.3; }
+.agenda-desc { font-size:13px; color:var(--body); line-height:1.5; }
+
+/* Section divider — full-bleed dark */
+.divider-inner { flex:1; position:relative; overflow:hidden; background:var(--grad-deep); display:flex; flex-direction:column; justify-content:center; padding:80px 100px; }
+.divider-chapter { font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.35); margin-bottom:24px; }
+.divider-title { font-size:clamp(44px,5.8vw,76px); font-weight:200; letter-spacing:-2px; line-height:1.02; color:#fff; text-wrap:balance; }
+.divider-line { width:56px; height:2px; background:var(--grad); margin-top:32px; border-radius:2px; }
+.chart-glow { position:absolute; border-radius:50%; background:radial-gradient(circle,rgba(124,93,255,.3) 0%,transparent 70%); pointer-events:none; }
+
+/* Application Screen — clickable */
+.screen-clickable { cursor:zoom-in; border-radius:10px; overflow:hidden; box-shadow:0 20px 60px rgba(15,23,42,.28); transition:transform .2s; display:block; width:100%; }
+.screen-clickable:hover { transform:scale(1.015); }
+.screen-clickable img { width:100%; height:auto; display:block; }
+.screen-hint { display:flex; align-items:center; gap:6px; font-size:11px; color:var(--muted); margin-top:9px; }
+
+/* Lightbox */
+.lb { position:fixed; inset:0; z-index:9999; background:rgba(5,5,10,.94); display:flex; align-items:center; justify-content:center; }
+.lb-vp { position:relative; overflow:hidden; width:88vw; height:84vh; cursor:grab; border-radius:10px; background:#0a0a12; }
+.lb-vp.grabbing { cursor:grabbing; }
+.lb-img { position:absolute; top:0; left:0; transform-origin:0 0; max-width:none; user-select:none; pointer-events:none; display:block; }
+.lb-ctrl { position:fixed; top:20px; right:20px; display:flex; align-items:center; gap:6px; z-index:10000; }
+.lb-btn { width:36px; height:36px; border-radius:8px; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.14); color:#fff; font-size:20px; font-weight:200; display:flex; align-items:center; justify-content:center; cursor:pointer; transition:background .15s; font-family:'Inter',sans-serif; }
+.lb-btn:hover { background:rgba(255,255,255,.2); }
+.lb-pct { font-size:11px; font-weight:600; color:rgba(255,255,255,.45); font-family:'JetBrains Mono',monospace; min-width:42px; text-align:center; }
+
+/* Feature highlight */
+.feature-pills { display:flex; flex-wrap:wrap; gap:7px; margin:4px 0 18px; }
+.feature-pill { display:inline-flex; align-items:center; gap:6px; padding:5px 11px; background:var(--softer); border:1px solid var(--border); border-radius:var(--radius-pill); font-size:13px; font-weight:500; color:var(--ink-soft); }
+.feature-pill::before { content:''; width:5px; height:5px; border-radius:50%; background:var(--grad); flex-shrink:0; display:inline-block; }
+.feature-metric-row { display:flex; gap:28px; margin-top:20px; padding-top:20px; border-top:1px solid var(--border-soft); }
+.feature-metric-num { font-size:26px; font-weight:200; letter-spacing:-1px; color:var(--ink); line-height:1; margin-bottom:4px; }
+.feature-metric-label { font-size:12px; color:var(--body); line-height:1.4; }
+
+/* KPI strip */
+.kpi-strip { display:flex; border:1px solid var(--border-soft); border-radius:var(--radius); overflow:hidden; margin-bottom:18px; }
+.kpi-cell { flex:1; padding:12px 14px; border-right:1px solid var(--border-soft); }
+.kpi-cell:last-child { border-right:none; }
+.kpi-num { font-size:20px; font-weight:200; letter-spacing:-1px; color:var(--ink); line-height:1; margin-bottom:2px; }
+.kpi-label { font-size:11px; color:var(--muted); }
+.kpi-delta { font-size:10.5px; font-weight:600; color:var(--green); margin-top:2px; }
+
+/* Analytics chart panel */
+.chart-panel { position:relative; width:100%; height:100%; background:linear-gradient(155deg,#0d0820 0%,#120a2c 45%,#0a1020 100%); display:flex; flex-direction:column; padding:28px 24px; overflow:hidden; }
+.chart-label { font-size:10px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:rgba(255,255,255,.3); margin-bottom:10px; }
+.bar-chart { display:flex; align-items:flex-end; gap:8px; height:96px; flex-shrink:0; }
+.bar-group { display:flex; flex-direction:column; align-items:center; gap:5px; flex:1; }
+.bar-fill { width:100%; border-radius:4px 4px 0 0; }
+.bar-lbl { font-size:9px; color:rgba(255,255,255,.35); text-align:center; }
+.chart-sep { height:1px; background:rgba(255,255,255,.05); margin:14px 0; flex-shrink:0; }
+.donut-row { display:flex; gap:16px; align-items:center; flex-shrink:0; }
+.donut-wrap { width:80px; height:80px; border-radius:50%; flex-shrink:0; position:relative; display:flex; align-items:center; justify-content:center; }
+.donut-hole { position:absolute; inset:11px; border-radius:50%; background:#0d0820; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1px; }
+.donut-legend { display:flex; flex-direction:column; gap:6px; flex:1; }
+.legend-item { display:flex; align-items:center; gap:7px; font-size:10.5px; color:rgba(255,255,255,.5); }
+.legend-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; }
+.legend-pct { margin-left:auto; font-size:11px; font-weight:600; color:rgba(255,255,255,.75); font-family:'JetBrains Mono',monospace; }
+
+/* Customer quote */
+.quote-mark { font-size:64px; font-weight:200; line-height:.75; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; -webkit-text-fill-color:transparent; margin-bottom:10px; display:block; }
+.quote-body { font-size:clamp(16px,1.7vw,21px); font-weight:200; font-style:italic; color:var(--ink); line-height:1.6; text-wrap:balance; max-width:44ch; margin-bottom:24px; }
+.quote-attr { display:flex; align-items:center; gap:12px; }
+.quote-avatar { width:44px; height:44px; border-radius:50%; background:var(--grad-soft); display:flex; align-items:center; justify-content:center; font-size:16px; font-weight:300; color:var(--purple); flex-shrink:0; }
+.quote-name { font-size:14px; font-weight:600; color:var(--ink); }
+.quote-company { font-size:12px; color:var(--body); margin-top:1px; }
+.client-logo-strip { display:flex; align-items:center; gap:20px; margin-top:28px; padding-top:20px; border-top:1px solid var(--border-soft); flex-wrap:wrap; }
+.client-logo-strip-label { font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); white-space:nowrap; }
+.client-logo-strip img { height:18px; opacity:.45; filter:grayscale(1); object-fit:contain; }
+
+/* Team */
+.team-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:8px; }
+.person-card { display:flex; align-items:center; gap:10px; padding:11px 13px; background:var(--softer); border:1px solid var(--border-soft); border-radius:10px; transition:border-color .15s; }
+.person-card:hover { border-color:rgba(124,93,255,.28); }
+.person-photo { width:40px; height:40px; border-radius:50%; object-fit:cover; object-position:top center; flex-shrink:0; }
+.person-name { font-size:13px; font-weight:600; color:var(--ink); margin-bottom:1px; line-height:1.25; }
+.person-role { font-size:11px; color:var(--body); }
+
+@media (max-width:1100px) {
+  .divider-inner { padding:60px 48px; }
+  .divider-title { font-size:clamp(36px,7vw,60px); }
+  .chart-panel { padding:18px 16px; }
+  .team-grid { gap:7px; }
+  .client-logo-strip { gap:14px; }
+}
+@media (max-width:600px) {
+  .team-grid { grid-template-columns:1fr; }
+  .agenda-item { grid-template-columns:40px 1fr; }
+  .feature-metric-row { gap:16px; }
+}
 </style>
 </head>
 <body>
@@ -660,6 +759,86 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
         <img src="../assets/PurchasePlus UI %26 UX/004_longarms_mockup.png"
              alt="PurchasePlus platform"
              style="position:absolute;right:-2%;bottom:3%;width:79%;height:auto;max-width:none;z-index:5;pointer-events:none;">
+
+      </section>
+
+      <!-- ══════════════════════════════
+           SLIDE 02 — AGENDA / SUMMARY
+           ══════════════════════════════ -->
+      <section class="slide" data-title="Agenda">
+
+        <div class="slide-left">
+          <div class="slide-eyebrow"><span class="grad">Today's Agenda</span></div>
+          <h2>What we will <span class="grad">cover today.</span></h2>
+          <p class="lead">A focused walkthrough of the PurchasePlus platform and what it means for your operation.</p>
+          <div class="agenda-list">
+            <div class="agenda-item">
+              <div class="agenda-num">01</div>
+              <div>
+                <div class="agenda-title">The Procurement Challenge</div>
+                <div class="agenda-desc">Why manual procurement is costing hospitality operators time and margin.</div>
+              </div>
+            </div>
+            <div class="agenda-item">
+              <div class="agenda-num">02</div>
+              <div>
+                <div class="agenda-title">The PurchasePlus Platform</div>
+                <div class="agenda-desc">One connected system from supplier catalog through to invoice reconciliation.</div>
+              </div>
+            </div>
+            <div class="agenda-item">
+              <div class="agenda-num">03</div>
+              <div>
+                <div class="agenda-title">How It Works</div>
+                <div class="agenda-desc">The four-step procurement cycle, live in your operation in under 30 days.</div>
+              </div>
+            </div>
+            <div class="agenda-item">
+              <div class="agenda-num">04</div>
+              <div>
+                <div class="agenda-title">Real Results</div>
+                <div class="agenda-desc">Outcomes from 5,000+ properties across APAC, EMEA, and North America.</div>
+              </div>
+            </div>
+            <div class="agenda-item">
+              <div class="agenda-num">05</div>
+              <div>
+                <div class="agenda-title">Getting Started</div>
+                <div class="agenda-desc">Your 30-day onboarding path and what to expect from week one.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide-right">
+          <img class="sr-char"
+               src="../assets/Longarms Characters/Stand Alone/98-084 PurchasePlus Longarm Illustration Manager Retina.png"
+               alt="" style="right:0%;height:78%;">
+          <img class="sr-card"
+               src="../assets/Colourful UI UX/Stand Alone/Amount Spent Per Category.png"
+               alt="" style="top:8%;left:8%;width:52%;max-width:200px;">
+          <img class="sr-card"
+               src="../assets/Colourful UI UX/Stand Alone/Procurement Savings.png"
+               alt="" style="top:50%;right:4%;width:42%;max-width:162px;transform:rotate(2deg);">
+        </div>
+
+      </section>
+
+      <!-- ══════════════════════════════
+           SLIDE 03 — SECTION DIVIDER
+           Full-bleed dark chapter break
+           ══════════════════════════════ -->
+      <section class="slide" data-title="Section Divider">
+
+        <div class="divider-inner">
+          <div class="chart-glow" style="width:320px;height:320px;top:-100px;left:-80px;opacity:.8;"></div>
+          <div class="chart-glow" style="width:200px;height:200px;bottom:-60px;right:12%;background:radial-gradient(circle,rgba(55,102,254,.25) 0%,transparent 70%);"></div>
+          <div class="divider-chapter">Chapter 01</div>
+          <div class="divider-title">The <span class="grad">Challenge</span><br>We Solve.</div>
+          <div class="divider-line"></div>
+          <img src="../assets/Colourful UI UX/Stand Alone/CLOUDS.png" alt=""
+               style="position:absolute;bottom:-10%;right:-8%;width:42%;opacity:.07;pointer-events:none;transform:rotate(15deg);">
+        </div>
 
       </section>
 
@@ -765,6 +944,103 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       </section>
 
       <!-- ══════════════════════════════
+           SLIDE — APPLICATION SCREEN
+           Text left + zoomable screenshot
+           ══════════════════════════════ -->
+      <section class="slide" data-title="Application Screen">
+
+        <div class="slide-left">
+          <div class="slide-eyebrow"><span class="grad">Platform Deep Dive</span></div>
+          <h2>Every detail,<br><span class="grad">at a glance.</span></h2>
+          <p class="lead">The PurchasePlus dashboard gives procurement managers real-time visibility across every order, invoice, and supplier relationship.</p>
+          <div class="concept-grid" style="margin-top:0;">
+            <div class="concept-card">
+              <div class="concept-tag">LIVE</div>
+              <div>
+                <div class="concept-title">Real-time spend tracking</div>
+                <div class="concept-body">Budgets, actuals, and variances updated the moment a PO is approved.</div>
+              </div>
+            </div>
+            <div class="concept-card">
+              <div class="concept-tag">SMART</div>
+              <div>
+                <div class="concept-title">AI invoice matching</div>
+                <div class="concept-body">3-way match across PO, delivery note, and supplier invoice in under 60 seconds.</div>
+              </div>
+            </div>
+          </div>
+          <div class="screen-hint" style="margin-top:16px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+            Click the screen to zoom in and explore the interface
+          </div>
+        </div>
+
+        <div class="slide-right" style="display:flex;align-items:center;justify-content:center;padding:32px 28px;background:#f8fafc;">
+          <div style="width:100%;">
+            <div class="screen-clickable" onclick="openLightbox(this.querySelector('img').src)">
+              <img src="../assets/PurchasePlus Web Application Screens/Artboard 2_PurchasePlu.png"
+                   alt="PurchasePlus dashboard">
+            </div>
+            <div class="screen-hint" style="justify-content:center;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
+              Scroll to zoom · Drag to pan · Click outside to close
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ══════════════════════════════
+           SLIDE — FEATURE HIGHLIGHT
+           Single feature focus
+           ══════════════════════════════ -->
+      <section class="slide" data-title="Feature Highlight">
+
+        <div class="slide-left">
+          <div class="slide-eyebrow"><span class="grad">Feature Focus</span></div>
+          <h2>Supplier catalog<br><span class="grad">built for hospitality.</span></h2>
+          <p class="lead">Browse 30,000+ verified suppliers, compare live pricing, and place orders from any device. No phone calls, no emails, no re-keying.</p>
+          <div class="feature-pills">
+            <div class="feature-pill">Live pricing comparison</div>
+            <div class="feature-pill">Mobile ordering</div>
+            <div class="feature-pill">Contract compliance</div>
+            <div class="feature-pill">Auto-reorder</div>
+            <div class="feature-pill">Spend limits</div>
+            <div class="feature-pill">Approval workflows</div>
+          </div>
+          <div class="feature-metric-row">
+            <div>
+              <div class="feature-metric-num"><span class="grad">30K+</span></div>
+              <div class="feature-metric-label">Verified suppliers</div>
+            </div>
+            <div>
+              <div class="feature-metric-num">3 min</div>
+              <div class="feature-metric-label">Average order time</div>
+            </div>
+            <div>
+              <div class="feature-metric-num"><span class="grad">18%</span></div>
+              <div class="feature-metric-label">Average cost reduction</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide-right">
+          <img class="sr-screen"
+               src="../assets/PurchasePlus Web Application Screens/Artboard 5_PurchasePlu.png"
+               alt="Supplier catalog"
+               style="top:44%;transform:translate(-50%,-50%) rotate(-1deg);width:82%;">
+          <img class="sr-card"
+               src="../assets/Colourful UI UX/Stand Alone/Total Spend.png"
+               alt=""
+               style="top:6%;right:8%;width:38%;max-width:150px;transform:rotate(1.5deg);">
+          <img class="sr-char"
+               src="../assets/Longarms Characters/Named Characters/98-084 PurchasePlus Longarm Illustration Bargain Brian Retina.png"
+               alt="" style="right:0%;height:56%;bottom:0;">
+        </div>
+
+      </section>
+
+      <!-- ══════════════════════════════
            SLIDE 04 — HOW IT WORKS
            PO screen + Speedy Simon
            ══════════════════════════════ -->
@@ -827,6 +1103,126 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       </section>
 
       <!-- ══════════════════════════════
+           SLIDE — ANALYTICS DASHBOARD
+           KPIs + gradient HTML charts
+           ══════════════════════════════ -->
+      <section class="slide" data-title="Analytics Dashboard">
+
+        <div class="slide-left">
+          <div class="slide-eyebrow"><span class="grad">Spend Intelligence</span></div>
+          <h2>Your numbers,<br><span class="grad">always in view.</span></h2>
+          <p class="lead">PurchasePlus turns procurement data into decisions. Every dollar spent, categorised, benchmarked, and reported in real time.</p>
+          <div class="kpi-strip">
+            <div class="kpi-cell">
+              <div class="kpi-num"><span class="grad">$2.4B</span></div>
+              <div class="kpi-label">Annual spend managed</div>
+              <div class="kpi-delta">+12% YoY</div>
+            </div>
+            <div class="kpi-cell">
+              <div class="kpi-num">18%</div>
+              <div class="kpi-label">Average cost savings</div>
+              <div class="kpi-delta">vs. pre-platform</div>
+            </div>
+            <div class="kpi-cell">
+              <div class="kpi-num"><span class="grad">40M+</span></div>
+              <div class="kpi-label">Invoices processed</div>
+              <div class="kpi-delta">99.9% accuracy</div>
+            </div>
+          </div>
+          <div class="pillars" style="margin-top:0;">
+            <div class="pillar">
+              <div class="pillar-num mono" style="font-size:16px;">↗</div>
+              <div class="pillar-title">Spend analytics</div>
+              <div class="pillar-body">Category breakdown, trends, and benchmarking against peer properties.</div>
+            </div>
+            <div class="pillar">
+              <div class="pillar-num mono" style="font-size:16px;">⊙</div>
+              <div class="pillar-title">Budget control</div>
+              <div class="pillar-body">Set limits by department or property. Alerts before you overspend.</div>
+            </div>
+            <div class="pillar">
+              <div class="pillar-num mono" style="font-size:16px;">☑</div>
+              <div class="pillar-title">Compliance reports</div>
+              <div class="pillar-body">Audit-ready reporting with a full digital trail from PO to payment.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Gradient dark panel with HTML/CSS charts -->
+        <div class="slide-right" style="padding:0;border-left:none;">
+          <div class="chart-panel">
+            <div class="chart-glow" style="width:280px;height:280px;top:-80px;right:-60px;opacity:.9;"></div>
+            <div class="chart-glow" style="width:180px;height:180px;bottom:-50px;left:10%;background:radial-gradient(circle,rgba(55,102,254,.22) 0%,transparent 70%);"></div>
+
+            <!-- Bar chart -->
+            <div class="chart-label">Monthly Spend by Category</div>
+            <div class="bar-chart">
+              <div class="bar-group">
+                <div class="bar-fill" style="height:88%;background:linear-gradient(to top,#a956ff,#7c5dff);"></div>
+                <div class="bar-lbl">Food</div>
+              </div>
+              <div class="bar-group">
+                <div class="bar-fill" style="height:62%;background:linear-gradient(to top,#7c5dff,#3766fe);"></div>
+                <div class="bar-lbl">Bev</div>
+              </div>
+              <div class="bar-group">
+                <div class="bar-fill" style="height:45%;background:linear-gradient(to top,#3766fe,#5b8aff);"></div>
+                <div class="bar-lbl">Equip</div>
+              </div>
+              <div class="bar-group">
+                <div class="bar-fill" style="height:34%;background:linear-gradient(to top,#a956ff,#7c5dff);"></div>
+                <div class="bar-lbl">Linen</div>
+              </div>
+              <div class="bar-group">
+                <div class="bar-fill" style="height:26%;background:linear-gradient(to top,#7c5dff,#3766fe);"></div>
+                <div class="bar-lbl">Clean</div>
+              </div>
+              <div class="bar-group">
+                <div class="bar-fill" style="height:18%;background:linear-gradient(to top,#3766fe,#5b8aff);"></div>
+                <div class="bar-lbl">Other</div>
+              </div>
+            </div>
+
+            <div class="chart-sep"></div>
+
+            <!-- Donut + legend -->
+            <div class="chart-label">Spend Distribution</div>
+            <div class="donut-row">
+              <div class="donut-wrap">
+                <div style="width:80px;height:80px;border-radius:50%;background:conic-gradient(#a956ff 0% 42%, #3766fe 42% 66%, #5b8aff 66% 84%, rgba(255,255,255,.1) 84% 100%);"></div>
+                <div class="donut-hole">
+                  <div style="font-size:10px;font-weight:200;color:#fff;line-height:1;">Total</div>
+                  <div style="font-size:8px;color:rgba(255,255,255,.4);font-family:'JetBrains Mono',monospace;">$2.4B</div>
+                </div>
+              </div>
+              <div class="donut-legend">
+                <div class="legend-item"><div class="legend-dot" style="background:#a956ff;"></div>Food &amp; Beverage<span class="legend-pct">42%</span></div>
+                <div class="legend-item"><div class="legend-dot" style="background:#3766fe;"></div>Beverages<span class="legend-pct">24%</span></div>
+                <div class="legend-item"><div class="legend-dot" style="background:#5b8aff;"></div>Equipment<span class="legend-pct">18%</span></div>
+                <div class="legend-item"><div class="legend-dot" style="background:rgba(255,255,255,.18);"></div>Other<span class="legend-pct">16%</span></div>
+              </div>
+            </div>
+
+            <div class="chart-sep"></div>
+
+            <!-- Sparkline: invoice processing time -->
+            <div class="chart-label">Invoice Processing Time (days avg)</div>
+            <svg width="100%" height="52" viewBox="0 0 280 52" preserveAspectRatio="none" style="flex-shrink:0;">
+              <defs>
+                <linearGradient id="lg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#a956ff"/><stop offset="100%" stop-color="#3766fe"/></linearGradient>
+                <linearGradient id="ag" x1="0%" y1="0%" x2="0%" y2="100%"><stop offset="0%" stop-color="#7c5dff" stop-opacity=".28"/><stop offset="100%" stop-color="#7c5dff" stop-opacity="0"/></linearGradient>
+              </defs>
+              <path d="M0,42 C40,40 80,36 120,28 C160,20 200,12 240,7 C256,5 268,4 280,3 L280,52 L0,52 Z" fill="url(#ag)"/>
+              <path d="M0,42 C40,40 80,36 120,28 C160,20 200,12 240,7 C256,5 268,4 280,3" fill="none" stroke="url(#lg)" stroke-width="2.5" stroke-linecap="round"/>
+              <text x="2" y="50" fill="rgba(255,255,255,.3)" font-size="8" font-family="JetBrains Mono">14d</text>
+              <text x="246" y="12" fill="rgba(255,255,255,.6)" font-size="8" font-family="JetBrains Mono">1.8d</text>
+            </svg>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ══════════════════════════════
            SLIDE 05 — WHAT YOU GET
            Spend analytics hero + UI cards collage
            ══════════════════════════════ -->
@@ -876,6 +1272,47 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       </section>
 
       <!-- ══════════════════════════════
+           SLIDE — CUSTOMER QUOTE
+           Pull quote + client logos
+           ══════════════════════════════ -->
+      <section class="slide" data-title="Customer Quote">
+
+        <div class="slide-left">
+          <div class="slide-eyebrow"><span class="grad">Client Voice</span></div>
+          <span class="quote-mark">"</span>
+          <p class="quote-body">We cut our invoice processing time from 14 days to under 48 hours in the first month. PurchasePlus didn't just save us money, it gave us back control of our operation.</p>
+          <div class="quote-attr">
+            <div class="quote-avatar">H</div>
+            <div>
+              <div class="quote-name">Head of Procurement</div>
+              <div class="quote-company">Asia-Pacific hotel group · 12 properties</div>
+            </div>
+          </div>
+          <div class="client-logo-strip">
+            <div class="client-logo-strip-label">Trusted by</div>
+            <img src="https://cdn.prod.website-files.com/62b4fd72b25b1bcbcba262e8/62ce4bed6cb0ca68f6af67a5_Accor.png" alt="Accor">
+            <img src="https://cdn.prod.website-files.com/62b4fd72b25b1bcbcba262e8/62ce4c8b09417a38dd3146ed_IHG.png" alt="IHG">
+            <img src="https://cdn.prod.website-files.com/62b4fd72b25b1bcbcba262e8/62ce50032ab9f2684a39e592_Sofitel.png" alt="Sofitel">
+            <img src="https://cdn.prod.website-files.com/62b4fd72b25b1bcbcba262e8/62ce4c4d9e01c683a9139aaf_Marriott.png" alt="Marriott">
+          </div>
+        </div>
+
+        <div class="slide-right">
+          <img class="sr-scene"
+               src="../assets/Longarms Scenes/98-084 PurchasePlus Scene Illustration Buyer and Seller Interaction Transparent 300dpi.png"
+               alt="" style="padding:10% 4px 0;opacity:.88;">
+          <div style="position:absolute;top:10%;left:0;right:0;display:flex;justify-content:center;z-index:3;">
+            <div style="background:rgba(255,255,255,.94);border:1px solid var(--border);border-radius:12px;padding:14px 18px;max-width:195px;box-shadow:0 8px 32px rgba(15,23,42,.12);">
+              <div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">Invoice Cycle Time</div>
+              <div style="font-size:24px;font-weight:200;letter-spacing:-1px;color:var(--ink);line-height:1;">1.8 <span style="font-size:13px;color:var(--green);font-weight:500;">days</span></div>
+              <div style="font-size:11px;color:var(--muted);margin-top:2px;">Down from 14 days &darr; 87%</div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ══════════════════════════════
            SLIDE 06 — PROVEN AT SCALE
            Buyer + Seller scene
            ══════════════════════════════ -->
@@ -920,6 +1357,75 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
                src="../assets/Longarms Scenes/98-084 PurchasePlus Scene Illustration Buyer and Seller Interaction Transparent 300dpi.png"
                alt="Buyer and supplier connected"
                style="padding:28% 4px 0; object-position:bottom center; opacity:.96;">
+        </div>
+
+      </section>
+
+      <!-- ══════════════════════════════
+           SLIDE — MEET THE TEAM
+           Leadership team grid
+           ══════════════════════════════ -->
+      <section class="slide" data-title="Meet the Team">
+
+        <div class="slide-left">
+          <div class="slide-eyebrow"><span class="grad">Our People</span></div>
+          <h2>The team <span class="grad">behind the platform.</span></h2>
+          <p class="lead">Built by hospitality and technology experts who understand procurement from the inside out.</p>
+          <div class="team-grid">
+            <div class="person-card">
+              <img class="person-photo" src="../assets/Team/nathan.avif" alt="Nathan Gyaneshwar">
+              <div>
+                <div class="person-name">Nathan Gyaneshwar</div>
+                <div class="person-role">Founder</div>
+              </div>
+            </div>
+            <div class="person-card">
+              <img class="person-photo" src="../assets/Team/malcolm.avif" alt="Malcolm Jull">
+              <div>
+                <div class="person-name">Malcolm Jull</div>
+                <div class="person-role">Chief Executive Officer</div>
+              </div>
+            </div>
+            <div class="person-card">
+              <img class="person-photo" src="../assets/Team/karny.avif" alt="Karny Dhah">
+              <div>
+                <div class="person-name">Karny Dhah</div>
+                <div class="person-role">Chief Financial Officer</div>
+              </div>
+            </div>
+            <div class="person-card">
+              <img class="person-photo" src="../assets/Team/mitch.avif" alt="Mitch Hulst">
+              <div>
+                <div class="person-name">Mitch Hulst</div>
+                <div class="person-role">Chief Operating Officer</div>
+              </div>
+            </div>
+            <div class="person-card">
+              <img class="person-photo" src="../assets/Team/peter.png" alt="Peter Hubbard">
+              <div>
+                <div class="person-name">Peter Hubbard</div>
+                <div class="person-role">Chief Product Officer</div>
+              </div>
+            </div>
+            <div class="person-card" style="background:var(--grad-soft);border-color:rgba(124,93,255,.2);">
+              <div style="width:40px;height:40px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:500;color:#fff;flex-shrink:0;letter-spacing:.04em;">AL</div>
+              <div>
+                <div class="person-name">Akila Lohan</div>
+                <div class="person-role"><span class="grad">Head of Marketing</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="slide-right">
+          <div style="position:absolute;top:0;left:0;right:0;height:60%;z-index:1;background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(169,86,255,.18) 0%,transparent 70%);"></div>
+          <img src="../assets/Colourful UI UX/Stand Alone/CLOUDS.png" alt=""
+               style="position:absolute;top:-6%;left:-14%;width:64%;opacity:.45;z-index:2;transform:rotate(-8deg);">
+          <img src="../assets/Colourful UI UX/Stand Alone/CLOUDS.png" alt=""
+               style="position:absolute;bottom:-8%;right:-10%;width:50%;opacity:.35;z-index:2;transform:rotate(12deg) scaleX(-1);">
+          <img class="sr-char"
+               src="../assets/Longarms Characters/Stand Alone/98-084 PurchasePlus Longarm Illustration Manager Retina.png"
+               alt="" style="height:72%;right:0%;z-index:3;">
         </div>
 
       </section>
@@ -1100,6 +1606,76 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
     go(e.deltaY > 0 ? current + 1 : current - 1);
     setTimeout(function() { wheelCooldown = false; }, 800);
   }, { passive: false });
+
+  /* ── Lightbox (Application Screen slide) ── */
+  (function() {
+    var lb, vp, img, scale, tx, ty, dragging, dsx, dsy;
+    window.openLightbox = function(src) {
+      lb = document.createElement('div');
+      lb.className = 'lb';
+      lb.innerHTML = '<div class="lb-vp" id="lbVp"><img class="lb-img" id="lbImg" src="' + src + '"></div>' +
+        '<div class="lb-ctrl">' +
+        '<button class="lb-btn" id="lbZi">+</button>' +
+        '<div class="lb-pct" id="lbPct">100%</div>' +
+        '<button class="lb-btn" id="lbZo">−</button>' +
+        '<button class="lb-btn" id="lbCl" style="margin-left:8px;">×</button>' +
+        '</div>';
+      document.body.appendChild(lb);
+      vp  = document.getElementById('lbVp');
+      img = document.getElementById('lbImg');
+      scale = 1; tx = 0; ty = 0;
+      img.onload = function() {
+        var cw = vp.offsetWidth, ch = vp.offsetHeight;
+        scale = Math.min(1, Math.min(cw / img.naturalWidth, ch / img.naturalHeight));
+        tx = (cw - img.naturalWidth  * scale) / 2;
+        ty = (ch - img.naturalHeight * scale) / 2;
+        applyT();
+      };
+      if (img.complete && img.naturalWidth) img.onload();
+      vp.addEventListener('wheel', onWh, { passive: false });
+      vp.addEventListener('mousedown', onMd);
+      document.addEventListener('mousemove', onMm);
+      document.addEventListener('mouseup', onMu);
+      document.getElementById('lbZi').addEventListener('click', function() { zoom(1.25); });
+      document.getElementById('lbZo').addEventListener('click', function() { zoom(0.8); });
+      document.getElementById('lbCl').addEventListener('click', closeLb);
+      lb.addEventListener('click', function(e) { if (e.target === lb) closeLb(); });
+      lb.addEventListener('wheel', function(e) { e.stopPropagation(); }, { passive: false });
+      document.addEventListener('keydown', onKey);
+    };
+    function applyT() {
+      img.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + scale + ')';
+      var el = document.getElementById('lbPct');
+      if (el) el.textContent = Math.round(scale * 100) + '%';
+    }
+    function zoom(f, cx, cy) {
+      if (!cx) cx = vp.offsetWidth / 2;
+      if (!cy) cy = vp.offsetHeight / 2;
+      var ns = Math.min(4, Math.max(0.2, scale * f));
+      tx = cx - (cx - tx) * ns / scale;
+      ty = cy - (cy - ty) * ns / scale;
+      scale = ns; applyT();
+    }
+    function onWh(e) {
+      e.preventDefault();
+      var r = vp.getBoundingClientRect();
+      zoom(e.deltaY < 0 ? 1.12 : 0.89, e.clientX - r.left, e.clientY - r.top);
+    }
+    function onMd(e) { dragging = true; dsx = e.clientX - tx; dsy = e.clientY - ty; vp.classList.add('grabbing'); }
+    function onMm(e) { if (!dragging) return; tx = e.clientX - dsx; ty = e.clientY - dsy; applyT(); }
+    function onMu() { dragging = false; if (vp) vp.classList.remove('grabbing'); }
+    function onKey(e) {
+      if (e.key === 'Escape') closeLb();
+      if (e.key === '+' || e.key === '=') zoom(1.2);
+      if (e.key === '-') zoom(0.8);
+    }
+    function closeLb() {
+      if (lb) { lb.remove(); lb = vp = img = null; }
+      document.removeEventListener('mousemove', onMm);
+      document.removeEventListener('mouseup', onMu);
+      document.removeEventListener('keydown', onKey);
+    }
+  })();
 
   updateChrome();
 
