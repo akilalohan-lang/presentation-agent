@@ -606,8 +606,8 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 .screen-hint { display:flex; align-items:center; gap:6px; font-size:11px; color:var(--muted); margin-top:9px; }
 
 /* Lightbox */
-.lb { position:fixed; inset:0; z-index:9999; background:linear-gradient(155deg,#1a0630 0%,#0f1628 50%,#081420 100%); display:flex; align-items:center; justify-content:center; }
-.lb-vp { position:relative; overflow:hidden; width:88vw; height:84vh; cursor:grab; border-radius:10px; background:#0a0a12; }
+.lb { position:fixed; inset:0; z-index:9999; background:linear-gradient(135deg,#594574 0%,#3a1a6e 45%,#1a2a6e 100%); display:flex; align-items:center; justify-content:center; }
+.lb-vp { position:relative; overflow:hidden; width:88vw; height:84vh; cursor:grab; border-radius:10px; background:rgba(30,10,60,.6); }
 .lb-vp.grabbing { cursor:grabbing; }
 .lb-img { position:absolute; top:0; left:0; transform-origin:0 0; max-width:none; user-select:none; pointer-events:none; display:block; }
 .lb-ctrl { position:fixed; top:20px; right:20px; display:flex; align-items:center; gap:6px; z-index:10000; }
@@ -1064,14 +1064,10 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
           </div>
         </div>
 
-        <div class="slide-right" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:24px;">
-          <div class="screen-clickable" onclick="openLightbox(this.querySelector('img').src)" style="width:100%;">
+        <div class="slide-right" style="display:flex;align-items:center;justify-content:center;padding:0 14px;">
+          <div class="screen-clickable" onclick="openLightbox(this.querySelector('img').src)" style="width:120%;max-width:120%;box-shadow:0 32px 80px rgba(15,23,42,.38),0 8px 32px rgba(124,93,255,.22);">
             <img src="../assets/PurchasePlus Web Application Screens/Artboard 2_PurchasePlu.png"
                  alt="PurchasePlus dashboard">
-          </div>
-          <div class="screen-hint" style="justify-content:center;">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
-            Scroll to zoom · Drag to pan · Click outside to close
           </div>
         </div>
 
