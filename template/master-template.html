@@ -1110,7 +1110,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
                  alt="PurchasePlus supplier catalog"
                  style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block;user-select:none;pointer-events:none;">
             <!-- Tracker box — shows region being zoomed -->
-            <div id="fhTracker" style="display:none;position:absolute;border:2px solid rgba(124,93,255,.9);box-shadow:0 0 0 1px rgba(124,93,255,.25),0 0 12px rgba(124,93,255,.3);border-radius:4px;pointer-events:none;z-index:10;transition:none;"></div>
+            <div id="fhTracker" style="display:none;position:absolute;border:3px solid #10b981;box-shadow:0 0 0 1px rgba(16,185,129,.3),0 0 16px rgba(16,185,129,.5);border-radius:4px;pointer-events:none;z-index:10;transition:none;"></div>
           </div>
           <!-- Bottom: zoom window -->
           <div style="flex:1;position:relative;background:linear-gradient(160deg,#1a0630 0%,#0d1422 100%);overflow:hidden;">
@@ -1638,13 +1638,14 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
     if (!screen || !zoom) return;
     var ZOOM   = 3.5;
     var locked = false;
-    var COL_DEFAULT = 'rgba(124,93,255,.9)';
-    var COL_LOCKED  = '#ee2b62';
+    var COL_DEFAULT  = '#10b981';
+    var COL_LOCKED   = '#ee2b62';
     var COL_UNLOCKED = '#10b981';
 
     function setTrackerColor(col) {
       tracker.style.borderColor = col;
-      tracker.style.boxShadow   = '0 0 0 1px ' + col + '40, 0 0 12px ' + col + '50';
+      tracker.style.borderWidth = '3px';
+      tracker.style.boxShadow   = '0 0 0 1px ' + col + '40, 0 0 16px ' + col + '60';
     }
 
     function resetToTopLeft() {
