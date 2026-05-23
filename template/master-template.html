@@ -1475,47 +1475,112 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
            ══════════════════════════════ -->
       <section class="slide" data-title="Call to Action">
 
-        <div class="slide-left">
-          <div class="slide-eyebrow"><span class="grad">Call to Action</span></div>
+        <div class="slide-left" style="overflow-y:auto;">
+          <div class="slide-eyebrow"><span class="grad">Get Started</span></div>
           <h2>Ready to transform<br><span class="grad">your procurement?</span></h2>
           <p class="lead">PurchasePlus is live in under 30 days. No disruption to current operations. Your team is supported every step of the way.</p>
-          <div class="concept-grid">
-            <div class="concept-card">
-              <div class="concept-tag">WEEK 1</div>
+
+          <!-- Timeline steps — large badges -->
+          <div style="display:flex;flex-direction:column;gap:12px;margin-top:14px;">
+            <div style="display:flex;align-items:flex-start;gap:16px;">
+              <div style="flex-shrink:0;background:var(--grad);color:#fff;font-size:clamp(15px,1.6vw,20px);font-weight:700;letter-spacing:.04em;padding:8px 18px;border-radius:10px;white-space:nowrap;line-height:1.2;text-transform:uppercase;">Week 1</div>
               <div>
-                <div class="concept-title">Setup and onboarding</div>
-                <div class="concept-body">Supplier connections, system integrations, and team training handled by our implementation team.</div>
+                <div style="font-size:clamp(15px,1.6vw,20px);font-weight:600;color:var(--ink);line-height:1.3;margin-bottom:4px;">Setup and onboarding</div>
+                <div style="font-size:clamp(12px,1.3vw,16px);color:var(--body);line-height:1.5;text-wrap:balance;">Supplier connections, system integrations, and team training handled by our implementation team.</div>
               </div>
             </div>
-            <div class="concept-card">
-              <div class="concept-tag">WEEK 2-4</div>
+            <div style="display:flex;align-items:flex-start;gap:16px;">
+              <div style="flex-shrink:0;background:var(--grad);color:#fff;font-size:clamp(15px,1.6vw,20px);font-weight:700;letter-spacing:.04em;padding:8px 16px;border-radius:10px;white-space:nowrap;line-height:1.2;text-transform:uppercase;">Week 2–4</div>
               <div>
-                <div class="concept-title">Go live on your first property</div>
-                <div class="concept-body">Full support during first month. Dedicated customer success manager from day one.</div>
+                <div style="font-size:clamp(15px,1.6vw,20px);font-weight:600;color:var(--ink);line-height:1.3;margin-bottom:4px;">Go live on your first property</div>
+                <div style="font-size:clamp(12px,1.3vw,16px);color:var(--body);line-height:1.5;text-wrap:balance;">Full support during first month. Dedicated customer success manager from day one.</div>
               </div>
             </div>
-            <div class="concept-card">
-              <div class="concept-tag">DAY 90</div>
+            <div style="display:flex;align-items:flex-start;gap:16px;">
+              <div style="flex-shrink:0;background:var(--grad);color:#fff;font-size:clamp(15px,1.6vw,20px);font-weight:700;letter-spacing:.04em;padding:8px 18px;border-radius:10px;white-space:nowrap;line-height:1.2;text-transform:uppercase;">Day 90</div>
               <div>
-                <div class="concept-title">Savings review</div>
-                <div class="concept-body">We show you exactly what PurchasePlus has saved you. Transparent, in writing.</div>
+                <div style="font-size:clamp(15px,1.6vw,20px);font-weight:600;color:var(--ink);line-height:1.3;margin-bottom:4px;">Savings review</div>
+                <div style="font-size:clamp(12px,1.3vw,16px);color:var(--body);line-height:1.5;text-wrap:balance;">We show you exactly what PurchasePlus has saved you. Transparent, in writing.</div>
               </div>
             </div>
           </div>
-          <button class="cta-btn" onclick="window.open('https://purchaseplus.com','_blank')">
-            Book a demo
-          </button>
         </div>
 
-        <!-- Dark right panel -->
-        <div class="slide-right dark">
-          <div class="dark-cta">
-            <div class="dark-cta-eyebrow">Get in touch</div>
-            <!-- Vertical logo: colored emblem + white PurchasePlus text + white slogan -->
+        <!-- Dark right panel — full contact info -->
+        <div class="slide-right dark" style="overflow-y:auto;">
+          <div class="dark-cta" style="padding:28px 32px;align-items:flex-start;gap:0;justify-content:flex-start;width:100%;">
+
+            <div style="font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:16px;">Get in touch</div>
+
+            <!-- Logo — large -->
             <img src="../assets/PurchasePlus Logos/logo-vertical-slogan-white.png"
-                 alt="PurchasePlus" style="width:180px; height:auto; opacity:.92;">
-            <div class="dark-cta-divider"></div>
-            <div class="dark-cta-url">purchaseplus.com</div>
+                 alt="PurchasePlus" style="width:clamp(160px,18vw,260px);height:auto;opacity:.95;margin-bottom:14px;">
+
+            <!-- Website URL -->
+            <a href="https://purchaseplus.com" target="_blank"
+               style="font-size:clamp(15px,1.6vw,21px);font-weight:600;color:#fff;text-decoration:none;letter-spacing:-.3px;margin-bottom:20px;opacity:.9;">
+              purchaseplus.com
+            </a>
+
+            <div style="width:100%;height:1px;background:rgba(255,255,255,.12);margin-bottom:18px;"></div>
+
+            <!-- Email -->
+            <a href="mailto:help@marketboomer.com"
+               style="display:flex;align-items:center;gap:8px;font-size:clamp(12px,1.3vw,15px);color:rgba(255,255,255,.8);text-decoration:none;margin-bottom:18px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+              help@marketboomer.com
+            </a>
+
+            <div style="width:100%;height:1px;background:rgba(255,255,255,.12);margin-bottom:14px;"></div>
+
+            <!-- Regional support -->
+            <div style="font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:10px;">Regional Support — Mon to Fri</div>
+            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:18px;width:100%;">
+              <div style="display:flex;justify-content:space-between;align-items:baseline;">
+                <span style="font-size:clamp(10px,1.1vw,13px);font-weight:600;color:rgba(255,255,255,.55);min-width:80px;">AU / NZ</span>
+                <a href="tel:+61258496957" style="font-size:clamp(11px,1.2vw,14px);color:rgba(255,255,255,.85);text-decoration:none;font-weight:300;">+61 2 5849 6957</a>
+                <span style="font-size:10px;color:rgba(255,255,255,.35);">08:30–18:00 AEST</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:baseline;">
+                <span style="font-size:clamp(10px,1.1vw,13px);font-weight:600;color:rgba(255,255,255,.55);min-width:80px;">Singapore</span>
+                <a href="tel:+6531251540" style="font-size:clamp(11px,1.2vw,14px);color:rgba(255,255,255,.85);text-decoration:none;font-weight:300;">+65 3125 1540</a>
+                <span style="font-size:10px;color:rgba(255,255,255,.35);">08:30–18:00 SGT</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:baseline;">
+                <span style="font-size:clamp(10px,1.1vw,13px);font-weight:600;color:rgba(255,255,255,.55);min-width:80px;">USA</span>
+                <a href="tel:+16802255236" style="font-size:clamp(11px,1.2vw,14px);color:rgba(255,255,255,.85);text-decoration:none;font-weight:300;">+1 (680) 225-5236</a>
+                <span style="font-size:10px;color:rgba(255,255,255,.35);">08:30–18:00 EST</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:baseline;">
+                <span style="font-size:clamp(10px,1.1vw,13px);font-weight:600;color:rgba(255,255,255,.55);min-width:80px;">Thailand</span>
+                <a href="tel:+6622553703" style="font-size:clamp(11px,1.2vw,14px);color:rgba(255,255,255,.85);text-decoration:none;font-weight:300;">+66 2255 3703</a>
+                <span style="font-size:10px;color:rgba(255,255,255,.35);">08:30–18:00 ICT</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:baseline;">
+                <span style="font-size:clamp(10px,1.1vw,13px);font-weight:600;color:rgba(255,255,255,.55);min-width:80px;">UK / Europe</span>
+                <a href="tel:+442045387068" style="font-size:clamp(11px,1.2vw,14px);color:rgba(255,255,255,.85);text-decoration:none;font-weight:300;">+44 204 538 7068</a>
+                <span style="font-size:10px;color:rgba(255,255,255,.35);">08:30–18:00 BST</span>
+              </div>
+            </div>
+
+            <div style="width:100%;height:1px;background:rgba(255,255,255,.12);margin-bottom:14px;"></div>
+
+            <!-- Head office -->
+            <div style="font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:8px;">Head Office</div>
+            <div style="font-size:clamp(11px,1.2vw,14px);color:rgba(255,255,255,.7);font-weight:300;line-height:1.6;margin-bottom:18px;">
+              477 Pitt Street, Haymarket NSW 2000, Australia
+            </div>
+
+            <div style="width:100%;height:1px;background:rgba(255,255,255,.12);margin-bottom:14px;"></div>
+
+            <!-- Compliance badges -->
+            <div style="font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:10px;">Certifications</div>
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+              <img src="../assets/Web Content/Images/cert-soc2.png" alt="SOC2" style="height:32px;width:auto;filter:brightness(0) invert(1);opacity:.6;">
+              <img src="../assets/Web Content/Images/cert-iso27001.png" alt="ISO 27001" style="height:32px;width:auto;filter:brightness(0) invert(1);opacity:.6;">
+              <img src="../assets/Web Content/Images/cert-gdpr.png" alt="GDPR" style="height:32px;width:auto;filter:brightness(0) invert(1);opacity:.6;">
+            </div>
+
           </div>
         </div>
 
@@ -1722,98 +1787,285 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
         keys: ['budget','visibility','analytics','finance','compliance','spend','reporting','control']
       }
     ];
-    var tlCurrent = 0;
 
-    function tlApply(idx) {
-      var t = tlTopics[idx];
-      tlCurrent = idx;
+    // ── Extended text-only topic pool (randomised for "New Text") ──
+    var tlTextPool = tlTopics.concat([
+      {
+        eyebrow: 'Compliance',
+        heading: 'Audit-ready<br><span class="grad">from day one.</span>',
+        lead: 'Every purchase order, approval, and invoice is logged with a tamper-proof digital trail that satisfies SOC2 and ISO 27001.',
+        stats: [
+          { num: '<span class="grad">SOC2</span>', label: 'Type II certified platform with end-to-end audit trail on every transaction.' },
+          { num: 'ISO 27001',                       label: 'certified security framework protecting all supplier and financial data.' },
+          { num: '<span class="grad">100%</span>',  label: 'of purchase events captured and reportable within seconds.' }
+        ],
+        kicker: 'Source: PurchasePlus Trust Center 2026.',
+        img: '../assets/Generated/tl-budget-visibility.png',
+        keys: ['compliance','audit','soc2','iso','security','trust','gdpr']
+      },
+      {
+        eyebrow: 'Multi-Property',
+        heading: 'One platform,<br><span class="grad">every property.</span>',
+        lead: 'Manage procurement across 5 or 500 properties from a single dashboard, with property-level controls and group-level reporting.',
+        stats: [
+          { num: '<span class="grad">5,000+</span>', label: 'properties actively managed on the PurchasePlus platform globally.' },
+          { num: '60%',                               label: 'reduction in time spent on procurement admin across multi-property groups.' },
+          { num: '<span class="grad">$2.4B</span>',  label: 'annual spend consolidated and reported across all customer groups.' }
+        ],
+        kicker: 'Source: PurchasePlus 2026 Enterprise Report.',
+        img: '../assets/Generated/tl-supplier-management.png',
+        keys: ['multi-property','enterprise','portfolio','group','scale','properties','chain']
+      },
+      {
+        eyebrow: 'Digital Transformation',
+        heading: 'Paper-free<br><span class="grad">procurement is here.</span>',
+        lead: 'Replace spreadsheets, phone calls, and email orders with a fully digital procurement workflow that your team adopts in days.',
+        stats: [
+          { num: '<span class="grad">30 days</span>', label: 'average time from sign-up to fully live across your first property.' },
+          { num: '95%',                                label: 'team adoption rate within the first month, with no training budget required.' },
+          { num: '<span class="grad">80%</span>',     label: 'reduction in procurement admin hours, freeing staff for guest-facing work.' }
+        ],
+        kicker: 'Source: PurchasePlus 2026 Onboarding Success Report.',
+        img: '../assets/Generated/tl-procurement-challenge.png',
+        keys: ['digital','transformation','paperless','adoption','change','technology','modern']
+      },
+      {
+        eyebrow: 'Contract Management',
+        heading: 'Contracts enforced<br><span class="grad">automatically.</span>',
+        lead: 'Lock in negotiated rates with your suppliers and let the platform enforce them on every order, eliminating compliance exceptions.',
+        stats: [
+          { num: '<span class="grad">100%</span>', label: 'of purchase orders checked against contracted supplier rates before approval.' },
+          { num: '$180K',                           label: 'average annual saving recovered from off-contract spend per enterprise group.' },
+          { num: '<span class="grad">0 calls</span>', label: 'required to enforce pricing — the platform handles it automatically.' }
+        ],
+        kicker: 'Source: PurchasePlus 2026 Contract Compliance Study.',
+        img: '../assets/Generated/tl-budget-visibility.png',
+        keys: ['contract','negotiated','rates','pricing','compliance','enforcement','spend']
+      },
+      {
+        eyebrow: 'Spend Analytics',
+        heading: 'Every dollar.<br><span class="grad">Every insight.</span>',
+        lead: 'Real-time dashboards give finance and operations teams live visibility into category spend, variances, and savings opportunities.',
+        stats: [
+          { num: '<span class="grad">Live</span>', label: 'spend dashboards updated the moment a PO is approved — no waiting for month-end.' },
+          { num: '42%',                             label: 'of spend typically unmanaged before PurchasePlus reveals the full picture.' },
+          { num: '<span class="grad">3 sec</span>', label: 'to generate a full spend report across any date range, property, or category.' }
+        ],
+        kicker: 'Source: PurchasePlus 2026 Analytics Benchmark.',
+        img: '../assets/Generated/tl-budget-visibility.png',
+        keys: ['analytics','spend','visibility','reporting','data','insight','dashboard']
+      },
+      {
+        eyebrow: 'AI Integration',
+        heading: 'AI that works<br><span class="grad">for procurement.</span>',
+        lead: 'Machine learning matches invoices, predicts reorder points, detects pricing anomalies, and flags contract exceptions — automatically.',
+        stats: [
+          { num: '<span class="grad">99.9%</span>', label: 'invoice matching accuracy across 40M+ invoices processed to date.' },
+          { num: '3-way',                            label: 'AI matching of PO, delivery receipt, and supplier invoice in under 3 minutes.' },
+          { num: '<span class="grad">$1.8M</span>', label: 'average AI-identified savings per enterprise group per year.' }
+        ],
+        kicker: 'Source: PurchasePlus 2026 AI Performance Report.',
+        img: '../assets/Generated/tl-invoice-automation.png',
+        keys: ['ai','machine learning','automation','intelligence','smart','matching','predictions']
+      },
+      {
+        eyebrow: 'Onboarding',
+        heading: 'Live in 30 days.<br><span class="grad">Guaranteed.</span>',
+        lead: 'Our implementation team handles supplier onboarding, system integrations, and staff training — so you can focus on running your operation.',
+        stats: [
+          { num: '<span class="grad">30 days</span>', label: 'average time from contract signing to first property going live.' },
+          { num: '0',                                  label: 'disruption to existing operations during the transition period.' },
+          { num: '<span class="grad">Dedicated</span>', label: 'customer success manager assigned from day one through your first year.' }
+        ],
+        kicker: 'Source: PurchasePlus 2026 Customer Success Report.',
+        img: '../assets/Generated/tl-procurement-challenge.png',
+        keys: ['onboarding','implementation','setup','go-live','launch','training','success']
+      }
+    ]);
+
+    // ── Scene descriptions for live Higgsfield generation ──
+    var tlScenes = [
+      'Character standing confidently with both very long arms stretched wide open in a welcoming pose, surrounded by floating abstract document and chart shapes',
+      'Character sitting at a desk with extremely long arms resting forward, with abstract glowing rectangle shapes representing a dashboard floating nearby',
+      'Character with one very long arm extended forward pointing toward the viewer, surrounded by abstract checkmark and circular node shapes',
+      'Character waving one extremely long arm high above in a greeting gesture, with floating abstract star and sparkle shapes around them',
+      'Character with both long arms raised upward in a celebratory pose, surrounded by abstract rising bar shapes and circular dial forms',
+      'Character looking thoughtful with both long curved arms crossed in front, floating rectangular document shapes and arrow shapes around them',
+      'Character with one long arm reaching toward a large abstract glowing panel shape, their other arm gesturing toward floating circular elements',
+      'Character in a presenting stance with both long arms gesturing outward, abstract network node shapes connected by lines floating around them',
+      'Character standing upright with long arms at sides, surrounded by floating abstract invoice and document icon shapes showing transformation',
+      'Character with extremely long arms curved upward making an arch shape, surrounded by floating abstract cloud and connectivity shapes'
+    ];
+
+    function tlBuildPrompt(scene) {
+      return 'Flat vector illustration. Cartoon character with EXTREMELY long curved arms far beyond normal human proportions, wearing a navy dark blue business suit, white shirt, small red tie. Abstract minimal face: NO nose whatsoever, only two small dot eyes and a simple curved smile line. ' + scene + '. Pure white background. Colors strictly: purple rgb(124,93,255), teal rgb(0,189,197), blue rgb(55,102,254). ABSOLUTELY NO text, NO logos, NO written words, NO letters, NO brand names, NO numbers, NO labels, NO watermarks anywhere in the image at all. Flat design style, portrait.';
+    }
+
+    // ── Queue and state ──
+    var tlQueue = tlTopics.map(function(t) { return { text: t, img: t.img, ready: true, jobId: null }; });
+    var tlQueueIdx = 0;
+    var tlGenCount = 0; // total items ever generated (for "Topic N" display)
+    var tlGenerating = false;
+
+    // ── Loading overlay helpers ──
+    function tlSetImgLoading(on) {
+      var right = document.getElementById('tl-right');
+      if (!right) return;
+      var overlay = right.querySelector('.tl-loading-overlay');
+      if (on && !overlay) {
+        overlay = document.createElement('div');
+        overlay.className = 'tl-loading-overlay';
+        overlay.style.cssText = 'position:absolute;inset:0;background:rgba(124,93,255,.18);display:flex;align-items:center;justify-content:center;z-index:10;backdrop-filter:blur(3px);';
+        overlay.innerHTML = '<svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="16" stroke="rgba(124,93,255,.25)" stroke-width="3"/><circle cx="20" cy="20" r="16" stroke="url(#tlSpinGrad)" stroke-width="3" stroke-dasharray="60 40" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0 20 20" to="360 20 20" dur="0.9s" repeatCount="indefinite"/></circle><defs><linearGradient id="tlSpinGrad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#a956ff"/><stop offset="100%" stop-color="#3766fe"/></linearGradient></defs></svg>';
+        right.appendChild(overlay);
+      } else if (!on && overlay) {
+        overlay.remove();
+      }
+    }
+
+    function tlApplyText(t) {
       var ey = document.getElementById('tl-eyebrow');
       var hd = document.getElementById('tl-heading');
       var ld = document.getElementById('tl-lead');
       var ki = document.getElementById('tl-kicker');
-      var img = document.getElementById('tl-img');
-      var hint = document.getElementById('tlHint');
       if (!ey) return;
-      ey.innerHTML  = t.eyebrow;
-      hd.innerHTML  = t.heading;
-      ld.textContent = t.lead;
-      ki.textContent = t.kicker;
+      ey.innerHTML    = t.eyebrow;
+      hd.innerHTML    = t.heading;
+      ld.textContent  = t.lead;
+      if (ki) ki.textContent = t.kicker;
       for (var i = 0; i < 3; i++) {
         document.getElementById('tl-s' + (i + 1) + 'n').innerHTML  = t.stats[i].num;
         document.getElementById('tl-s' + (i + 1) + 'l').textContent = t.stats[i].label;
       }
-      if (img) img.src = t.img;
-      if (hint) hint.textContent = (idx + 1) + ' / ' + tlTopics.length;
     }
 
-    function tlPickByQuery() {
-      var input = document.getElementById('tlInput');
-      var query = input ? input.value.toLowerCase().trim() : '';
-      if (query.length > 1) {
-        var best = -1, bestIdx = (tlCurrent + 1) % tlTopics.length;
-        tlTopics.forEach(function(t, i) {
-          var score = t.keys.filter(function(k) {
-            return query.indexOf(k) >= 0 || k.indexOf(query) >= 0;
-          }).length;
-          if (score > best) { best = score; bestIdx = i; }
-        });
-        return bestIdx;
-      }
-      return -1;
+    function tlApplyImg(url) {
+      var imgEl = document.getElementById('tl-img');
+      if (!imgEl || !url) return;
+      imgEl.style.transition = 'opacity .3s';
+      imgEl.style.opacity = '0.3';
+      setTimeout(function() {
+        imgEl.src = url;
+        imgEl.style.opacity = '1';
+      }, 200);
     }
 
-    // New Topic: picks a new topic (text + image change together)
-    window.tlNewTopic = function() {
-      var byQuery = tlPickByQuery();
-      var next;
-      if (byQuery >= 0) {
-        next = byQuery;
+    function tlUpdateHint(label) {
+      var hint = document.getElementById('tlHint');
+      if (hint) hint.textContent = label;
+    }
+
+    function tlShowQueueItem(idx) {
+      var item = tlQueue[idx];
+      if (!item) return;
+      tlApplyText(item.text);
+      if (item.ready && item.img) {
+        tlSetImgLoading(false);
+        tlApplyImg(item.img);
       } else {
-        next = tlCurrent;
-        if (tlTopics.length > 1) while (next === tlCurrent) next = Math.floor(Math.random() * tlTopics.length);
+        tlSetImgLoading(true);
+        // poll until ready
+        (function poll() {
+          if (!tlQueue[idx]) return;
+          var q = tlQueue[idx];
+          if (q.ready && q.img) {
+            tlSetImgLoading(false);
+            tlApplyImg(q.img);
+          } else if (q.jobId) {
+            setTimeout(function() {
+              fetch('/api/hf-poll?id=' + q.jobId)
+                .then(function(r) { return r.json(); })
+                .then(function(d) {
+                  if (d.status === 'completed' && d.url) {
+                    q.img = d.url; q.ready = true;
+                    if (tlQueueIdx === idx) { tlSetImgLoading(false); tlApplyImg(d.url); }
+                  } else if (d.status !== 'failed') {
+                    poll();
+                  } else {
+                    tlSetImgLoading(false);
+                  }
+                }).catch(function() { tlSetImgLoading(false); });
+            }, 3000);
+          } else {
+            setTimeout(poll, 500);
+          }
+        })();
       }
-      tlApply(next);
+      tlUpdateHint('Topic ' + (idx + 1));
+    }
+
+    // Always prefetch the next item
+    function tlPrefetch() {
+      var needed = tlQueueIdx + 1;
+      if (needed < tlQueue.length) return; // already have it
+      if (tlGenerating) return;
+      tlGenerating = true;
+      var textT = tlTextPool[Math.floor(Math.random() * tlTextPool.length)];
+      var sceneStr = tlScenes[Math.floor(Math.random() * tlScenes.length)];
+      var prompt = tlBuildPrompt(sceneStr);
+      var pendingIdx = tlQueue.length;
+      tlQueue.push({ text: textT, img: null, ready: false, jobId: null });
+      fetch('/api/hf-start', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: prompt })
+      }).then(function(r) { return r.json(); }).then(function(d) {
+        if (d.jobId && tlQueue[pendingIdx]) {
+          tlQueue[pendingIdx].jobId = d.jobId;
+        }
+        tlGenerating = false;
+      }).catch(function() { tlGenerating = false; });
+    }
+
+    // Button: New Topic — advance queue + prefetch next
+    window.tlNewTopic = function() {
+      tlQueueIdx++;
+      tlShowQueueItem(tlQueueIdx);
+      tlPrefetch();
     };
 
-    // New Text: keeps current image, applies text from a different topic
+    // Button: New Text — pick random text, keep current image
     window.tlNewText = function() {
-      var textIdx = tlCurrent;
-      if (tlTopics.length > 1) while (textIdx === tlCurrent) textIdx = Math.floor(Math.random() * tlTopics.length);
-      var t = tlTopics[textIdx];
+      var t = tlTextPool[Math.floor(Math.random() * tlTextPool.length)];
       var ey = document.getElementById('tl-eyebrow');
-      var hd = document.getElementById('tl-heading');
-      var ld = document.getElementById('tl-lead');
-      var ki = document.getElementById('tl-kicker');
       if (!ey) return;
-      // Flash text area
-      [ey, hd, ld, ki].forEach(function(el) { if (el) { el.style.transition = 'opacity .15s'; el.style.opacity = '0.3'; } });
+      [ey, document.getElementById('tl-heading'), document.getElementById('tl-lead'), document.getElementById('tl-kicker')]
+        .forEach(function(el) { if (el) { el.style.transition = 'opacity .15s'; el.style.opacity = '0.3'; } });
       setTimeout(function() {
-        ey.innerHTML = t.eyebrow;
-        hd.innerHTML = t.heading;
-        ld.textContent = t.lead;
-        if (ki) ki.textContent = t.kicker;
-        for (var i = 0; i < 3; i++) {
-          document.getElementById('tl-s' + (i + 1) + 'n').innerHTML  = t.stats[i].num;
-          document.getElementById('tl-s' + (i + 1) + 'l').textContent = t.stats[i].label;
-        }
-        [ey, hd, ld, ki].forEach(function(el) { if (el) el.style.opacity = '1'; });
-        document.getElementById('tlHint').textContent = (textIdx + 1) + ' / ' + tlTopics.length;
+        tlApplyText(t);
+        [ey, document.getElementById('tl-heading'), document.getElementById('tl-lead'), document.getElementById('tl-kicker')]
+          .forEach(function(el) { if (el) el.style.opacity = '1'; });
+        tlUpdateHint('Topic ' + (tlQueueIdx + 1));
       }, 160);
     };
 
-    // New Image: keeps current text, swaps to a different topic's image
+    // Button: New Image — generate fresh image, keep current text
     window.tlNewImage = function() {
-      var imgIdx = tlCurrent;
-      if (tlTopics.length > 1) while (imgIdx === tlCurrent) imgIdx = Math.floor(Math.random() * tlTopics.length);
-      var imgEl = document.getElementById('tl-img');
-      if (!imgEl) return;
-      imgEl.style.transition = 'opacity .25s';
-      imgEl.style.opacity = '0.2';
-      setTimeout(function() {
-        imgEl.src = tlTopics[imgIdx].img;
-        imgEl.alt = tlTopics[imgIdx].alt || '';
-        imgEl.style.opacity = '1';
-      }, 250);
+      tlSetImgLoading(true);
+      var sceneStr = tlScenes[Math.floor(Math.random() * tlScenes.length)];
+      var prompt = tlBuildPrompt(sceneStr);
+      fetch('/api/hf-start', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: prompt })
+      }).then(function(r) { return r.json(); }).then(function(d) {
+        if (!d.jobId) { tlSetImgLoading(false); return; }
+        var jobId = d.jobId;
+        (function poll() {
+          setTimeout(function() {
+            fetch('/api/hf-poll?id=' + jobId)
+              .then(function(r) { return r.json(); })
+              .then(function(d) {
+                if (d.status === 'completed' && d.url) {
+                  tlSetImgLoading(false);
+                  tlApplyImg(d.url);
+                  if (tlQueue[tlQueueIdx]) tlQueue[tlQueueIdx].img = d.url;
+                } else if (d.status !== 'failed') { poll(); }
+                else { tlSetImgLoading(false); }
+              }).catch(function() { tlSetImgLoading(false); });
+          }, 3000);
+        })();
+      }).catch(function() { tlSetImgLoading(false); });
     };
 
     // Legacy alias
@@ -1825,6 +2077,9 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
         if (e.key === 'Enter') window.tlNewTopic();
       });
     }
+
+    // Prefetch topic 2 on load
+    tlPrefetch();
   })();
 
   /* ── Feature Highlight magnifier ── */
