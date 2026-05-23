@@ -84,6 +84,11 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
   0%   { background-position: 200% 50%; }
   100% { background-position: 0% 50%; }
 }
+@keyframes ctaPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(0,189,197,.5); }
+  60%  { box-shadow: 0 0 0 6px rgba(0,189,197,0); }
+  100% { box-shadow: 0 0 0 0 rgba(0,189,197,0); }
+}
 
 /* ══════════════════════════════════════════════════════════
    APP SHELL
@@ -1661,24 +1666,24 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
           <h2>Ready to transform<br><span class="grad">your procurement?</span></h2>
           <p class="lead">PurchasePlus is live in under 30 days. No disruption to current operations. Your team is supported every step of the way.</p>
 
-          <!-- Timeline steps — large badges -->
+          <!-- Timeline steps — badges match text block height -->
           <div style="display:flex;flex-direction:column;gap:12px;margin-top:14px;">
-            <div style="display:flex;align-items:flex-start;gap:16px;">
-              <div style="flex-shrink:0;background:var(--grad);color:#fff;font-size:clamp(15px,1.6vw,20px);font-weight:700;letter-spacing:.04em;padding:8px 18px;border-radius:10px;white-space:nowrap;line-height:1.2;text-transform:uppercase;">Week 1</div>
+            <div style="display:flex;align-items:stretch;gap:16px;">
+              <div style="flex-shrink:0;background:var(--grad);color:#fff;font-size:clamp(15px,1.6vw,20px);font-weight:700;letter-spacing:.04em;padding:0 20px;border-radius:10px;white-space:nowrap;text-transform:uppercase;display:flex;align-items:center;justify-content:center;">Week 1</div>
               <div>
                 <div style="font-size:clamp(15px,1.6vw,20px);font-weight:600;color:var(--ink);line-height:1.3;margin-bottom:4px;">Setup and onboarding</div>
                 <div style="font-size:clamp(12px,1.3vw,16px);color:var(--body);line-height:1.5;text-wrap:balance;">Supplier connections, system integrations, and team training handled by our implementation team.</div>
               </div>
             </div>
-            <div style="display:flex;align-items:flex-start;gap:16px;">
-              <div style="flex-shrink:0;background:var(--grad);color:#fff;font-size:clamp(15px,1.6vw,20px);font-weight:700;letter-spacing:.04em;padding:8px 16px;border-radius:10px;white-space:nowrap;line-height:1.2;text-transform:uppercase;">Week 2–4</div>
+            <div style="display:flex;align-items:stretch;gap:16px;">
+              <div style="flex-shrink:0;background:var(--grad);color:#fff;font-size:clamp(15px,1.6vw,20px);font-weight:700;letter-spacing:.04em;padding:0 18px;border-radius:10px;white-space:nowrap;text-transform:uppercase;display:flex;align-items:center;justify-content:center;">Week 2–4</div>
               <div>
                 <div style="font-size:clamp(15px,1.6vw,20px);font-weight:600;color:var(--ink);line-height:1.3;margin-bottom:4px;">Go live on your first property</div>
                 <div style="font-size:clamp(12px,1.3vw,16px);color:var(--body);line-height:1.5;text-wrap:balance;">Full support during first month. Dedicated customer success manager from day one.</div>
               </div>
             </div>
-            <div style="display:flex;align-items:flex-start;gap:16px;">
-              <div style="flex-shrink:0;background:var(--grad);color:#fff;font-size:clamp(15px,1.6vw,20px);font-weight:700;letter-spacing:.04em;padding:8px 18px;border-radius:10px;white-space:nowrap;line-height:1.2;text-transform:uppercase;">Day 90</div>
+            <div style="display:flex;align-items:stretch;gap:16px;">
+              <div style="flex-shrink:0;background:var(--grad);color:#fff;font-size:clamp(15px,1.6vw,20px);font-weight:700;letter-spacing:.04em;padding:0 20px;border-radius:10px;white-space:nowrap;text-transform:uppercase;display:flex;align-items:center;justify-content:center;">Day 90</div>
               <div>
                 <div style="font-size:clamp(15px,1.6vw,20px);font-weight:600;color:var(--ink);line-height:1.3;margin-bottom:4px;">Savings review</div>
                 <div style="font-size:clamp(12px,1.3vw,16px);color:var(--body);line-height:1.5;text-wrap:balance;">We show you exactly what PurchasePlus has saved you. Transparent, in writing.</div>
@@ -1687,85 +1692,88 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
           </div>
         </div>
 
-        <!-- Dark right panel — full contact info -->
+        <!-- Dark right panel — fully centered contact info -->
         <div class="slide-right dark" style="overflow-y:auto;">
-          <div class="dark-cta" style="padding:28px 32px;align-items:flex-start;gap:0;justify-content:flex-start;width:100%;">
+          <div style="min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 32px;gap:0;text-align:center;">
 
-            <div style="font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:16px;">Get in touch</div>
+            <div style="font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:14px;">Get in touch</div>
 
-            <!-- Logo — large -->
+            <!-- Logo — centered, large -->
             <img src="../assets/PurchasePlus Logos/logo-vertical-slogan-white.png"
-                 alt="PurchasePlus" style="width:clamp(160px,18vw,260px);height:auto;opacity:.95;margin-bottom:14px;">
+                 alt="PurchasePlus" style="width:clamp(140px,16vw,220px);height:auto;opacity:.95;margin-bottom:16px;">
 
-            <!-- Website URL -->
-            <a href="https://purchaseplus.com" target="_blank"
-               style="font-size:clamp(15px,1.6vw,21px);font-weight:600;color:#fff;text-decoration:none;letter-spacing:-.3px;margin-bottom:20px;opacity:.9;">
-              purchaseplus.com
+            <!-- URL pill -->
+            <a href="https://www.purchaseplus.com" target="_blank"
+               style="display:inline-block;background:linear-gradient(90deg,rgba(169,86,255,.28),rgba(55,102,254,.28));border:1px solid rgba(255,255,255,.18);border-radius:999px;padding:7px 22px;font-size:clamp(13px,1.4vw,17px);font-weight:600;color:#fff;text-decoration:none;letter-spacing:-.2px;margin-bottom:16px;white-space:nowrap;">
+              www.purchaseplus.com
             </a>
-
-            <div style="width:100%;height:1px;background:rgba(255,255,255,.12);margin-bottom:18px;"></div>
 
             <!-- Email -->
             <a href="mailto:help@marketboomer.com"
-               style="display:flex;align-items:center;gap:8px;font-size:clamp(12px,1.3vw,15px);color:rgba(255,255,255,.8);text-decoration:none;margin-bottom:18px;">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+               style="display:inline-flex;align-items:center;gap:7px;font-size:clamp(12px,1.2vw,14px);color:rgba(255,255,255,.7);text-decoration:none;margin-bottom:18px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
               help@marketboomer.com
             </a>
 
-            <div style="width:100%;height:1px;background:rgba(255,255,255,.12);margin-bottom:14px;"></div>
+            <div style="width:80%;height:1px;background:rgba(255,255,255,.1);margin-bottom:16px;"></div>
 
             <!-- Regional support -->
-            <div style="font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:10px;">Regional Support — Mon to Fri</div>
-            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:18px;width:100%;">
-              <div style="display:flex;justify-content:space-between;align-items:baseline;">
-                <span style="font-size:clamp(10px,1.1vw,13px);font-weight:600;color:rgba(255,255,255,.55);min-width:80px;">AU / NZ</span>
-                <a href="tel:+61258496957" style="font-size:clamp(11px,1.2vw,14px);color:rgba(255,255,255,.85);text-decoration:none;font-weight:300;">+61 2 5849 6957</a>
-                <span style="font-size:10px;color:rgba(255,255,255,.35);">08:30–18:00 AEST</span>
+            <div style="font-size:8.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:8px;">Regional Support</div>
+
+            <!-- Support hours badge -->
+            <div style="display:inline-flex;align-items:center;gap:7px;margin-bottom:12px;">
+              <span style="width:7px;height:7px;border-radius:50%;background:#00bdc5;display:inline-block;box-shadow:0 0 0 0 rgba(0,189,197,.5);animation:ctaPulse 1.8s ease-in-out infinite;flex-shrink:0;"></span>
+              <span style="font-size:clamp(11px,1.1vw,13px);color:rgba(255,255,255,.65);">Mon–Fri, <strong style="color:#fff;font-weight:600;">24h support</strong> / all regions</span>
+            </div>
+
+            <!-- Phone table — centered block -->
+            <div style="width:100%;max-width:320px;display:flex;flex-direction:column;gap:5px;margin-bottom:16px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 14px;background:rgba(255,255,255,.05);border-radius:8px;">
+                <span style="font-size:clamp(10px,1vw,12px);font-weight:600;color:rgba(255,255,255,.5);min-width:80px;text-align:left;">AU / NZ</span>
+                <a href="tel:+61258496957" style="font-size:clamp(11px,1.1vw,13px);color:rgba(255,255,255,.85);text-decoration:none;font-weight:400;">+61 2 5849 6957</a>
               </div>
-              <div style="display:flex;justify-content:space-between;align-items:baseline;">
-                <span style="font-size:clamp(10px,1.1vw,13px);font-weight:600;color:rgba(255,255,255,.55);min-width:80px;">Singapore</span>
-                <a href="tel:+6531251540" style="font-size:clamp(11px,1.2vw,14px);color:rgba(255,255,255,.85);text-decoration:none;font-weight:300;">+65 3125 1540</a>
-                <span style="font-size:10px;color:rgba(255,255,255,.35);">08:30–18:00 SGT</span>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 14px;background:rgba(255,255,255,.05);border-radius:8px;">
+                <span style="font-size:clamp(10px,1vw,12px);font-weight:600;color:rgba(255,255,255,.5);min-width:80px;text-align:left;">Singapore</span>
+                <a href="tel:+6531251540" style="font-size:clamp(11px,1.1vw,13px);color:rgba(255,255,255,.85);text-decoration:none;font-weight:400;">+65 3125 1540</a>
               </div>
-              <div style="display:flex;justify-content:space-between;align-items:baseline;">
-                <span style="font-size:clamp(10px,1.1vw,13px);font-weight:600;color:rgba(255,255,255,.55);min-width:80px;">USA</span>
-                <a href="tel:+16802255236" style="font-size:clamp(11px,1.2vw,14px);color:rgba(255,255,255,.85);text-decoration:none;font-weight:300;">+1 (680) 225-5236</a>
-                <span style="font-size:10px;color:rgba(255,255,255,.35);">08:30–18:00 EST</span>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 14px;background:rgba(255,255,255,.05);border-radius:8px;">
+                <span style="font-size:clamp(10px,1vw,12px);font-weight:600;color:rgba(255,255,255,.5);min-width:80px;text-align:left;">USA</span>
+                <a href="tel:+16802255236" style="font-size:clamp(11px,1.1vw,13px);color:rgba(255,255,255,.85);text-decoration:none;font-weight:400;">+1 (680) 225-5236</a>
               </div>
-              <div style="display:flex;justify-content:space-between;align-items:baseline;">
-                <span style="font-size:clamp(10px,1.1vw,13px);font-weight:600;color:rgba(255,255,255,.55);min-width:80px;">Thailand</span>
-                <a href="tel:+6622553703" style="font-size:clamp(11px,1.2vw,14px);color:rgba(255,255,255,.85);text-decoration:none;font-weight:300;">+66 2255 3703</a>
-                <span style="font-size:10px;color:rgba(255,255,255,.35);">08:30–18:00 ICT</span>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 14px;background:rgba(255,255,255,.05);border-radius:8px;">
+                <span style="font-size:clamp(10px,1vw,12px);font-weight:600;color:rgba(255,255,255,.5);min-width:80px;text-align:left;">Thailand</span>
+                <a href="tel:+6622553703" style="font-size:clamp(11px,1.1vw,13px);color:rgba(255,255,255,.85);text-decoration:none;font-weight:400;">+66 2255 3703</a>
               </div>
-              <div style="display:flex;justify-content:space-between;align-items:baseline;">
-                <span style="font-size:clamp(10px,1.1vw,13px);font-weight:600;color:rgba(255,255,255,.55);min-width:80px;">UK / Europe</span>
-                <a href="tel:+442045387068" style="font-size:clamp(11px,1.2vw,14px);color:rgba(255,255,255,.85);text-decoration:none;font-weight:300;">+44 204 538 7068</a>
-                <span style="font-size:10px;color:rgba(255,255,255,.35);">08:30–18:00 BST</span>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 14px;background:rgba(255,255,255,.05);border-radius:8px;">
+                <span style="font-size:clamp(10px,1vw,12px);font-weight:600;color:rgba(255,255,255,.5);min-width:80px;text-align:left;">UK / Europe</span>
+                <a href="tel:+442045387068" style="font-size:clamp(11px,1.1vw,13px);color:rgba(255,255,255,.85);text-decoration:none;font-weight:400;">+44 204 538 7068</a>
               </div>
             </div>
 
-            <div style="width:100%;height:1px;background:rgba(255,255,255,.12);margin-bottom:14px;"></div>
+            <div style="width:80%;height:1px;background:rgba(255,255,255,.1);margin-bottom:14px;"></div>
 
             <!-- Head office -->
-            <div style="font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:8px;">Head Office</div>
-            <div style="font-size:clamp(11px,1.2vw,14px);color:rgba(255,255,255,.7);font-weight:300;line-height:1.6;margin-bottom:18px;">
+            <div style="font-size:8.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:7px;">Head Office</div>
+            <div style="font-size:clamp(11px,1.1vw,13px);color:rgba(255,255,255,.65);font-weight:300;line-height:1.6;margin-bottom:16px;">
               477 Pitt Street, Haymarket NSW 2000, Australia
             </div>
 
-            <div style="width:100%;height:1px;background:rgba(255,255,255,.12);margin-bottom:14px;"></div>
+            <div style="width:80%;height:1px;background:rgba(255,255,255,.1);margin-bottom:14px;"></div>
 
-            <!-- Compliance badges -->
-            <div style="font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.38);margin-bottom:10px;">Certifications</div>
-            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
-              <img src="../assets/Web Content/Images/cert-soc2.png" alt="SOC2" style="height:32px;width:auto;filter:brightness(0) invert(1);opacity:.6;">
-              <img src="../assets/Web Content/Images/cert-iso27001.png" alt="ISO 27001" style="height:32px;width:auto;filter:brightness(0) invert(1);opacity:.6;">
-              <img src="../assets/Web Content/Images/cert-gdpr.png" alt="GDPR" style="height:32px;width:auto;filter:brightness(0) invert(1);opacity:.6;">
+            <!-- Certifications — all 4 -->
+            <div style="font-size:8.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:10px;">Certifications</div>
+            <div style="display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;">
+              <img src="../assets/Web Content/Images/cert-iso27001.png" alt="ISO 27001" style="height:30px;width:auto;filter:brightness(0) invert(1);opacity:.55;">
+              <img src="../assets/Web Content/Images/cert-soc2.png" alt="SOC 2" style="height:30px;width:auto;filter:brightness(0) invert(1);opacity:.55;">
+              <img src="../assets/Web Content/Images/cert-gdpr.png" alt="GDPR" style="height:30px;width:auto;filter:brightness(0) invert(1);opacity:.55;">
+              <img src="../assets/Web Content/Images/cert-app.png" alt="Australian Privacy" style="height:30px;width:auto;filter:brightness(0) invert(1);opacity:.55;">
             </div>
 
           </div>
         </div>
 
       </section>
+
 
     </div><!-- /slides -->
 
