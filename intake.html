@@ -95,6 +95,12 @@ input, textarea, select { font-family: inherit; }
   display: flex; align-items: center; justify-content: center;
 }
 .topbar-user-name { font-size: 13px; font-weight: 500; color: var(--ink-soft); }
+.topbar-signout {
+  font-size: 11px; font-weight: 500; color: var(--muted); cursor: pointer;
+  padding: 3px 8px; border-radius: 6px; border: 1px solid var(--border);
+  background: none; transition: all .15s; white-space: nowrap;
+}
+.topbar-signout:hover { color: var(--ink); border-color: var(--body); }
 
 /* ── Page ── */
 .page { min-height: 100dvh; padding-top: 58px; }
@@ -176,6 +182,15 @@ input, textarea, select { font-family: inherit; }
 
 .auth-domain-note {
   font-size: 12px; color: var(--muted); margin: 0; text-wrap: balance;
+}
+.auth-keep-me {
+  display: flex; align-items: center; gap: 7px;
+  justify-content: center; margin: 10px 0 0;
+  font-size: 12px; color: var(--body); cursor: pointer;
+  user-select: none;
+}
+.auth-keep-me input[type="checkbox"] {
+  width: 14px; height: 14px; accent-color: var(--purple); cursor: pointer;
 }
 
 /* ══════════════════════════════
@@ -570,6 +585,7 @@ select.field-input { cursor: pointer; }
   <div class="topbar-user" id="topbarUser" style="display:none;">
     <div class="topbar-user-avatar" id="topbarAvatar">AL</div>
     <span class="topbar-user-name" id="topbarName">Akila</span>
+    <button class="topbar-signout" onclick="signOut()">Sign out</button>
   </div>
 </header>
 
@@ -822,7 +838,12 @@ select.field-input { cursor: pointer; }
 
     <div id="googleBtnMount" style="display:flex;justify-content:center;margin:20px 0 4px;min-height:44px;"></div>
 
-    <p class="auth-domain-note">PurchasePlus team only · @marketboomer.com</p>
+    <label class="auth-keep-me">
+      <input type="checkbox" id="keepMeIn" checked>
+      Keep me logged in
+    </label>
+
+    <p class="auth-domain-note" style="margin-top:14px;">PurchasePlus team only · @marketboomer.com</p>
   </div>
 </div>
 
@@ -876,6 +897,47 @@ select.field-input { cursor: pointer; }
 
   function $(id) { return document.getElementById(id); }
 
+  /* ══ PERSISTED SESSION ══ */
+  var SESSION_KEY = 'pp_agent_user';
+  var SESSION_TTL = 30 * 24 * 60 * 60 * 1000; /* 30 days */
+
+  function saveSession(user) {
+    try {
+      localStorage.setItem(SESSION_KEY, JSON.stringify({ user: user, savedAt: Date.now() }));
+    } catch (e) {}
+  }
+
+  function clearSession() {
+    try { localStorage.removeItem(SESSION_KEY); } catch (e) {}
+  }
+
+  function loadSession() {
+    try {
+      var raw = localStorage.getItem(SESSION_KEY);
+      if (!raw) return null;
+      var data = JSON.parse(raw);
+      if (!data || !data.user || !data.user.email) return null;
+      if (Date.now() - data.savedAt > SESSION_TTL) { clearSession(); return null; }
+      return data.user;
+    } catch (e) { return null; }
+  }
+
+  window.signOut = function() {
+    clearSession();
+    if (window.google && window.google.accounts && window.google.accounts.id) {
+      google.accounts.id.disableAutoSelect();
+    }
+    location.reload();
+  };
+
+  /* Check for saved session before showing auth modal */
+  var savedUser = loadSession();
+  if (savedUser) {
+    currentUser = savedUser;
+    document.addEventListener('DOMContentLoaded', function() { showMainApp(); });
+    if (document.readyState !== 'loading') showMainApp();
+  }
+
   /* ══ GOOGLE AUTH (real GSI) ══ */
   var GSI_CLIENT_ID = '812267550316-l0t61j18l01uil9bg0s9bichvs6165md.apps.googleusercontent.com';
 
@@ -914,6 +976,7 @@ select.field-input { cursor: pointer; }
         name: payload.name || nameFromEmail(email),
         picture: payload.picture || null
       };
+      if ($('keepMeIn') && $('keepMeIn').checked) saveSession(currentUser);
       showMainApp();
     } catch (err) {
       showAuthError('Sign-in failed. Please try again.');
