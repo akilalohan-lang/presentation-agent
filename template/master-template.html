@@ -10,7 +10,7 @@
 <link rel="icon" href="../assets/PurchasePlus Logos/logo-emblem-mobile.png">
 <style>
 /* ==========================================================================
-   PurchasePlus Presentation Template — canonical design system
+   PurchasePlus Presentation Template, canonical design system
    Single-file HTML. No framework. Vanilla JS.
    Sidebar nav + one-slide-at-a-time desktop. Scroll-snap on mobile.
 
@@ -219,7 +219,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
   z-index: 1;
 }
 
-/* Device mockup — centered, large, sits at bottom */
+/* Device mockup, centered, large, sits at bottom */
 .sr-device {
   position: absolute;
   bottom: 0; left: 50%;
@@ -231,7 +231,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
   filter: drop-shadow(0 12px 40px rgba(15,23,42,.14));
 }
 
-/* Single artboard screen — PNG drop-shadow, no white container */
+/* Single artboard screen, PNG drop-shadow, no white container */
 .sr-screen {
   position: absolute;
   top: 50%; left: 50%;
@@ -243,7 +243,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
   filter: drop-shadow(0 16px 48px rgba(15,23,42,.24)) drop-shadow(0 4px 12px rgba(15,23,42,.12));
 }
 
-/* Longarms character — stands at bottom, overlaps device/screen */
+/* Longarms character, stands at bottom, overlaps device/screen */
 .sr-char {
   position: absolute;
   bottom: 0; right: 4%;
@@ -253,7 +253,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
   filter: drop-shadow(0 8px 24px rgba(15,23,42,.12));
 }
 
-/* Longarms scene — fills the panel */
+/* Longarms scene, fills the panel */
 .sr-scene {
   position: absolute;
   inset: 0; padding: 24px 16px 0;
@@ -262,7 +262,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
   z-index: 2;
 }
 
-/* Floating UI cards — drop-shadow on PNG, no white backing container */
+/* Floating UI cards, drop-shadow on PNG, no white backing container */
 .sr-card {
   position: absolute;
   z-index: 3;
@@ -389,13 +389,13 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
   display: flex; gap: 14px; align-items: flex-start;
 }
 .concept-tag {
-  display: inline-block; padding: 3px 9px; background: var(--grad);
+  display: inline-block; padding: 5px 12px; background: var(--grad);
   color: #fff; font-family: 'JetBrains Mono', monospace;
-  font-size: 9px; font-weight: 700; letter-spacing: .14em;
-  border-radius: 4px; flex-shrink: 0; white-space: nowrap; margin-top: 2px;
+  font-size: 12px; font-weight: 700; letter-spacing: .1em;
+  border-radius: 5px; flex-shrink: 0; white-space: nowrap; margin-top: 3px;
 }
-.concept-title { font-size: 14px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
-.concept-body  { font-size: 13px; color: var(--body); line-height: 1.5; }
+.concept-title { font-size: clamp(15px,1.5vw,18px); font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+.concept-body  { font-size: clamp(13px,1.35vw,16px); color: var(--body); line-height: 1.55; }
 
 /* 2-column show grid */
 .show-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
@@ -476,7 +476,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 }
 
 /* ════════════════════════════════════════════════════
-   TABLET + MOBILE — scroll-snap layout
+   TABLET + MOBILE, scroll-snap layout
    ════════════════════════════════════════════════════ */
 @media (max-width: 1100px) {
   .app { grid-template-columns: 1fr; height: 100dvh; }
@@ -586,7 +586,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 }
 
 /* ══════════════════════════════════════════════════════════
-   EXTENDED COMPONENTS — new slide types
+   EXTENDED COMPONENTS, new slide types
    ══════════════════════════════════════════════════════════ */
 
 /* Agenda */
@@ -597,14 +597,14 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 .agenda-title { font-size:14.5px; font-weight:600; color:var(--ink); margin-bottom:2px; line-height:1.3; }
 .agenda-desc { font-size:13px; color:var(--body); line-height:1.5; }
 
-/* Section divider — full-bleed dark */
+/* Section divider, full-bleed dark */
 .divider-inner { flex:1; position:relative; overflow:hidden; background:var(--grad-deep); display:flex; flex-direction:column; justify-content:center; padding:80px 100px; }
 .divider-chapter { font-family:'JetBrains Mono',monospace; font-size:11px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:rgba(255,255,255,.35); margin-bottom:24px; }
 .divider-title { font-size:clamp(44px,5.8vw,76px); font-weight:200; letter-spacing:-2px; line-height:1.02; color:#fff; text-wrap:balance; }
 .divider-line { width:56px; height:2px; background:var(--grad); margin-top:32px; border-radius:2px; }
 .chart-glow { position:absolute; border-radius:50%; background:radial-gradient(circle,rgba(124,93,255,.3) 0%,transparent 70%); pointer-events:none; }
 
-/* Application Screen — clickable */
+/* Application Screen, clickable */
 .screen-clickable { cursor:zoom-in; border-radius:10px; overflow:hidden; box-shadow:0 20px 60px rgba(15,23,42,.28); transition:transform .2s; display:block; width:100%; }
 .screen-clickable:hover { transform:scale(1.015); }
 .screen-clickable img { width:100%; height:auto; display:block; }
@@ -824,8 +824,8 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 .ms-scroll { position: absolute; inset: 0; overflow-y: auto; padding: 16px 20px; display: flex; flex-direction: column; gap: 0; scrollbar-width: thin; scrollbar-color: rgba(124,93,255,.4) transparent; }
 .ms-arrow  { display: flex; justify-content: center; align-items: center; padding: 6px 0; flex-shrink: 0; }
 .ms-step-label { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; margin-top: 2px; flex-shrink: 0; }
-.ms-step-num { background: linear-gradient(90deg,#a956ff,#3766fe); color: #fff; font-size: 12px; font-weight: 700; letter-spacing: .06em; padding: 4px 12px; border-radius: 20px; white-space: nowrap; }
-.ms-step-desc { font-size: 12px; font-weight: 500; color: var(--body); }
+.ms-step-num { background: linear-gradient(90deg,#a956ff,#3766fe); color: #fff; font-size: 13px; font-weight: 700; letter-spacing: .06em; padding: 5px 14px; border-radius: 20px; white-space: nowrap; }
+.ms-step-desc { font-size: clamp(13px,1.35vw,16px); font-weight: 500; color: var(--body); }
 @media (max-width: 1100px) { .sum-card { padding: 12px 14px; gap: 6px; } .sum-num { font-size: 40px; } .sum-title { font-size: 17px; } .sum-desc { font-size: 13px; } }
 </style>
 </head>
@@ -862,7 +862,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
     <div class="slides" id="slides">
 
       <!-- ══════════════════════════════
-           SLIDE 01 — COVER
+           SLIDE 01, COVER
            Device mockup + Longarms scene layered
            ══════════════════════════════ -->
       <section class="slide is-active" data-title="Presentation Cover">
@@ -882,7 +882,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
               <div style="font-size:12px;color:var(--muted);margin-top:4px;">May 2026</div>
             </div>
 
-            <!-- Client logo slot — shown when presenting to a client -->
+            <!-- Client logo slot, shown when presenting to a client -->
             <div style="margin-top:32px;padding-top:24px;border-top:1px solid var(--border-soft);max-width:200px;">
               <div style="font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;">Prepared for</div>
               <div style="height:36px;width:120px;border-radius:6px;border:1px dashed var(--border);display:flex;align-items:center;justify-content:center;">
@@ -904,7 +904,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
                style="position:absolute;top:-5%;right:-16%;width:52%;opacity:.55;z-index:2;transform:rotate(15deg) scaleX(-1);">
         </div>
 
-        <!-- Device mockup — positioned relative to full slide so it overlaps both panels -->
+        <!-- Device mockup, positioned relative to full slide so it overlaps both panels -->
         <img src="../assets/PurchasePlus UI %26 UX/004_longarms_mockup.png"
              alt="PurchasePlus platform"
              style="position:absolute;right:-2%;bottom:3%;width:79%;height:auto;max-width:none;z-index:5;pointer-events:none;">
@@ -912,7 +912,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       </section>
 
       <!-- ══════════════════════════════
-           SLIDE 02 — SUMMARY
+           SLIDE 02, SUMMARY
            Full-width gradient card grid with chapter dividers
            ══════════════════════════════ -->
       <section class="slide" data-title="Summary">
@@ -925,12 +925,12 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
             <h2 style="max-width:none;margin-bottom:0;text-align:center;">Here's what we'll <span class="grad">cover today.</span></h2>
           </div>
 
-          <!-- Chapters — fills remaining height equally -->
+          <!-- Chapters, fills remaining height equally -->
           <div style="flex:1;display:flex;flex-direction:column;gap:12px;min-height:0;">
 
             <!-- CHAPTER 1: The Problem -->
             <div style="flex:1;display:flex;flex-direction:column;gap:8px;min-height:0;">
-              <div class="sum-chap"><div class="sum-chap-label">Chapter 01 — The Problem</div><div class="sum-chap-rule"></div></div>
+              <div class="sum-chap"><div class="sum-chap-label">Chapter 01: The Problem</div><div class="sum-chap-rule"></div></div>
               <div style="flex:1;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;min-height:0;">
                 <div class="sum-card" style="animation-delay:0s;">
                   <div class="sum-num">03</div>
@@ -957,7 +957,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 
             <!-- CHAPTER 2: The Solution -->
             <div style="flex:1;display:flex;flex-direction:column;gap:8px;min-height:0;">
-              <div class="sum-chap"><div class="sum-chap-label">Chapter 02 — The Solution</div><div class="sum-chap-rule"></div></div>
+              <div class="sum-chap"><div class="sum-chap-label">Chapter 02: The Solution</div><div class="sum-chap-rule"></div></div>
               <div style="flex:1;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;min-height:0;">
                 <div class="sum-card" style="animation-delay:-2.4s;">
                   <div class="sum-num">07</div>
@@ -984,7 +984,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 
             <!-- CHAPTER 3: The Close -->
             <div style="flex:1;display:flex;flex-direction:column;gap:8px;min-height:0;">
-              <div class="sum-chap"><div class="sum-chap-label">Chapter 03 — The Close</div><div class="sum-chap-rule"></div></div>
+              <div class="sum-chap"><div class="sum-chap-label">Chapter 03: The Close</div><div class="sum-chap-rule"></div></div>
               <div style="flex:1;display:grid;grid-template-columns:repeat(2,1fr);gap:10px;min-height:0;">
                 <div class="sum-card" style="animation-delay:-4.2s;">
                   <div class="sum-num">11</div>
@@ -1006,7 +1006,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       </section>
 
       <!-- ══════════════════════════════
-           SLIDE 03 — SECTION DIVIDER
+           SLIDE 03, SECTION DIVIDER
            Full-bleed dark chapter break
            ══════════════════════════════ -->
       <section class="slide" data-title="Section Divider">
@@ -1024,7 +1024,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       </section>
 
       <!-- ══════════════════════════════
-           SLIDE — TEXT + LONGARMS + UI
+           SLIDE, TEXT + LONGARMS + UI
            Topic shuffler bar + generated scene right
            ══════════════════════════════ -->
       <section class="slide" data-title="Text + Longarms + UI" style="flex-direction:column;">
@@ -1093,7 +1093,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       </section>
 
       <!-- ══════════════════════════════
-           SLIDE — APPLICATION SCREEN
+           SLIDE, APPLICATION SCREEN
            Text left + zoomable screenshot
            ══════════════════════════════ -->
       <section class="slide" data-title="Application Screen">
@@ -1126,8 +1126,8 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 
         <div class="slide-right" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 18px 16px;gap:10px;">
           <div style="text-align:center;flex-shrink:0;">
-            <div style="font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);margin-bottom:5px;">Dashboard Overview</div>
-            <div style="font-size:clamp(13px,1.4vw,17px);font-weight:300;color:var(--body);max-width:32ch;text-wrap:balance;line-height:1.4;">Real-time visibility across orders, invoices, and supplier relationships — updated live.</div>
+            <div style="font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--purple);margin-bottom:6px;">Dashboard Overview</div>
+            <div style="font-size:clamp(14px,1.5vw,18px);font-weight:300;color:var(--body);max-width:30ch;text-wrap:balance;line-height:1.45;">Real-time visibility across orders, invoices, and supplier relationships. Updated live.</div>
           </div>
           <div onclick="openLightbox(this.querySelector('img').src)" style="cursor:zoom-in;width:105%;max-width:105%;box-shadow:0 32px 80px rgba(15,23,42,.38),0 8px 32px rgba(124,93,255,.22);border-radius:8px;overflow:hidden;transition:transform .2s;flex-shrink:0;" onmouseover="this.style.transform='scale(1.012)'" onmouseout="this.style.transform=''">
             <img src="../assets/PurchasePlus Web Application Screens/Artboard 2_PurchasePlu.png"
@@ -1142,7 +1142,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       </section>
 
       <!-- ══════════════════════════════
-           SLIDE — APPLICATION MULTI-SCREEN
+           SLIDE, APPLICATION MULTI-SCREEN
            Scrollable stack of 5 screens
            ══════════════════════════════ -->
       <section class="slide" data-title="Application Multi-Screen">
@@ -1163,7 +1163,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
               <div class="concept-tag">FLOW</div>
               <div>
                 <div class="concept-title">End-to-end workflow</div>
-                <div class="concept-body">From supplier catalog to approved invoice — every step is tracked and auditable.</div>
+                <div class="concept-body">From supplier catalog to approved invoice, every step is tracked and auditable.</div>
               </div>
             </div>
           </div>
@@ -1176,7 +1176,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
         <div class="slide-right" style="position:relative;overflow:hidden;">
           <div class="ms-scroll" id="msScrollPanel">
 
-            <!-- Zoom hint — very top -->
+            <!-- Zoom hint, very top -->
             <div style="display:flex;align-items:center;justify-content:center;gap:6px;padding:6px 0 12px;flex-shrink:0;">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(124,93,255,.7)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
               <span style="font-size:11px;font-weight:600;color:rgba(124,93,255,.75);letter-spacing:.04em;">Click any screen to zoom</span>
@@ -1249,7 +1249,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       </section>
 
       <!-- ══════════════════════════════
-           SLIDE — FEATURE HIGHLIGHT
+           SLIDE, FEATURE HIGHLIGHT
            Single feature focus
            ══════════════════════════════ -->
       <section class="slide" data-title="Feature Highlight">
@@ -1283,19 +1283,19 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
         </div>
 
         <div class="slide-right" style="display:flex;flex-direction:column;padding:0;overflow:hidden;">
-          <!-- Top: app screen — hover here to drive zoom below -->
+          <!-- Top: app screen, hover here to drive zoom below -->
           <div id="fhScreen" style="flex:0 0 46%;position:relative;overflow:hidden;cursor:crosshair;border-bottom:1px solid rgba(124,93,255,.18);">
             <img id="fhImg"
                  src="../assets/PurchasePlus Web Application Screens/Artboard 5_PurchasePlu.png"
                  alt="PurchasePlus supplier catalog"
                  style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block;user-select:none;pointer-events:none;">
-            <!-- Tracker box — shows region being zoomed -->
+            <!-- Tracker box, shows region being zoomed -->
             <div id="fhTracker" style="display:none;position:absolute;border:3px solid #00bdc5;box-shadow:0 0 0 1px rgba(0,189,197,.3),0 0 16px rgba(0,189,197,.5);border-radius:4px;pointer-events:none;z-index:10;transition:none;"></div>
           </div>
           <!-- Bottom: zoom window -->
           <div style="flex:1;position:relative;background:linear-gradient(160deg,#1a0630 0%,#0d1422 100%);overflow:hidden;">
             <div id="fhZoom" style="position:absolute;inset:0;background-repeat:no-repeat;background-size:200% 200%;background-position:50% 50%;transition:background-position .04s linear,background-size .04s linear;"></div>
-            <div style="position:absolute;top:10px;left:14px;font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);z-index:2;pointer-events:none;">Zoom view — hover the screen above</div>
+            <div style="position:absolute;top:10px;left:14px;font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);z-index:2;pointer-events:none;">Zoom view, hover the screen above</div>
             <!-- Subtle glow -->
             <div style="position:absolute;inset:0;background:radial-gradient(ellipse at top right,rgba(124,93,255,.12) 0%,transparent 60%);pointer-events:none;z-index:1;"></div>
           </div>
@@ -1304,7 +1304,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       </section>
 
       <!-- ══════════════════════════════
-           SLIDE — ANALYTICS DASHBOARD AI
+           SLIDE, ANALYTICS DASHBOARD AI
            KPIs + AI-generated dashboard image
            ══════════════════════════════ -->
       <section class="slide" data-title="Analytics Dashboard AI">
@@ -1358,7 +1358,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       </section>
 
       <!-- ══════════════════════════════
-           SLIDE — ANALYTICS DASHBOARD REPORT
+           SLIDE, ANALYTICS DASHBOARD REPORT
            Live HTML/SVG chart panel
            ══════════════════════════════ -->
       <section class="slide" data-title="Analytics Dashboard Report">
@@ -1371,7 +1371,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
             <div class="pillar">
               <div class="pillar-num mono" style="font-size:15px;">01</div>
               <div class="pillar-title">Category spend breakdown</div>
-              <div class="pillar-body">Food, beverage, linen, equipment — benchmarked against targets and peer properties.</div>
+              <div class="pillar-body">Food, beverage, linen, equipment, benchmarked against targets and peer properties.</div>
             </div>
             <div class="pillar">
               <div class="pillar-num mono" style="font-size:15px;">02</div>
@@ -1532,7 +1532,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       </section>
 
       <!-- ══════════════════════════════
-           SLIDE 05 — WHAT YOU GET
+           SLIDE 05, WHAT YOU GET
            Spend analytics hero + UI cards collage
            ══════════════════════════════ -->
       <section class="slide" data-title="Text + Longarms + Colorful UI">
@@ -1566,7 +1566,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
         </div>
 
         <div class="slide-right">
-          <!-- Spend analytics hero illustration — cloud composition -->
+          <!-- Spend analytics hero illustration, cloud composition -->
           <img class="sr-scene"
                src="../assets/Colourful UI UX/Illustrations/Hero Videos/002_spend-analytics-dashboard-hero.png"
                alt="Spend analytics dashboard"
@@ -1582,7 +1582,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 
 
       <!-- ══════════════════════════════
-           SLIDE — PEOPLE
+           SLIDE, PEOPLE
            Leadership team grid
            ══════════════════════════════ -->
       <section class="slide" data-title="People">
@@ -1659,7 +1659,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       </section>
 
       <!-- ══════════════════════════════
-           SLIDE 07 — GET STARTED
+           SLIDE 07, GET STARTED
            Concept cards + dark CTA panel
            ══════════════════════════════ -->
       <section class="slide" data-title="Call to Action">
@@ -1669,7 +1669,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
           <h2>Ready to transform<br><span class="grad">your procurement?</span></h2>
           <p class="lead">PurchasePlus is live in under 30 days. No disruption to current operations. Your team is supported every step of the way.</p>
 
-          <!-- Timeline steps — badges match text block height -->
+          <!-- Timeline steps, badges match text block height -->
           <div style="display:flex;flex-direction:column;gap:12px;margin-top:14px;">
             <div style="display:flex;align-items:stretch;gap:16px;">
               <div style="flex-shrink:0;background:var(--grad);color:#fff;font-size:clamp(15px,1.6vw,20px);font-weight:700;letter-spacing:.04em;padding:0 20px;border-radius:10px;white-space:nowrap;text-transform:uppercase;display:flex;align-items:center;justify-content:center;">Week 1</div>
@@ -1695,13 +1695,13 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
           </div>
         </div>
 
-        <!-- Dark right panel — fully centered contact info -->
+        <!-- Dark right panel, fully centered contact info -->
         <div class="slide-right dark" style="overflow-y:auto;">
           <div style="min-height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 32px;gap:0;text-align:center;">
 
             <div style="font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:14px;">Get in touch</div>
 
-            <!-- Logo — centered, large -->
+            <!-- Logo, centered, large -->
             <img src="../assets/PurchasePlus Logos/logo-vertical-slogan-white.png"
                  alt="PurchasePlus" style="width:clamp(140px,16vw,220px);height:auto;opacity:.95;margin-bottom:16px;">
 
@@ -1729,7 +1729,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
               <span style="font-size:clamp(11px,1.1vw,13px);color:rgba(255,255,255,.65);">Mon–Fri, <strong style="color:#fff;font-weight:600;">24h support</strong> / all regions</span>
             </div>
 
-            <!-- Phone table — centered block -->
+            <!-- Phone table, centered block -->
             <div style="width:100%;max-width:320px;display:flex;flex-direction:column;gap:5px;margin-bottom:16px;">
               <div style="display:flex;justify-content:space-between;align-items:center;padding:5px 14px;background:rgba(255,255,255,.05);border-radius:8px;">
                 <span style="font-size:clamp(10px,1vw,12px);font-weight:600;color:rgba(255,255,255,.5);min-width:80px;text-align:left;">AU / NZ</span>
@@ -1763,7 +1763,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 
             <div style="width:80%;height:1px;background:rgba(255,255,255,.1);margin-bottom:14px;"></div>
 
-            <!-- Certifications — all 4 -->
+            <!-- Certifications, all 4 -->
             <div style="font-size:8.5px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:10px;">Certifications</div>
             <div style="display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;">
               <img src="../assets/Web Content/Images/cert-iso27001.png" alt="ISO 27001" style="height:30px;width:auto;filter:brightness(0) invert(1);opacity:.55;">
@@ -2028,7 +2028,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
         stats: [
           { num: '<span class="grad">100%</span>', label: 'of purchase orders checked against contracted supplier rates before approval.' },
           { num: '$180K',                           label: 'average annual saving recovered from off-contract spend per enterprise group.' },
-          { num: '<span class="grad">0 calls</span>', label: 'required to enforce pricing — the platform handles it automatically.' }
+          { num: '<span class="grad">0 calls</span>', label: 'required to enforce pricing, the platform handles it automatically.' }
         ],
         kicker: 'Source: PurchasePlus 2026 Contract Compliance Study.',
         img: '../assets/Generated/tl-budget-visibility.png',
@@ -2039,7 +2039,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
         heading: 'Every dollar.<br><span class="grad">Every insight.</span>',
         lead: 'Real-time dashboards give finance and operations teams live visibility into category spend, variances, and savings opportunities.',
         stats: [
-          { num: '<span class="grad">Live</span>', label: 'spend dashboards updated the moment a PO is approved — no waiting for month-end.' },
+          { num: '<span class="grad">Live</span>', label: 'spend dashboards updated the moment a PO is approved, no waiting for month-end.' },
           { num: '42%',                             label: 'of spend typically unmanaged before PurchasePlus reveals the full picture.' },
           { num: '<span class="grad">3 sec</span>', label: 'to generate a full spend report across any date range, property, or category.' }
         ],
@@ -2050,7 +2050,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       {
         eyebrow: 'AI Integration',
         heading: 'AI that works<br><span class="grad">for procurement.</span>',
-        lead: 'Machine learning matches invoices, predicts reorder points, detects pricing anomalies, and flags contract exceptions — automatically.',
+        lead: 'Machine learning matches invoices, predicts reorder points, detects pricing anomalies, and flags contract exceptions, automatically.',
         stats: [
           { num: '<span class="grad">99.9%</span>', label: 'invoice matching accuracy across 40M+ invoices processed to date.' },
           { num: '3-way',                            label: 'AI matching of PO, delivery receipt, and supplier invoice in under 3 minutes.' },
@@ -2063,7 +2063,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       {
         eyebrow: 'Onboarding',
         heading: 'Live in 30 days.<br><span class="grad">Guaranteed.</span>',
-        lead: 'Our implementation team handles supplier onboarding, system integrations, and staff training — so you can focus on running your operation.',
+        lead: 'Our implementation team handles supplier onboarding, system integrations, and staff training, so you can focus on running your operation.',
         stats: [
           { num: '<span class="grad">30 days</span>', label: 'average time from contract signing to first property going live.' },
           { num: '0',                                  label: 'disruption to existing operations during the transition period.' },
@@ -2108,7 +2108,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       var count = n || tlGetCharCount();
       var groupDesc = count === 1
         ? 'A single cartoon character with EXTREMELY long curved arms far beyond normal human proportions, wearing a navy dark blue business suit, white shirt, small red tie'
-        : 'A group of exactly ' + count + ' cartoon characters, each with EXTREMELY long curved arms far beyond normal human proportions. Characters wear different hospitality uniforms: navy business suit, chef whites, waiter uniform, bellhop uniform, casual — vary the outfits. All have abstract minimal faces with NO nose, only two small dot eyes and a simple curved smile line';
+        : 'A group of exactly ' + count + ' cartoon characters, each with EXTREMELY long curved arms far beyond normal human proportions. Characters wear different hospitality uniforms: navy business suit, chef whites, waiter uniform, bellhop uniform, casual, vary the outfits. All have abstract minimal faces with NO nose, only two small dot eyes and a simple curved smile line';
       return 'Flat vector illustration. ' + groupDesc + '. ' + scene + '. Pure white background. Colors strictly: purple rgb(124,93,255), teal rgb(0,189,197), blue rgb(55,102,254), dark navy. ABSOLUTELY NO text, NO logos, NO written words, NO letters, NO brand names, NO numbers, NO labels, NO watermarks anywhere in the image at all. Flat design style, portrait.';
     }
 
@@ -2230,7 +2230,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       tlUpdateHint((idx + 1) + ' / ' + tlQueue.length);
     }
 
-    // Queue a new item in the background — sequential chaining avoids rate limits
+    // Queue a new item in the background, sequential chaining avoids rate limits
     function tlEnqueue(n) {
       var textT = tlTextPool[Math.floor(Math.random() * tlTextPool.length)];
       var sceneStr = tlScenes[Math.floor(Math.random() * tlScenes.length)];
@@ -2254,7 +2254,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       tlEnqueue(n).then(function() { tlWarmup(remaining - 1); });
     }
 
-    // Button: Generate — advance queue and warm up more behind it
+    // Button: Generate, advance queue and warm up more behind it
     window.tlGenerate = function() {
       tlQueueIdx++;
       // If we've consumed ahead of the queue, enqueue one more immediately
@@ -2267,7 +2267,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
     window.tlNewTopic = window.tlGenerate;
     window.tlShuffle  = window.tlGenerate;
 
-    // Button: New Text — pick random text, keep current image
+    // Button: New Text, pick random text, keep current image
     window.tlNewText = function() {
       var t = tlTextPool[Math.floor(Math.random() * tlTextPool.length)];
       var ey = document.getElementById('tl-eyebrow');
