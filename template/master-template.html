@@ -185,7 +185,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
   flex: 0 0 56%;
   padding: 52px 68px 100px;
   display: flex; flex-direction: column; justify-content: center;
-  overflow-y: auto; position: relative;
+  overflow-y: auto; position: relative; z-index: 10;
 }
 .slide-left::-webkit-scrollbar { width: 0; }
 
@@ -619,7 +619,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
            ══════════════════════════════ -->
       <section class="slide is-active" data-title="Presentation Cover">
 
-        <div class="slide-left">
+        <div class="slide-left" style="justify-content:flex-start;padding-top:72px;">
           <h1>Better Procurement.<br><span class="grad">Better Hospitality.</span></h1>
           <p class="lead">PurchasePlus is the procurement platform built for hospitality. One marketplace, every supplier, full visibility from order to invoice.</p>
 
@@ -649,7 +649,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
         <!-- Device mockup — positioned relative to full slide so it overlaps both panels -->
         <img src="../assets/PurchasePlus UI %26 UX/004_longarms_mockup.png"
              alt="PurchasePlus platform"
-             style="position:absolute;right:0;bottom:-6%;width:93%;height:auto;max-width:none;z-index:5;pointer-events:none;">
+             style="position:absolute;right:0;bottom:-10%;width:84%;height:auto;max-width:none;z-index:5;pointer-events:none;">
 
       </section>
 
