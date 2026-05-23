@@ -678,6 +678,24 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
   flex-shrink: 0;
   font-family: 'JetBrains Mono', monospace;
 }
+.tl-sep { width:1px; height:18px; background:var(--border); flex-shrink:0; margin:0 2px; }
+.tl-brand {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex-shrink: 0;
+  padding: 0 4px;
+}
+.tl-brand-icon {
+  width: 26px; height: 26px;
+  border-radius: 6px;
+  background: var(--grad);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.tl-brand-text { display:flex; flex-direction:column; gap:1px; }
+.tl-brand-name { font-size:11px; font-weight:700; color:var(--ink); letter-spacing:-.1px; line-height:1; }
+.tl-brand-sub  { font-size:10px; color:var(--muted); line-height:1; white-space:nowrap; }
 .tl-inner {
   flex: 1;
   display: flex;
@@ -996,6 +1014,23 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
             Shuffle
           </button>
           <span class="tl-hint" id="tlHint">1 / 5</span>
+          <div class="tl-sep"></div>
+          <div class="tl-brand">
+            <div class="tl-brand-icon">
+              <!-- Chef hat icon -->
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <rect x="3" y="11.5" width="10" height="3" rx="1" fill="white" opacity=".9"/>
+                <ellipse cx="8" cy="8" rx="5" ry="4.5" fill="white" opacity=".9"/>
+                <ellipse cx="4" cy="9.5" rx="3" ry="2.5" fill="white" opacity=".9"/>
+                <ellipse cx="12" cy="9.5" rx="3" ry="2.5" fill="white" opacity=".9"/>
+                <ellipse cx="6" cy="6.5" rx="1.5" ry="1.2" fill="white" opacity=".25"/>
+              </svg>
+            </div>
+            <div class="tl-brand-text">
+              <div class="tl-brand-name">MasterChef</div>
+              <div class="tl-brand-sub">shuffle topics for you</div>
+            </div>
+          </div>
         </div>
 
         <!-- Main content row -->

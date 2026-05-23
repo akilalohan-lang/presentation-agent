@@ -94,11 +94,26 @@ The Longarms characters are a fixed brand asset. Their appearance must be preser
 
 1. **Clothes and colors are fixed**: Navy/dark blue business suit, white shirt, red/pink accent tie or collar detail. Do not change, remove, or recolor.
 2. **Proportions are fixed**: Extremely long curved arms are the defining trait. Never shorten, straighten, or resize the arms.
-3. **Face is fixed**: Abstract, minimal — no nose, very simple eyes and smile. Never add realistic facial features.
-4. **Brand colors only**: The character palette is the PurchasePlus brand gradient (purple, blue). Do not introduce off-brand colors to the character.
+3. **Face is fixed**: Abstract, minimal — NO nose at all, only two small dot eyes and a simple curved smile. Never add realistic facial features, hair, or expressions.
+4. **Brand colors only** (exact RGB values from the PurchasePlus Colors folder — use these in every prompt):
+   - Purple: `#7c5dff` rgb(124, 93, 255)
+   - Light purple: `#a956ff` rgb(169, 86, 255)
+   - Blue: `#3766fe` rgb(55, 102, 254)
+   - Teal/green: `#00bdc5` rgb(0, 189, 197) — this is the ONLY acceptable green
+   - Red (for warnings/locked states only): `#ee2b62` rgb(238, 43, 98)
 5. **Poses and emotions CAN vary**: The character can be sitting, standing, gesturing, sad, happy, confused, celebrating — as long as clothes and proportions are unchanged.
 6. **Accessories**: Hats or props are only added if the MasterChef user explicitly requests them. Do not add accessories by default.
 7. **Reference image**: Always pass at least one Longarms reference image from `../assets/Longarms Characters/Stand Alone/` using the `--image` flag.
+
+### NO LOGO / NO TEXT RULE (CRITICAL — never violate)
+
+**Every Higgsfield prompt MUST include this exact instruction verbatim:**
+
+> ABSOLUTELY NO text, NO logos, NO written words, NO letters, NO brand names, NO numbers, NO labels, NO watermarks anywhere in the image at all — not on clothing, not on props, not on any screens or devices, not anywhere.
+
+Reason: AI models hallucinate company logos (including fake "PurchasePlus" branding) when given prompts involving screens or apps. This breaks brand integrity and is unacceptable. The rule is non-negotiable regardless of what the scene involves.
+
+If the scene includes a screen/device/tablet: describe it as showing only abstract shapes, icons, checkmarks, or glow effects — never describe content that could trigger text generation.
 
 ### Reference Images to Load
 
@@ -111,11 +126,17 @@ Optionally pass a second reference for pose variety (Bargain Brian or Speedy Sim
 
 ### Prompt Formula
 
-Build the Higgsfield prompt from the slide content:
-1. **Scene setting**: Describe the environment that matches the slide topic (e.g., "a chaotic restaurant kitchen with paper invoices everywhere" for a procurement pain slide).
+Build the Higgsfield prompt from the slide content using this structure:
+
+```
+Flat vector illustration. Cartoon character with EXTREMELY long curved arms far beyond normal human proportions, wearing a navy dark blue business suit, white shirt, small red tie. Abstract minimal face: NO nose whatsoever, only two small dot eyes and a simple curved smile line. [SCENE DESCRIPTION — avoid any content that could trigger text/logo generation]. Pure white background. Colors strictly: purple rgb(124,93,255), teal rgb(0,189,197), blue rgb(55,102,254). ABSOLUTELY NO text, NO logos, NO written words, NO letters, NO brand names, NO numbers, NO labels, NO watermarks anywhere in the image at all. Flat design style, portrait.
+```
+
+1. **Scene setting**: Describe abstract environment elements that match the slide topic. Use shape-based descriptions (e.g., "floating rectangular document icons", "circular network nodes connected by lines") rather than content-based ones.
 2. **Character action**: What is the Longarms character doing? Match their emotion/pose to the slide mood.
-3. **UI/data elements**: If the slide mentions dashboards or data, add these as background elements — broken screens, stacked paper, or glowing charts.
-4. **Style lock**: Always end with: `vector illustration style, flat design, navy suit white shirt, extremely long curved arms, abstract minimal face, PurchasePlus brand colors purple and blue, white background`
+3. **UI/data elements**: Abstract shapes only — "circular dial shapes", "bar shapes of different heights", "glowing rectangle panel" — never describe readable content.
+4. **Color lock line**: Always include `Colors strictly: purple rgb(124,93,255), teal rgb(0,189,197), blue rgb(55,102,254)`
+5. **No-logo line**: Always end with the ABSOLUTELY NO text/logos line verbatim.
 
 ### Example Prompt (master template default — "Procurement is still costing you")
 
