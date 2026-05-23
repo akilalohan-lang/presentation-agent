@@ -615,6 +615,86 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 .lb-btn:hover { background:rgba(255,255,255,.2); }
 .lb-pct { font-size:11px; font-weight:600; color:rgba(255,255,255,.45); font-family:'JetBrains Mono',monospace; min-width:42px; text-align:center; }
 
+/* Topic Shuffler bar (Text + Longarms + UI slide) */
+.tl-bar {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 28px;
+  height: 46px;
+  background: #fff;
+  border-bottom: 1px solid var(--border-soft);
+  z-index: 20;
+}
+.tl-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.tl-input {
+  flex: 1;
+  height: 28px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--ink);
+  background: var(--softer);
+  outline: none;
+  transition: border-color .15s;
+}
+.tl-input:focus { border-color: var(--purple); background: #fff; }
+.tl-input::placeholder { color: var(--muted); }
+.tl-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 14px;
+  height: 28px;
+  border-radius: var(--radius-pill);
+  background: var(--grad);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  border: 0;
+  font-family: inherit;
+  transition: opacity .15s;
+  flex-shrink: 0;
+}
+.tl-btn:hover { opacity: .88; }
+.tl-btn svg { flex-shrink: 0; }
+.tl-hint {
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-family: 'JetBrains Mono', monospace;
+}
+.tl-inner {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  min-height: 0;
+  overflow: hidden;
+}
+/* Topic image right panel - full bleed generated image */
+.tl-right-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
 /* Feature highlight */
 .feature-pills { display:flex; flex-wrap:wrap; gap:7px; margin:4px 0 18px; }
 .feature-pill { display:inline-flex; align-items:center; gap:6px; padding:5px 11px; background:var(--softer); border:1px solid var(--border); border-radius:var(--radius-pill); font-size:13px; font-weight:500; color:var(--ink-soft); }
@@ -902,57 +982,52 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       </section>
 
       <!-- ══════════════════════════════
-           SLIDE — TEXT + LONGARMS
-           Text content left, Longarms character right
+           SLIDE — TEXT + LONGARMS + UI
+           Topic shuffler bar + generated scene right
            ══════════════════════════════ -->
-      <section class="slide" data-title="Text + Longarms + UI">
+      <section class="slide" data-title="Text + Longarms + UI" style="flex-direction:column;">
 
-        <div class="slide-left">
-          <div class="slide-eyebrow"><span class="grad">The Challenge</span></div>
-          <h2>Procurement is still<br><span class="grad">costing you.</span></h2>
-          <p class="lead">Manual ordering, disconnected suppliers, and zero visibility into spend are draining hospitality margins every day.</p>
-          <div class="stats-row">
-            <div class="stat-card">
-              <div class="stat-num"><span class="grad">68%</span></div>
-              <div class="stat-label">of hospitality operators still process purchase orders manually.</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-num">$240K</div>
-              <div class="stat-label">average annual overspend per property from unmanaged supplier pricing.</div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-num"><span class="grad">14 days</span></div>
-              <div class="stat-label">average invoice approval cycle. Industry best practice is 3 days.</div>
-            </div>
-          </div>
-          <p class="kicker">Source: PurchasePlus 2026 Hospitality Procurement Index.</p>
+        <!-- Topic Shuffler Bar -->
+        <div class="tl-bar">
+          <span class="tl-label">Topic</span>
+          <input class="tl-input" id="tlInput" type="text" placeholder="Type a topic to explore, or hit Shuffle…" autocomplete="off">
+          <button class="tl-btn" onclick="tlShuffle()">
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M2 4.5c0-1.38 1.12-2.5 2.5-2.5h4.09l-1.3-1.3.71-.7L10.5 2.5 8 5l-.71-.71 1.3-1.29H4.5a1.5 1.5 0 0 0-1.5 1.5v1H2V4.5zm9 4c0 1.38-1.12 2.5-2.5 2.5H4.41l1.3 1.3-.71.7L2.5 10.5 5 8l.71.71-1.3 1.29H8.5A1.5 1.5 0 0 0 10 8.5v-1h1v1z" fill="currentColor"/></svg>
+            Shuffle
+          </button>
+          <span class="tl-hint" id="tlHint">1 / 5</span>
         </div>
 
-        <div class="slide-right">
-          <!-- Screen background — dimmed for context -->
-          <img class="sr-bg-screen"
-               src="../assets/PurchasePlus Web Application Screens/Artboard 3_PurchasePlu.png"
-               alt="">
-          <!-- Total Spend card — top left -->
-          <img class="sr-card"
-               src="../assets/Colourful UI UX/Stand Alone/Total Spend.png"
-               alt=""
-               style="top:8%;left:6%;width:38%;max-width:156px;">
-          <!-- Closed Invoices card — mid right -->
-          <img class="sr-card"
-               src="../assets/Colourful UI UX/Stand Alone/Closed Invoices.png"
-               alt=""
-               style="top:36%;right:4%;width:40%;max-width:162px;transform:rotate(1.5deg);">
-          <!-- Food Cost card — lower left -->
-          <img class="sr-card"
-               src="../assets/Colourful UI UX/Stand Alone/Food Cost.png"
-               alt=""
-               style="bottom:18%;left:5%;width:34%;max-width:138px;transform:rotate(-2deg);">
-          <!-- Bargain Brian — prominent, bottom right -->
-          <img class="sr-char"
-               src="../assets/Longarms Characters/Named Characters/98-084 PurchasePlus Longarm Illustration Bargain Brian Retina.png"
-               alt=""
-               style="right:0%;height:70%;">
+        <!-- Main content row -->
+        <div class="tl-inner">
+
+          <div class="slide-left">
+            <div class="slide-eyebrow"><span class="grad" id="tl-eyebrow">The Challenge</span></div>
+            <h2 id="tl-heading">Procurement is still<br><span class="grad">costing you.</span></h2>
+            <p class="lead" id="tl-lead">Manual ordering, disconnected suppliers, and zero visibility into spend are draining hospitality margins every day.</p>
+            <div class="stats-row">
+              <div class="stat-card">
+                <div class="stat-num" id="tl-s1n"><span class="grad">68%</span></div>
+                <div class="stat-label" id="tl-s1l">of hospitality operators still process purchase orders manually.</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-num" id="tl-s2n">$240K</div>
+                <div class="stat-label" id="tl-s2l">average annual overspend per property from unmanaged supplier pricing.</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-num" id="tl-s3n"><span class="grad">14 days</span></div>
+                <div class="stat-label" id="tl-s3l">average invoice approval cycle. Industry best practice is 3 days.</div>
+              </div>
+            </div>
+            <p class="kicker" id="tl-kicker">Source: PurchasePlus 2026 Hospitality Procurement Index.</p>
+          </div>
+
+          <div class="slide-right" id="tl-right" style="position:relative;overflow:hidden;">
+            <img class="tl-right-img" id="tl-img"
+                 src="../assets/Generated/tl-procurement-challenge.png"
+                 alt="Procurement challenge scene">
+          </div>
+
         </div>
 
       </section>
@@ -1628,6 +1703,126 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
     go(e.deltaY > 0 ? current + 1 : current - 1);
     setTimeout(function() { wheelCooldown = false; }, 800);
   }, { passive: false });
+
+  /* ── Topic Shuffler (Text + Longarms + UI slide) ── */
+  (function() {
+    var tlTopics = [
+      {
+        eyebrow: 'The Challenge',
+        heading: 'Procurement is still<br><span class="grad">costing you.</span>',
+        lead: 'Manual ordering, disconnected suppliers, and zero visibility into spend are draining hospitality margins every day.',
+        stats: [
+          { num: '<span class="grad">68%</span>', label: 'of hospitality operators still process purchase orders manually.' },
+          { num: '$240K',                          label: 'average annual overspend per property from unmanaged supplier pricing.' },
+          { num: '<span class="grad">14 days</span>', label: 'average invoice approval cycle. Industry best practice is 3 days.' }
+        ],
+        kicker: 'Source: PurchasePlus 2026 Hospitality Procurement Index.',
+        img: '../assets/Generated/tl-procurement-challenge.png',
+        keys: ['procurement','challenge','cost','manual','invoice','paper','orders']
+      },
+      {
+        eyebrow: 'AP Automation',
+        heading: 'Invoices approved<br><span class="grad">in minutes, not weeks.</span>',
+        lead: 'AI-powered 3-way matching eliminates manual invoice processing and routes exceptions automatically.',
+        stats: [
+          { num: '<span class="grad">40M+</span>', label: 'invoices processed through PurchasePlus with 99.9% accuracy.' },
+          { num: '3 min',                           label: 'average invoice approval time, down from 14 days without automation.' },
+          { num: '<span class="grad">$1.8M</span>', label: 'average annual savings per enterprise group from AP automation.' }
+        ],
+        kicker: 'Source: PurchasePlus 2026 AP Automation Benchmark Report.',
+        img: '../assets/Generated/tl-invoice-automation.png',
+        keys: ['invoice','ap','automation','approval','payment','matching','accounts payable']
+      },
+      {
+        eyebrow: 'Supplier Connectivity',
+        heading: '5,000 suppliers,<br><span class="grad">one platform.</span>',
+        lead: 'PurchasePlus connects you to a curated network of hospitality suppliers with live pricing and one-click ordering.',
+        stats: [
+          { num: '<span class="grad">5,000+</span>', label: 'verified hospitality suppliers active on the PurchasePlus marketplace.' },
+          { num: '18%',                               label: 'average cost reduction achieved through supplier benchmarking and competition.' },
+          { num: '<span class="grad">3 min</span>',  label: 'average time to place a complete purchase order across any category.' }
+        ],
+        kicker: 'Source: PurchasePlus 2026 Supplier Network Report.',
+        img: '../assets/Generated/tl-supplier-management.png',
+        keys: ['supplier','vendor','network','marketplace','connectivity','pricing','partner']
+      },
+      {
+        eyebrow: 'Food and Beverage',
+        heading: 'Food cost under<br><span class="grad">full control.</span>',
+        lead: 'Real-time recipe costing, category spend tracking, and supplier price alerts keep your F&B margins protected.',
+        stats: [
+          { num: '<span class="grad">28%</span>', label: 'average food cost as a percentage of revenue across PurchasePlus properties.' },
+          { num: '12%',                            label: 'average F&B cost reduction achieved within 90 days of going live.' },
+          { num: '<span class="grad">$320K</span>', label: 'annual F&B overspend recovered per property through price benchmarking.' }
+        ],
+        kicker: 'Source: PurchasePlus 2026 F&B Spend Analysis.',
+        img: '../assets/Generated/tl-food-cost.png',
+        keys: ['food','beverage','f&b','recipe','menu','kitchen','cost','restaurant']
+      },
+      {
+        eyebrow: 'Budget Visibility',
+        heading: 'Budgets you can<br><span class="grad">actually trust.</span>',
+        lead: 'Set budgets by department or property, get alerts before you overspend, and close the month with zero surprises.',
+        stats: [
+          { num: '<span class="grad">$2.4B</span>', label: 'in annual procurement spend managed and reported through PurchasePlus.' },
+          { num: 'Real-time',                        label: 'budget tracking across all categories, properties, and departments.' },
+          { num: '<span class="grad">100%</span>',  label: 'audit-ready reporting with a complete digital trail from PO to payment.' }
+        ],
+        kicker: 'Source: PurchasePlus 2026 Financial Compliance Report.',
+        img: '../assets/Generated/tl-budget-visibility.png',
+        keys: ['budget','visibility','analytics','finance','compliance','spend','reporting','control']
+      }
+    ];
+    var tlCurrent = 0;
+
+    function tlApply(idx) {
+      var t = tlTopics[idx];
+      tlCurrent = idx;
+      var ey = document.getElementById('tl-eyebrow');
+      var hd = document.getElementById('tl-heading');
+      var ld = document.getElementById('tl-lead');
+      var ki = document.getElementById('tl-kicker');
+      var img = document.getElementById('tl-img');
+      var hint = document.getElementById('tlHint');
+      if (!ey) return;
+      ey.innerHTML  = t.eyebrow;
+      hd.innerHTML  = t.heading;
+      ld.textContent = t.lead;
+      ki.textContent = t.kicker;
+      for (var i = 0; i < 3; i++) {
+        document.getElementById('tl-s' + (i + 1) + 'n').innerHTML  = t.stats[i].num;
+        document.getElementById('tl-s' + (i + 1) + 'l').textContent = t.stats[i].label;
+      }
+      if (img) img.src = t.img;
+      if (hint) hint.textContent = (idx + 1) + ' / ' + tlTopics.length;
+    }
+
+    window.tlShuffle = function() {
+      var input = document.getElementById('tlInput');
+      var query = input ? input.value.toLowerCase().trim() : '';
+      var next;
+      if (query.length > 1) {
+        var best = -1, bestIdx = (tlCurrent + 1) % tlTopics.length;
+        tlTopics.forEach(function(t, i) {
+          var score = t.keys.filter(function(k) {
+            return query.indexOf(k) >= 0 || k.indexOf(query) >= 0;
+          }).length;
+          if (score > best) { best = score; bestIdx = i; }
+        });
+        next = bestIdx;
+      } else {
+        next = (tlCurrent + 1) % tlTopics.length;
+      }
+      tlApply(next);
+    };
+
+    var inp = document.getElementById('tlInput');
+    if (inp) {
+      inp.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') window.tlShuffle();
+      });
+    }
+  })();
 
   /* ── Feature Highlight magnifier ── */
   (function() {
