@@ -2190,39 +2190,9 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 
     function tlBuildPrompt(n, topicText) {
       var count = n || tlGetCharCount();
-
-      var charDesc = count === 1
-        ? 'Flat vector illustration. One character, fully visible from head to toe, centered on pure white background.'
-        : 'Flat vector illustration. Exactly ' + count + ' characters side by side on pure white background, all fully visible from head to toe, evenly spaced across the full width.';
-
-      var styleGuide = 'Each character has EXTREMELY long curved arms that extend far beyond normal human body proportions — the arms swoop and curve dramatically, much longer than the torso. Abstract minimal face: no nose, just two small dot eyes and a gentle curved smile line. Flat geometric vector art style, clean solid color fills, no gradients, no realistic shading. Copy the exact colors and uniform details of each character precisely from the reference images — do not invent or change any colors.';
-
-      var poseMap = [
-        ['AP AUTOMATION',      'Characters hold documents and invoices, one long arm sweeping upward in an approving gesture, the other arm extended outward.'],
-        ['AUTOMATION',         'Characters hold documents and invoices, one long arm sweeping upward in an approving gesture, the other arm extended outward.'],
-        ['SPEND',              'Characters point at data and charts with one long arm raised high, the other arm gesturing outward enthusiastically.'],
-        ['BUDGET',             'Characters spread their long arms wide open in a confident controlling gesture, palms facing out.'],
-        ['PURCHAS',            'Characters reach out with long arms holding documents, one arm raised presenting forward.'],
-        ['MARKETPLACE',        'Characters extend both long arms outward presenting and welcoming, palms open.'],
-        ['INVOICE',            'Characters hold documents with arms raised triumphantly overhead.'],
-        ['SUPPLIER',           'Characters wave with one long arm raised high, the other arm extended at shoulder height.'],
-        ['APPROVAL',           'Characters raise one long arm high giving a thumbs-up gesture, other arm extended to the side.'],
-        ['ANALYTICS',          'Characters point with one long arm at an imaginary chart, the other arm resting on their hip.'],
-        ['REPORTING',          'Characters hold a clipboard or document in one hand, the other long arm pointing forward at the viewer.']
-      ];
-
-      var poseCtx = 'Characters are in a dynamic pose with arms extended and raised, as if presenting or celebrating.';
-      if (topicText) {
-        var upperTopic = topicText.toUpperCase();
-        for (var i = 0; i < poseMap.length; i++) {
-          if (upperTopic.indexOf(poseMap[i][0]) !== -1) {
-            poseCtx = poseMap[i][1];
-            break;
-          }
-        }
-      }
-
-      return charDesc + ' ' + styleGuide + ' ' + poseCtx + ' Pure white (#ffffff) background. ABSOLUTELY NO text, NO logos, NO letters, NO numbers, NO watermarks anywhere in the image.';
+      var who = count === 1 ? 'this character' : 'these characters';
+      var ctx = topicText ? 'in the context of ' + topicText : 'in a professional hospitality setting';
+      return 'Create an image of ' + who + ' ' + ctx + '. Do not change the characters\' clothes or colours. White background. No text, no logos, no watermarks.';
     }
 
     function tlHandleModelResult(modelId) {
