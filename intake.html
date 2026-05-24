@@ -660,7 +660,10 @@ select.field-input { cursor: pointer; }
     <div class="editor-layout">
       <div class="editor-left">
         <div class="editor-section">
-          <div class="editor-section-title">Content analysis</div>
+          <div class="editor-section-title" style="display:flex;align-items:center;gap:10px;">
+            Content analysis
+            <span id="modeBadge" style="display:none;font-size:11px;font-weight:600;padding:3px 10px;border-radius:999px;letter-spacing:.02em;white-space:nowrap;"></span>
+          </div>
           <div class="analysis-card">
             <div class="analysis-row">
               <div class="analysis-icon">
@@ -878,10 +881,16 @@ select.field-input { cursor: pointer; }
       <div class="chef-av-bg"></div>
     </div>
     <h2>Alright, <span id="chefGreetName">there.</span></h2>
-    <p>What would you like me to do?</p>
+    <p>Would you like me to follow the Master Template, or shall I do some magic for you?</p>
     <div class="choice-btns">
-      <button class="btn-cook" onclick="cookItGood()">Cook Something Good</button>
-      <button class="btn-create" onclick="createWithChef()">Create with MasterChef</button>
+      <button class="btn-cook" onclick="chooseMasterTemplate()">
+        Follow Master Template
+        <span style="display:block;font-size:12px;font-weight:400;opacity:.8;margin-top:3px;">Structured slides, brand-perfect output</span>
+      </button>
+      <button class="btn-create" onclick="chooseMagic()">
+        Do some magic
+        <span style="display:block;font-size:12px;font-weight:400;opacity:.65;margin-top:2px;">AI picks the best layout for your content</span>
+      </button>
     </div>
   </div>
 </div>
@@ -895,6 +904,7 @@ select.field-input { cursor: pointer; }
   var currentUser = null;
   var bubbleVisible = true;
   var chefMsgTimer  = null;
+  var masterMode  = null; /* 'template' | 'magic' */
   var DEMO_URL = 'https://akilalohan-lang.github.io/pp-pitch-2026/preso-demo.html';
   var defaultSlides = [
     'Cover / Title', 'The Challenge', 'The Platform',
@@ -1208,18 +1218,24 @@ select.field-input { cursor: pointer; }
     $('choiceModal').classList.add('open');
   }
 
-  window.cookItGood = function() {
+  window.chooseMasterTemplate = function() {
+    masterMode = 'template';
+    $('choiceModal').classList.remove('open');
+    goToEditorStep();
+    setChefMessage('Master Template mode. I\'ll use the exact slide types and brand system. Set the title and audience to proceed.', 700);
+  };
+
+  window.chooseMagic = function() {
+    masterMode = 'magic';
     $('choiceModal').classList.remove('open');
     $('togAI').checked = true;
     goToEditorStep();
-    setChefMessage('On it! Fill in the title and audience on the right and I\'ll handle the rest.', 700);
+    setChefMessage('Magic mode. I\'ll pick the best layout for your content. Set the title and audience and leave the rest to me.', 700);
   };
 
-  window.createWithChef = function() {
-    $('choiceModal').classList.remove('open');
-    goToEditorStep();
-    setChefMessage('Let\'s build this together. Set the title and audience to get started.', 700);
-  };
+  /* Legacy aliases kept in case anything references them */
+  window.cookItGood     = window.chooseMagic;
+  window.createWithChef = window.chooseMasterTemplate;
 
   function goToEditorStep() {
     var sources = [];
@@ -1227,6 +1243,21 @@ select.field-input { cursor: pointer; }
     urls.forEach(function(u) { sources.push(u.length > 40 ? u.slice(0,38)+'…' : u); });
     if ($('pasteArea').value.trim()) sources.push('Pasted text');
     $('analysisSources').textContent = sources.join(' · ');
+
+    var modeEl = $('modeBadge');
+    if (modeEl) {
+      if (masterMode === 'template') {
+        modeEl.textContent = 'Master Template';
+        modeEl.style.background = 'linear-gradient(90deg,#a956ff,#3766fe)';
+        modeEl.style.color = '#fff';
+      } else {
+        modeEl.textContent = 'Magic mode';
+        modeEl.style.background = '#f5edff';
+        modeEl.style.color = '#7c5dff';
+      }
+      modeEl.style.display = 'inline-flex';
+    }
+
     buildOutline(+$('slideCount').value);
     $('step1').style.display = 'none';
     $('step2').style.display = '';

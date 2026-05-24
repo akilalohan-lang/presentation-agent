@@ -37,6 +37,71 @@ The agent does NOT ask for all settings upfront. It digests first, then the edit
 
 ---
 
+## Mode selection (Master Template vs Magic)
+
+When a user uploads content, MasterChef asks:
+- **Follow Master Template** (`masterMode = 'template'`): use only the approved slide types below, in the order they make sense for the content. Do not invent new layouts.
+- **Do Some Magic** (`masterMode = 'magic'`): use the master template as a foundation but apply creative judgment. You may combine elements differently, vary layouts, and generate AI images freely. Still use brand colours and assets.
+
+If mode is unknown, default to `template`.
+
+---
+
+## Slide selection map
+
+Not every slide is used in every presentation. Read the content, then pick only the slides that serve it. The map below is the decision guide. Each slide in `template/master-template.html` has a `data-title` attribute -- use that exact string to reference it.
+
+### Always include (every deck)
+
+| Slide | data-title | When |
+|---|---|---|
+| Cover | `Presentation Cover` | Always first slide. Big headline, tagline, device mockup right panel. |
+| Call to Action | `Call to Action` | Always last slide. Closing CTA, contact details, certifications. |
+
+### Include when content calls for it (conditional)
+
+| Slide | data-title | Use when content includes... |
+|---|---|---|
+| Summary | `Summary` | Overview, agenda, or "what's in this deck" content. Also good for 3-5 key proof points up front. |
+| Section Divider | `Section Divider` | Deck has distinct topic sections that need a clear visual break. Skip if deck is under 8 slides. |
+| TXT + Longarms + UI | `TXT + Longarms + UI` | Any slide that leads with a headline + 3 stats or bullets, where AI character imagery suits the topic. Good for: product benefits, feature highlights, capabilities, outcomes. Uses Higgsfield generation. |
+| Application Screen | `Application Screen` | Slide focused on ONE specific product feature or workflow. Use a real artboard screenshot from `assets/PurchasePlus Web Application Screens/`. |
+| Application Multi-Screen | `Application Multi-Screen` | Slide that shows platform breadth (multiple features at once) or a "how it works" multi-step flow. Use two artboard screenshots side by side. |
+| Feature Highlight | `Feature Highlight` | 3 named feature cards across full width. Use when listing three distinct capabilities or benefits without a visual hero. |
+| Analytics Dash AI | `Analytics Dash AI` | Slide about reporting, analytics, spend intelligence, or data visibility. Uses Higgsfield to generate a dark dashboard image. |
+| TXT + Longarms + Fun UI | `TXT + Longarms + Fun UI` | Same as TXT + Longarms + UI but for slides with a lighter/colourful visual tone. Uses the Colourful UI illustrated cards in the right panel. Good for marketplace, supplier, or engagement stories. |
+| People | `People` | Slide about the team, leadership, or "who we are." Shows the team grid with photos. Only include if the deck has a people/trust angle. |
+
+### Decision flowchart
+
+```
+Content type            → Slide to use
+─────────────────────────────────────────────────────────
+Title / intro           → Presentation Cover (always)
+Agenda / key numbers    → Summary
+"Section X" break       → Section Divider (if 8+ slides)
+Feature / benefit       → TXT + Longarms + UI  OR  Feature Highlight
+  └ if colourful tone   → TXT + Longarms + Fun UI
+Single product workflow → Application Screen
+Platform breadth        → Application Multi-Screen
+Analytics / spend data  → Analytics Dash AI
+Team / company          → People
+Closing / next steps    → Call to Action (always)
+```
+
+### Slide ordering rule
+
+Cover → Summary (optional) → Section Divider (optional) → [content slides in narrative order] → People (optional, near end) → Call to Action
+
+### How many slides
+
+- 4-6 slide deck: Cover, 2-4 content slides, Call to Action
+- 7-9 slide deck: Cover, Summary, 4-6 content slides, Call to Action
+- 10-12 slide deck: Cover, Summary, Section Divider(s), content slides, People, Call to Action
+- Never exceed what the content justifies. A slide without real content is worse than no slide.
+
+---
+
 ## Folder layout
 
 ```
