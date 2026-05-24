@@ -1,9 +1,50 @@
-// Starts a PurchasePlus-branded analytics dashboard image generation job.
-// References the PP emblem logo (ef87048f) for brand accuracy.
+// Generates a PurchasePlus analytics dashboard image via Higgsfield.
+// Accepts { model, topic } in the POST body.
+// model defaults to gpt_image_2 (best for UI + text sharpness).
+// topic adjusts the prompt context to match the active slide variant.
 const HF_API  = 'https://fnf.higgsfield.ai';
-const PP_LOGO = 'ef87048f-c65e-4283-be15-a9a859ecb162'; // PP High Res Logo upload
+const PP_LOGO = 'ef87048f-c65e-4283-be15-a9a859ecb162';
 
-const BASE_PROMPT = 'Hyper-realistic enterprise SaaS dashboard UI screenshot for PurchasePlus, a procurement platform. Portrait orientation. PURE WHITE background (#ffffff) throughout. TOP NAVIGATION BAR: White background. Left side shows the PurchasePlus logo emblem (purple and blue cross/plus shape) followed by the text "PurchasePlus" in dark navy. Right side shows a date filter reading "May 1 - May 31, 2026" and a Filters button. LEFT SIDEBAR: White background with subtle border-right. Top shows PurchasePlus emblem. Menu items in this exact order, each with a small line icon and label: Home (house icon, highlighted in purple gradient pill), Requisitions (shopping cart), Purchase Orders (clipboard), Invoices (document with dollar sign), Buy Lists (checklist), Catalogues (folder), Products (grid), Supplier (delivery truck), Inventory (box), Reports (bar chart icon). MAIN CONTENT AREA (white background): Page title "Analytics" in large bold dark navy, subheader "May 2026". Four KPI cards: Total Spend $2.4B with green +12.6% trend; Invoices Processed 40M with 99.9% accuracy; Cost Savings 18% with $432M saved; Invoice Cycle 1.8 days down 87.1% from 14 days. Bar chart "Monthly Spend by Category": Food 735M purple, Beverages 520M blue, Equipment 410M teal, Linen 280M light blue, Cleaning 160M pink, Other 95M light teal. Donut chart "Spend Distribution" with brand colors and percentage labels and legend. Line chart "Invoice Processing Time" showing declining curve from 14 days to 1.8 days in purple-to-teal gradient. FONT: Clean modern geometric sans-serif. All labels dark navy. NO watermarks, NO SpendSmart, only PurchasePlus branding. High fidelity enterprise SaaS screenshot.';
+const TOPIC_CONTEXT = {
+  'Spend Intelligence': 'The dashboard is focused on spend analytics: category breakdown, bar chart, and donut distribution are the featured visuals.',
+  'Budget Control':     'The dashboard is focused on budget tracking: department budget limits, rolling forecast, and alert indicators are featured.',
+  'Invoice Automation': 'The dashboard is focused on invoice automation: the invoice cycle time line chart (14 days down to 1.8 days) is the hero visual.'
+};
+
+const BASE_PROMPT = `Photorealistic high-fidelity screenshot of a modern B2B SaaS procurement platform. \
+Pure white background (#ffffff) throughout. Crisp, pixel-perfect UI. All text sharp and correctly proportioned — absolutely no stretching, no distortion, no blurring of letterforms.
+
+LAYOUT (portrait, full-bleed screenshot):
+
+TOP NAVIGATION BAR — white background, 1px bottom border. \
+Left: small purple-and-blue cross/plus emblem only (no text beside it, emblem is ~32px). \
+Right: date range pill "May 1 – May 31, 2026" with dropdown chevron, then a "Filters" button with funnel icon. Both in dark navy text.
+
+LEFT SIDEBAR — white, 1px right border, approximately 180px wide. \
+Vertical menu items in this exact order, each with a small monoline icon then label text: \
+Home (active — purple filled pill background, white text), Requisitions, Purchase Orders, Invoices (red notification dot), Buy Lists, Catalogues, Products, Supplier, Inventory, Reports. \
+Icons are thin line style, dark navy, matching each menu label.
+
+MAIN CONTENT AREA — white background, starts right of sidebar. \
+Heading: "Analytics" in bold 28px dark navy. Subheading: "May 2026" in 14px grey.
+
+KPI CARDS ROW — four equal white cards with subtle rounded border and light shadow: \
+Card 1: dollar-coin icon, "$2.4B", "Total Spend", green "+12.6% vs Apr 2026". \
+Card 2: document icon, "40M", "Total Invoices", teal "99.9% Accuracy Rate". \
+Card 3: trending-up arrow icon, "18%", "M Saved", green "+4.2% vs Apr 2026". \
+Card 4: clock icon, "1.8", "Days", red "↓ 87.1% Down from 14.0 days".
+
+BAR CHART — titled "Monthly Spend by Category" with "This Month" dropdown. \
+Y-axis 0–800M. Bars: Food 735M (deep purple #5b21b6), Beverages 520M (royal blue #3766fe), Equipment 410M (teal #00bdc5), Linen 280M (light purple #a956ff), Cleaning 160M (red-pink #ee2b62), Other 95M (light teal #67e8f9). \
+Clean gridlines, x-axis category labels, y-axis labels.
+
+TWO BOTTOM CHARTS side by side: \
+Left — "Spend Distribution" donut chart with the same 6 brand colors, percentage labels inside/outside, legend below. \
+Right — "Invoice Processing Time" line chart, y-axis "Days" 0–16, smooth curve declining from 14.0 (left) to 1.8 (right), purple-to-teal gradient stroke, data points as dots.
+
+TYPOGRAPHY: Clean geometric sans-serif (Inter, SF Pro, or equivalent). ALL text is properly proportioned, horizontal, and fully legible. Dark navy (#111827) on white. No AI-generated text artifacts.
+
+NO watermarks. NO other brand names. NO additional logos. Only the cross/plus emblem in the top-left nav bar.`;
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
@@ -11,11 +52,13 @@ export default async function handler(req, res) {
   const token = process.env.HIGGSFIELD_TOKEN;
   if (!token) return res.status(500).json({ error: 'HIGGSFIELD_TOKEN not configured' });
 
-  const { extraPrompt } = req.body || {};
-  const prompt = BASE_PROMPT + (extraPrompt ? ' ' + extraPrompt : '');
+  const { model = 'gpt_image_2', topic } = req.body || {};
+
+  const topicCtx = topic && TOPIC_CONTEXT[topic] ? ' ' + TOPIC_CONTEXT[topic] : '';
+  const prompt = BASE_PROMPT + topicCtx;
 
   const body = {
-    job_set_type: 'imagegen_2_0',
+    job_set_type: model,
     params: {
       prompt,
       aspect_ratio: '9:16',

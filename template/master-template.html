@@ -1312,7 +1312,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
         <div class="slide-left" style="display:flex;flex-direction:column;">
 
           <!-- MasterChef-style control bar — inside slide-left only -->
-          <div style="display:flex;align-items:center;gap:8px;padding:8px 0 12px;flex-shrink:0;border-bottom:1px solid var(--border-soft);margin-bottom:16px;">
+          <div style="display:flex;align-items:center;gap:8px;padding:8px 0 12px;flex-shrink:0;border-bottom:1px solid var(--border-soft);margin-bottom:16px;flex-wrap:wrap;">
             <div class="tl-brand" style="padding:0;">
               <div class="tl-brand-icon"></div>
               <div class="tl-brand-text">
@@ -1333,6 +1333,13 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
               <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
               New Image
             </button>
+            <select id="adModel" style="height:26px;font-size:11px;font-family:inherit;font-weight:500;color:var(--ink);background:#fff;border:1.5px solid rgba(124,93,255,.28);border-radius:8px;padding:0 6px;cursor:pointer;outline:none;flex-shrink:0;">
+              <option value="gpt_image_2">GPT Image 2</option>
+              <option value="nano_banana_2">Nano Banana Pro</option>
+              <option value="nano_banana_flash">Nano Banana 2</option>
+              <option value="seedream_v4_5">Seedream 4.5</option>
+              <option value="seedream_v5_lite">Seedream V5 Lite</option>
+            </select>
             <span id="adHint" style="font-size:11px;color:var(--muted);margin-left:auto;flex-shrink:0;">1 / 3</span>
           </div>
 
@@ -2434,7 +2441,10 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 
     function adFetchNewImage() {
       adSetLoading(true);
-      fetch('/api/hf-dashboard-start', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({}) })
+      var model = (document.getElementById('adModel') || {}).value || 'gpt_image_2';
+      var eyebrowEl = document.getElementById('ad-eyebrow');
+      var topic = eyebrowEl ? eyebrowEl.textContent.trim() : '';
+      fetch('/api/hf-dashboard-start', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ model: model, topic: topic }) })
         .then(function(r) { return r.json(); })
         .then(function(d) {
           if (!d.jobId) { adSetLoading(false); return; }
