@@ -2183,15 +2183,14 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
     var tlGenerateStartTime = 0;
     var tlCurrentModel = 'nano_banana_2';
 
-    function tlBuildPrompt(pose, n, topicText) {
+    function tlBuildPrompt(n, topicText) {
       var count = n || tlGetCharCount();
-      var uniforms = ['navy business suit with white shirt and small red tie', 'white chef uniform with toque hat and apron', 'waiter uniform with bow tie and serving tray', 'bellhop uniform with pillbox hat', 'delivery uniform with cap', 'casual business attire', 'supplier vest and shirt', 'chef uniform', 'bellhop uniform', 'supplier uniform', 'customer casual outfit', 'nurse uniform with scrubs'];
       var charDesc = count === 1
-        ? 'A single Longarms character in a ' + uniforms[0]
-        : 'Exactly ' + count + ' Longarms characters standing side by side, ALL ' + count + ' fully visible from head to toe. Each wears a DIFFERENT uniform: ' + uniforms.slice(0, count).join(', ') + '. Spread them evenly across the width. Every single character must appear in the image.';
-      var identityLock = 'CRITICAL: Match the reference image character appearance exactly. (1) The head and face color is deep midnight navy-indigo, approximately #1c1040 -- distinctly dark but NOT pure black, with a visible dark blue-purple undertone. Do NOT render the face as black, grey, or any other color. (2) The face is an abstract round head with ONLY two tiny white dot eyes -- no nose, no mouth, no eyebrows, no hair, no other facial features. (3) The arms are EXTREMELY long and curved, extending far beyond normal human proportions -- preserve this exaggerated arm length exactly. (4) Flat vector illustration style. Purple (#7c5dff), teal (#00bdc5) and blue (#3766fe) appear only on clothing and background elements, never on skin or face.';
-      var topicCtx = topicText ? 'Slide topic context: ' + topicText + '. ' : '';
-      return charDesc + '. Pose: ' + pose + '. ' + identityLock + ' ' + topicCtx + 'Pure white (#ffffff) background. ABSOLUTELY NO text, NO letters, NO numbers, NO logos, NO watermarks anywhere in the image.';
+        ? 'Reproduce the character from the reference image exactly as shown. One character, standing upright, fully visible from head to toe.'
+        : 'Reproduce exactly ' + count + ' characters from the reference images, standing side by side. All ' + count + ' characters fully visible from head to toe, evenly spread across the full width. Each character is a different one from the reference images.';
+      var styleGuide = 'Copy every visual detail from the reference images precisely: the flat geometric vector illustration style, every character\'s exact colors, their distinctive curved arm shapes, their unique face shape and color, their specific hat and uniform. Do not change any colors. Do not change any shapes. Do not make it realistic. Keep the flat clean vector look exactly as in the references.';
+      var topicCtx = topicText ? 'Presentation slide topic: ' + topicText + '.' : '';
+      return charDesc + ' ' + styleGuide + ' ' + topicCtx + ' Pure white (#ffffff) background. No text, no letters, no numbers, no logos, no watermarks.';
     }
 
     function tlHandleModelResult(modelId) {
@@ -2405,8 +2404,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       if (headingEl && headingEl.textContent.trim()) topicParts.push(headingEl.textContent.replace(/\s+/g, ' ').trim());
       var topicText = topicParts.join(': ');
 
-      var poseStr = tlScenes[Math.floor(Math.random() * tlScenes.length)];
-      var prompt = tlBuildPrompt(poseStr, count, topicText);
+      var prompt = tlBuildPrompt(count, topicText);
 
       // Reset results for this new generation round
       tlModelResults = {};
