@@ -1082,6 +1082,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
             <option value="seedream_v4_5">Seedream 4.5</option>
             <option value="seedream_v5_lite">Seedream V5 Lite</option>
           </select>
+          <span id="tlReadyCount" style="font-size:10px;color:#9ca3af;white-space:nowrap;flex-shrink:0;"></span>
           <span class="tl-hint" id="tlHint">—</span>
         </div>
 
@@ -2155,8 +2156,8 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       'Character with extremely long arms curved upward making an arch shape, surrounded by floating abstract cloud and connectivity shapes'
     ];
 
-    // 11 Stand Alone PNG characters available (max for char count control)
-    var TL_MAX_CHARS = 11;
+    // 12 Stand Alone PNG characters available (max for char count control)
+    var TL_MAX_CHARS = 12;
 
     function tlGetCharCount() {
       var el = document.getElementById('tlCharCount');
@@ -2170,14 +2171,68 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       el.textContent = val;
     };
 
-    function tlBuildPrompt(scene, n) {
+    var TL_MODELS = [
+      { id: 'nano_banana_2',     label: 'Nano Banana Pro' },
+      { id: 'gpt_image_2',      label: 'GPT Image 2' },
+      { id: 'nano_banana_flash', label: 'Nano Banana 2' },
+      { id: 'seedream_v4_5',    label: 'Seedream 4.5' },
+      { id: 'seedream_v5_lite', label: 'Seedream V5 Lite' }
+    ];
+    var tlModelResults = {};
+    var tlModelLoading = {};
+    var tlGenerateStartTime = 0;
+    var tlCurrentModel = 'nano_banana_2';
+
+    function tlBuildPrompt(pose, n, topicText) {
       var count = n || tlGetCharCount();
-      var uniforms = ['navy business suit with white shirt and small red tie', 'white chef uniform with toque hat and apron', 'waiter uniform with bow tie and serving tray', 'bellhop uniform with pillbox hat', 'delivery uniform with cap', 'casual business attire', 'supplier vest and shirt'];
+      var uniforms = ['navy business suit with white shirt and small red tie', 'white chef uniform with toque hat and apron', 'waiter uniform with bow tie and serving tray', 'bellhop uniform with pillbox hat', 'delivery uniform with cap', 'casual business attire', 'supplier vest and shirt', 'chef uniform', 'bellhop uniform', 'supplier uniform', 'customer casual outfit', 'nurse uniform with scrubs'];
       var charDesc = count === 1
         ? 'A single Longarms character in a ' + uniforms[0]
         : 'Exactly ' + count + ' Longarms characters standing side by side, ALL ' + count + ' fully visible from head to toe. Each wears a DIFFERENT uniform: ' + uniforms.slice(0, count).join(', ') + '. Spread them evenly across the width. Every single character must appear in the image.';
-      var identityLock = 'CRITICAL — DO NOT CHANGE THE CHARACTER IDENTITY OR APPEARANCE: The characters in the reference images have a FIXED visual identity that must be preserved EXACTLY. This means: (1) Skin/face color is VERY DARK NAVY (#0c0821), almost charcoal-black — do NOT make it lighter, do NOT make it purple, blue, teal, brown, or any other color. (2) The face is an abstract round head with ONLY two tiny dot eyes and NO nose, NO mouth, NO eyebrows, NO hair details — do not add any facial features. (3) The body has EXTREMELY long curved arms that extend far beyond normal proportions — preserve this exaggerated arm length exactly. (4) The overall flat vector illustration style must match the reference images. Purple (#7c5dff), teal (#00bdc5) and blue (#3766fe) are used ONLY on clothing accents and background elements, NEVER on skin or faces.';
-      return charDesc + '. ' + identityLock + ' Scene context: ' + scene + '. Pure white (#ffffff) background. ABSOLUTELY NO text, NO letters, NO numbers, NO logos, NO watermarks anywhere in the image.';
+      var identityLock = 'CRITICAL: Match the reference image character appearance exactly. (1) The head and face color is deep midnight navy-indigo, approximately #1c1040 -- distinctly dark but NOT pure black, with a visible dark blue-purple undertone. Do NOT render the face as black, grey, or any other color. (2) The face is an abstract round head with ONLY two tiny white dot eyes -- no nose, no mouth, no eyebrows, no hair, no other facial features. (3) The arms are EXTREMELY long and curved, extending far beyond normal human proportions -- preserve this exaggerated arm length exactly. (4) Flat vector illustration style. Purple (#7c5dff), teal (#00bdc5) and blue (#3766fe) appear only on clothing and background elements, never on skin or face.';
+      var topicCtx = topicText ? 'Slide topic context: ' + topicText + '. ' : '';
+      return charDesc + '. Pose: ' + pose + '. ' + identityLock + ' ' + topicCtx + 'Pure white (#ffffff) background. ABSOLUTELY NO text, NO letters, NO numbers, NO logos, NO watermarks anywhere in the image.';
+    }
+
+    function tlHandleModelResult(modelId) {
+      tlUpdateReadyCount();
+      if (modelId !== tlCurrentModel) return;
+      var result = tlModelResults[modelId];
+      if (result && result !== 'error') {
+        tlSetImgLoading(false);
+        tlApplyImg(result);
+      } else if (result === 'error') {
+        var anyLoading = false;
+        for (var i = 0; i < TL_MODELS.length; i++) { if (tlModelLoading[TL_MODELS[i].id]) { anyLoading = true; break; } }
+        if (anyLoading) return;
+        var firstGood = null;
+        for (var j = 0; j < TL_MODELS.length; j++) {
+          if (tlModelResults[TL_MODELS[j].id] && tlModelResults[TL_MODELS[j].id] !== 'error') { firstGood = TL_MODELS[j]; break; }
+        }
+        if (firstGood) {
+          var sel = document.getElementById('tlModel');
+          if (sel) sel.value = firstGood.id;
+          tlCurrentModel = firstGood.id;
+          tlSetImgLoading(false);
+          tlApplyImg(tlModelResults[firstGood.id]);
+        } else {
+          tlSetImgLoading(false);
+          tlShowPlaceholder('All models failed. Check credits and try again.', true);
+        }
+      }
+    }
+
+    function tlUpdateReadyCount() {
+      var ready = 0;
+      for (var i = 0; i < TL_MODELS.length; i++) {
+        if (tlModelResults[TL_MODELS[i].id] && tlModelResults[TL_MODELS[i].id] !== 'error') ready++;
+      }
+      var el = document.getElementById('tlReadyCount');
+      if (!el) return;
+      var hasAny = Object.keys(tlModelResults).length > 0;
+      if (!hasAny) { el.textContent = ''; return; }
+      el.textContent = ready + '/' + TL_MODELS.length + ' ready';
+      el.style.color = ready === TL_MODELS.length ? '#00bdc5' : '#9ca3af';
     }
 
     // ── Queue and state ──
@@ -2334,61 +2389,115 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       tlEnqueue(n).then(function() { tlWarmup(remaining - 1); });
     }
 
-    // Button: Generate — advance text topic and submit one new image job
+    // Button: Generate — fire all 5 models simultaneously; dropdown switches between cached results
     window.tlGenerate = function() {
       tlQueueIdx = (tlQueueIdx + 1) % tlTopics.length;
       tlApplyText(tlTopics[tlQueueIdx]);
       tlUpdateHint((tlQueueIdx + 1) + ' / ' + tlTopics.length);
 
       var count = tlGetCharCount();
-      var sceneStr = tlScenes[Math.floor(Math.random() * tlScenes.length)];
-      var prompt = tlBuildPrompt(sceneStr, count);
-      var model = (document.getElementById('tlModel') || {}).value || 'nano_banana_2';
 
-      tlSetImgLoading(true, Date.now());
+      // Read current slide topic from DOM (just applied above via tlApplyText)
+      var eyebrowEl = document.getElementById('tl-eyebrow');
+      var headingEl = document.getElementById('tl-heading');
+      var topicParts = [];
+      if (eyebrowEl && eyebrowEl.textContent.trim()) topicParts.push(eyebrowEl.textContent.trim());
+      if (headingEl && headingEl.textContent.trim()) topicParts.push(headingEl.textContent.replace(/\s+/g, ' ').trim());
+      var topicText = topicParts.join(': ');
+
+      var poseStr = tlScenes[Math.floor(Math.random() * tlScenes.length)];
+      var prompt = tlBuildPrompt(poseStr, count, topicText);
+
+      // Reset results for this new generation round
+      tlModelResults = {};
+      tlModelLoading = {};
+      tlGenerateStartTime = Date.now();
+
+      var sel = document.getElementById('tlModel');
+      tlCurrentModel = sel ? sel.value : TL_MODELS[0].id;
+
       var ph = document.getElementById('tl-placeholder');
       if (ph) ph.style.display = 'none';
+      var imgEl = document.getElementById('tl-img');
+      if (imgEl) { imgEl.src = ''; imgEl.style.display = 'none'; }
+      tlSetImgLoading(true, tlGenerateStartTime);
+      tlUpdateReadyCount();
 
-      fetch('/api/hf-start', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: prompt, count: count, model: model })
-      })
-      .then(function(r) { return r.json(); })
-      .then(function(d) {
-        if (!d.jobId) {
-          tlSetImgLoading(false);
-          var errMsg = d.error && d.error.indexOf('not_enough_credits') !== -1
-            ? 'Out of Higgsfield credits. Top up at higgsfield.ai'
-            : 'Generation failed — check API config.';
-          tlShowPlaceholder(errMsg, true);
-          return;
-        }
-        var jobId = d.jobId;
-        (function poll() {
-          setTimeout(function() {
-            fetch('/api/hf-poll?id=' + jobId)
-              .then(function(r) { return r.json(); })
-              .then(function(d) {
-                if (d.status === 'completed' && d.url) {
-                  tlSetImgLoading(false);
-                  tlApplyImg(d.url);
-                } else if (d.status !== 'failed') {
-                  poll();
-                } else {
-                  tlSetImgLoading(false);
-                  tlShowPlaceholder('Generation failed — try another model.', true);
-                }
-              }).catch(function() { tlSetImgLoading(false); tlShowPlaceholder('Network error.', true); });
-          }, 3000);
-        })();
-      })
-      .catch(function() { tlSetImgLoading(false); tlShowPlaceholder('Network error.', true); });
+      // Fire all 5 models in parallel
+      TL_MODELS.forEach(function(m) {
+        tlModelLoading[m.id] = true;
+        fetch('/api/hf-start', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt: prompt, count: count, model: m.id })
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(d) {
+          if (!d.jobId) {
+            tlModelLoading[m.id] = false;
+            tlModelResults[m.id] = 'error';
+            tlHandleModelResult(m.id);
+            return;
+          }
+          var jobId = d.jobId;
+          (function poll() {
+            setTimeout(function() {
+              fetch('/api/hf-poll?id=' + jobId)
+                .then(function(r) { return r.json(); })
+                .then(function(pd) {
+                  if (pd.status === 'completed' && pd.url) {
+                    tlModelLoading[m.id] = false;
+                    tlModelResults[m.id] = pd.url;
+                    tlHandleModelResult(m.id);
+                  } else if (pd.status !== 'failed') {
+                    poll();
+                  } else {
+                    tlModelLoading[m.id] = false;
+                    tlModelResults[m.id] = 'error';
+                    tlHandleModelResult(m.id);
+                  }
+                }).catch(function() {
+                  tlModelLoading[m.id] = false;
+                  tlModelResults[m.id] = 'error';
+                  tlHandleModelResult(m.id);
+                });
+            }, 3000);
+          })();
+        })
+        .catch(function() {
+          tlModelLoading[m.id] = false;
+          tlModelResults[m.id] = 'error';
+          tlHandleModelResult(m.id);
+        });
+      });
     };
 
     // Legacy aliases so any hardcoded onclick still works
     window.tlNewTopic = window.tlGenerate;
     window.tlShuffle  = window.tlGenerate;
+
+    // Model dropdown — switch displayed image between cached results without re-generating
+    (function() {
+      var modelSel = document.getElementById('tlModel');
+      if (!modelSel) return;
+      modelSel.addEventListener('change', function() {
+        tlCurrentModel = modelSel.value;
+        var result = tlModelResults[tlCurrentModel];
+        if (result && result !== 'error') {
+          tlSetImgLoading(false);
+          tlApplyImg(result);
+        } else if (tlModelLoading[tlCurrentModel]) {
+          var imgEl = document.getElementById('tl-img');
+          if (imgEl) { imgEl.style.display = 'none'; }
+          var phEl = document.getElementById('tl-placeholder');
+          if (phEl) phEl.style.display = 'none';
+          tlSetImgLoading(true, tlGenerateStartTime);
+        } else if (result === 'error') {
+          tlSetImgLoading(false);
+          tlShowPlaceholder('Generation failed for this model. Select another.', true);
+        }
+      });
+    })();
 
     // Button: New Text, pick random text, keep current image
     window.tlNewText = function() {

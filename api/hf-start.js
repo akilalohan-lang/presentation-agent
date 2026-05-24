@@ -3,8 +3,8 @@
 // count controls how many Longarms character reference images are passed to the model.
 const HF_API = 'https://fnf.higgsfield.ai';
 
-// All 11 Stand Alone characters uploaded to Higgsfield.
-// Ordered for maximum visual variety when selecting a subset (1..N).
+// All 12 Stand Alone characters uploaded to Higgsfield.
+// Random N are selected per request for visual variety.
 const CHAR_IDS = [
   'fbc71621-e9c9-43fc-8879-b30b8ab49ea7', // Manager (navy suit)
   'd05e638b-d8e4-4fe9-920c-65a20e9972b2', // Chef 1 (white uniform)
@@ -17,7 +17,13 @@ const CHAR_IDS = [
   '893991e5-98df-4475-bb3e-9bf1bcdfb947', // Bellhop 2
   '6c3030d7-69f1-4e16-866f-84c4ca7d8c67', // Supplier 2
   'e951dc9b-9324-43a1-9833-288ce930c423', // Customer 2
+  '77983a98-2b46-41d9-8670-85502a50bd37', // Age Care Nurse
 ];
+
+function pickRandom(arr, n) {
+  const shuffled = [...arr].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, n);
+}
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
@@ -29,7 +35,7 @@ export default async function handler(req, res) {
   if (!prompt) return res.status(400).json({ error: 'prompt required' });
 
   const charCount = Math.max(1, Math.min(CHAR_IDS.length, parseInt(count) || 1));
-  const selectedIds = CHAR_IDS.slice(0, charCount);
+  const selectedIds = pickRandom(CHAR_IDS, charCount);
   const medias = selectedIds.map(id => ({ data: { id, type: 'media_input' }, role: 'image' }));
 
   const body = {
