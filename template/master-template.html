@@ -1075,7 +1075,14 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
             <button onclick="tlCharAdjust(1)" style="border:0;background:none;color:var(--purple);font-size:15px;font-weight:600;cursor:pointer;padding:0 2px;line-height:1;font-family:inherit;">+</button>
             <span style="font-size:10px;color:var(--muted);white-space:nowrap;margin-left:2px;letter-spacing:.04em;">chars</span>
           </div>
-          <span class="tl-hint" id="tlHint">1 / 10</span>
+          <select id="tlModel" style="height:28px;font-size:11px;font-family:inherit;font-weight:500;color:var(--ink);background:#fff;border:1.5px solid rgba(124,93,255,.28);border-radius:8px;padding:0 6px;cursor:pointer;outline:none;flex-shrink:0;">
+            <option value="nano_banana_2">Nano Banana Pro</option>
+            <option value="gpt_image_2">GPT Image 2</option>
+            <option value="nano_banana_flash">Nano Banana 2</option>
+            <option value="seedream_v4_5">Seedream 4.5</option>
+            <option value="seedream_v5_lite">Seedream V5 Lite</option>
+          </select>
+          <span class="tl-hint" id="tlHint">—</span>
         </div>
 
         <!-- Main content row -->
@@ -1103,9 +1110,11 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
           </div>
 
           <div class="slide-right" id="tl-right">
-            <img class="tl-right-img" id="tl-img"
-                 src="../assets/Generated/tl-procurement-challenge.png"
-                 alt="Procurement challenge scene">
+            <img class="tl-right-img" id="tl-img" src="" alt="" style="display:none;">
+            <div id="tl-placeholder" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:#fff;">
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="4" y="4" width="32" height="32" rx="6" stroke="#e5e7eb" stroke-width="2"/><circle cx="14" cy="15" r="3" stroke="#9ca3af" stroke-width="1.5"/><path d="M4 28l9-8 6 6 5-5 12 10" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span id="tl-ph-msg" style="font-size:12px;color:#9ca3af;font-weight:500;text-align:center;max-width:140px;line-height:1.5;">Press Generate to create your scene</span>
+            </div>
           </div>
 
         </div>
@@ -1980,7 +1989,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
           { num: '<span class="grad">14 days</span>', label: 'average invoice approval cycle. Industry best practice is 3 days.' }
         ],
         kicker: 'Source: PurchasePlus 2026 Hospitality Procurement Index.',
-        img: '../assets/Generated/tl-procurement-challenge.png',
+        img: null,
         keys: ['procurement','challenge','cost','manual','invoice','paper','orders']
       },
       {
@@ -1993,7 +2002,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
           { num: '<span class="grad">$1.8M</span>', label: 'average annual savings per enterprise group from AP automation.' }
         ],
         kicker: 'Source: PurchasePlus 2026 AP Automation Benchmark Report.',
-        img: '../assets/Generated/tl-invoice-automation.png',
+        img: null,
         keys: ['invoice','ap','automation','approval','payment','matching','accounts payable']
       },
       {
@@ -2006,7 +2015,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
           { num: '<span class="grad">3 min</span>',  label: 'average time to place a complete purchase order across any category.' }
         ],
         kicker: 'Source: PurchasePlus 2026 Supplier Network Report.',
-        img: '../assets/Generated/tl-supplier-management.png',
+        img: null,
         keys: ['supplier','vendor','network','marketplace','connectivity','pricing','partner']
       },
       {
@@ -2019,7 +2028,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
           { num: '<span class="grad">$320K</span>', label: 'annual F&B overspend recovered per property through price benchmarking.' }
         ],
         kicker: 'Source: PurchasePlus 2026 F&B Spend Analysis.',
-        img: '../assets/Generated/tl-food-cost.png',
+        img: null,
         keys: ['food','beverage','f&b','recipe','menu','kitchen','cost','restaurant']
       },
       {
@@ -2032,7 +2041,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
           { num: '<span class="grad">100%</span>',  label: 'audit-ready reporting with a complete digital trail from PO to payment.' }
         ],
         kicker: 'Source: PurchasePlus 2026 Financial Compliance Report.',
-        img: '../assets/Generated/tl-budget-visibility.png',
+        img: null,
         keys: ['budget','visibility','analytics','finance','compliance','spend','reporting','control']
       }
     ];
@@ -2049,7 +2058,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
           { num: '<span class="grad">100%</span>',  label: 'of purchase events captured and reportable within seconds.' }
         ],
         kicker: 'Source: PurchasePlus Trust Center 2026.',
-        img: '../assets/Generated/tl-budget-visibility.png',
+        img: null,
         keys: ['compliance','audit','soc2','iso','security','trust','gdpr']
       },
       {
@@ -2062,7 +2071,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
           { num: '<span class="grad">$2.4B</span>',  label: 'annual spend consolidated and reported across all customer groups.' }
         ],
         kicker: 'Source: PurchasePlus 2026 Enterprise Report.',
-        img: '../assets/Generated/tl-supplier-management.png',
+        img: null,
         keys: ['multi-property','enterprise','portfolio','group','scale','properties','chain']
       },
       {
@@ -2075,7 +2084,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
           { num: '<span class="grad">80%</span>',     label: 'reduction in procurement admin hours, freeing staff for guest-facing work.' }
         ],
         kicker: 'Source: PurchasePlus 2026 Onboarding Success Report.',
-        img: '../assets/Generated/tl-procurement-challenge.png',
+        img: null,
         keys: ['digital','transformation','paperless','adoption','change','technology','modern']
       },
       {
@@ -2088,7 +2097,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
           { num: '<span class="grad">0 calls</span>', label: 'required to enforce pricing, the platform handles it automatically.' }
         ],
         kicker: 'Source: PurchasePlus 2026 Contract Compliance Study.',
-        img: '../assets/Generated/tl-budget-visibility.png',
+        img: null,
         keys: ['contract','negotiated','rates','pricing','compliance','enforcement','spend']
       },
       {
@@ -2101,7 +2110,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
           { num: '<span class="grad">3 sec</span>', label: 'to generate a full spend report across any date range, property, or category.' }
         ],
         kicker: 'Source: PurchasePlus 2026 Analytics Benchmark.',
-        img: '../assets/Generated/tl-budget-visibility.png',
+        img: null,
         keys: ['analytics','spend','visibility','reporting','data','insight','dashboard']
       },
       {
@@ -2114,7 +2123,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
           { num: '<span class="grad">$1.8M</span>', label: 'average AI-identified savings per enterprise group per year.' }
         ],
         kicker: 'Source: PurchasePlus 2026 AI Performance Report.',
-        img: '../assets/Generated/tl-invoice-automation.png',
+        img: null,
         keys: ['ai','machine learning','automation','intelligence','smart','matching','predictions']
       },
       {
@@ -2127,7 +2136,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
           { num: '<span class="grad">Dedicated</span>', label: 'customer success manager assigned from day one through your first year.' }
         ],
         kicker: 'Source: PurchasePlus 2026 Customer Success Report.',
-        img: '../assets/Generated/tl-procurement-challenge.png',
+        img: null,
         keys: ['onboarding','implementation','setup','go-live','launch','training','success']
       }
     ]);
@@ -2167,9 +2176,8 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       var charDesc = count === 1
         ? 'A single Longarms character in a ' + uniforms[0]
         : 'Exactly ' + count + ' Longarms characters standing side by side, ALL ' + count + ' fully visible from head to toe. Each wears a DIFFERENT uniform: ' + uniforms.slice(0, count).join(', ') + '. Spread them evenly across the width. Every single character must appear in the image.';
-      var skinRule = 'CRITICAL SKIN COLOR: All character skin and face areas are VERY DARK NAVY (#0c0821) — almost charcoal black. This color is fixed from the reference images and must NEVER change. Do NOT apply purple, blue, teal or any other color to skin or faces. Purple (#7c5dff), teal (#00bdc5) and blue (#3766fe) are used ONLY on clothing accents, accessories, and background graphic elements.';
-      var shapeRule = 'Each character has EXTREMELY long curved arms extending 3x beyond normal human arm length. Abstract minimal face: two tiny dot eyes only, NO nose, NO mouth detail. Flat vector illustration style matching the reference images exactly.';
-      return charDesc + '. ' + skinRule + ' ' + shapeRule + ' Scene context: ' + scene + '. Pure white (#ffffff) background. ABSOLUTELY NO text, NO letters, NO numbers, NO logos, NO watermarks anywhere in the image.';
+      var identityLock = 'CRITICAL — DO NOT CHANGE THE CHARACTER IDENTITY OR APPEARANCE: The characters in the reference images have a FIXED visual identity that must be preserved EXACTLY. This means: (1) Skin/face color is VERY DARK NAVY (#0c0821), almost charcoal-black — do NOT make it lighter, do NOT make it purple, blue, teal, brown, or any other color. (2) The face is an abstract round head with ONLY two tiny dot eyes and NO nose, NO mouth, NO eyebrows, NO hair details — do not add any facial features. (3) The body has EXTREMELY long curved arms that extend far beyond normal proportions — preserve this exaggerated arm length exactly. (4) The overall flat vector illustration style must match the reference images. Purple (#7c5dff), teal (#00bdc5) and blue (#3766fe) are used ONLY on clothing accents and background elements, NEVER on skin or faces.';
+      return charDesc + '. ' + identityLock + ' Scene context: ' + scene + '. Pure white (#ffffff) background. ABSOLUTELY NO text, NO letters, NO numbers, NO logos, NO watermarks anywhere in the image.';
     }
 
     // ── Queue and state ──
@@ -2238,13 +2246,25 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 
     function tlApplyImg(url) {
       var imgEl = document.getElementById('tl-img');
+      var ph = document.getElementById('tl-placeholder');
       if (!imgEl || !url) return;
+      if (ph) ph.style.display = 'none';
+      imgEl.style.display = 'block';
       imgEl.style.transition = 'opacity .3s';
       imgEl.style.opacity = '0.3';
-      setTimeout(function() {
-        imgEl.src = url;
-        imgEl.style.opacity = '1';
-      }, 200);
+      setTimeout(function() { imgEl.src = url; imgEl.style.opacity = '1'; }, 200);
+    }
+
+    function tlShowPlaceholder(msg, isError) {
+      var ph = document.getElementById('tl-placeholder');
+      var msgEl = document.getElementById('tl-ph-msg');
+      var imgEl = document.getElementById('tl-img');
+      if (imgEl) imgEl.style.display = 'none';
+      if (ph) ph.style.display = 'flex';
+      if (msgEl) {
+        msgEl.textContent = msg || 'Press Generate to create your scene';
+        msgEl.style.color = isError ? '#ee2b62' : '#9ca3af';
+      }
     }
 
     function tlUpdateHint(label) {
@@ -2314,13 +2334,56 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       tlEnqueue(n).then(function() { tlWarmup(remaining - 1); });
     }
 
-    // Button: Generate, advance queue and warm up more behind it
+    // Button: Generate — advance text topic and submit one new image job
     window.tlGenerate = function() {
-      tlQueueIdx++;
-      // If we've consumed ahead of the queue, enqueue one more immediately
-      if (tlQueueIdx >= tlQueue.length - 2) tlEnqueue(tlGetCharCount());
-      tlShowQueueItem(tlQueueIdx);
-      tlUpdateHint(tlQueueIdx + 1 + ' / ' + tlQueue.length);
+      tlQueueIdx = (tlQueueIdx + 1) % tlTopics.length;
+      tlApplyText(tlTopics[tlQueueIdx]);
+      tlUpdateHint((tlQueueIdx + 1) + ' / ' + tlTopics.length);
+
+      var count = tlGetCharCount();
+      var sceneStr = tlScenes[Math.floor(Math.random() * tlScenes.length)];
+      var prompt = tlBuildPrompt(sceneStr, count);
+      var model = (document.getElementById('tlModel') || {}).value || 'nano_banana_2';
+
+      tlSetImgLoading(true, Date.now());
+      var ph = document.getElementById('tl-placeholder');
+      if (ph) ph.style.display = 'none';
+
+      fetch('/api/hf-start', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt: prompt, count: count, model: model })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (!d.jobId) {
+          tlSetImgLoading(false);
+          var errMsg = d.error && d.error.indexOf('not_enough_credits') !== -1
+            ? 'Out of Higgsfield credits. Top up at higgsfield.ai'
+            : 'Generation failed — check API config.';
+          tlShowPlaceholder(errMsg, true);
+          return;
+        }
+        var jobId = d.jobId;
+        (function poll() {
+          setTimeout(function() {
+            fetch('/api/hf-poll?id=' + jobId)
+              .then(function(r) { return r.json(); })
+              .then(function(d) {
+                if (d.status === 'completed' && d.url) {
+                  tlSetImgLoading(false);
+                  tlApplyImg(d.url);
+                } else if (d.status !== 'failed') {
+                  poll();
+                } else {
+                  tlSetImgLoading(false);
+                  tlShowPlaceholder('Generation failed — try another model.', true);
+                }
+              }).catch(function() { tlSetImgLoading(false); tlShowPlaceholder('Network error.', true); });
+          }, 3000);
+        })();
+      })
+      .catch(function() { tlSetImgLoading(false); tlShowPlaceholder('Network error.', true); });
     };
 
     // Legacy aliases so any hardcoded onclick still works
@@ -2348,8 +2411,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       });
     }
 
-    // On load: pre-warm 10 images in background so queue is ready
-    tlWarmup(10);
+    // No warmup on load — user presses Generate to create images on demand
   })();
 
   /* ── Analytics Dashboard AI controls ── */

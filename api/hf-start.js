@@ -25,7 +25,7 @@ export default async function handler(req, res) {
   const token = process.env.HIGGSFIELD_TOKEN;
   if (!token) return res.status(500).json({ error: 'HIGGSFIELD_TOKEN not configured' });
 
-  const { prompt, count = 1 } = req.body || {};
+  const { prompt, count = 1, model = 'nano_banana_2' } = req.body || {};
   if (!prompt) return res.status(400).json({ error: 'prompt required' });
 
   const charCount = Math.max(1, Math.min(CHAR_IDS.length, parseInt(count) || 1));
@@ -33,7 +33,7 @@ export default async function handler(req, res) {
   const medias = selectedIds.map(id => ({ data: { id, type: 'media_input' }, role: 'image' }));
 
   const body = {
-    job_set_type: 'nano_banana_2',
+    job_set_type: model,
     params: {
       prompt,
       aspect_ratio: '9:16',
