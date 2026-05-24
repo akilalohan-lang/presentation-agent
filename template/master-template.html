@@ -723,6 +723,26 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
   overflow: hidden;
 }
 /* Topic image right panel - covers full right section, character centered */
+/* 9:16 right panels — panel itself is portrait, image fills it perfectly */
+#tl-right,
+#ad-right {
+  flex: 0 0 auto !important;
+  height: 100%;
+  aspect-ratio: 9 / 16;
+  min-width: 180px;
+  max-width: 52%;
+  background: #fff !important;
+  position: relative;
+  overflow: hidden;
+}
+#tl-right::before,
+#ad-right::before { display: none !important; }
+
+/* Left panels adjacent to 9:16 right panels take remaining space */
+.tl-inner > .slide-left { flex: 1 !important; }
+[data-title="Analytics Dashboard AI"] .slide-left { flex: 1 !important; }
+
+/* Image fills the 9:16 panel exactly — same ratio so no cropping, no letterbox */
 .tl-right-img {
   position: absolute;
   inset: 0;
@@ -731,9 +751,6 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
   object-fit: cover;
   object-position: center center;
 }
-/* Remove purple overlay for the tl-right panel — background is white */
-#tl-right.slide-right { background: #fff; }
-#tl-right.slide-right::before { display: none; }
 
 /* Feature highlight */
 .feature-pills { display:flex; flex-wrap:wrap; gap:7px; margin:4px 0 18px; }
@@ -1085,7 +1102,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
             <p class="kicker" id="tl-kicker">Source: PurchasePlus 2026 Hospitality Procurement Index.</p>
           </div>
 
-          <div class="slide-right" id="tl-right" style="position:relative;overflow:hidden;background:#fff;">
+          <div class="slide-right" id="tl-right">
             <img class="tl-right-img" id="tl-img"
                  src="../assets/Generated/tl-procurement-challenge.png"
                  alt="Procurement challenge scene">
@@ -2449,15 +2466,34 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       }, 160);
     }
 
+    function adShowError(msg) {
+      adSetLoading(false);
+      var ph = document.getElementById('ad-placeholder');
+      if (ph) {
+        ph.style.display = 'flex';
+        ph.innerHTML = '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ee2b62" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span style="font-size:12px;color:#ee2b62;font-weight:600;text-align:center;max-width:160px;line-height:1.5;">' + msg + '</span>';
+      }
+    }
+
     function adFetchNewImage() {
       adSetLoading(true);
+      var ph = document.getElementById('ad-placeholder');
+      if (ph) ph.style.display = 'none';
       var model = (document.getElementById('adModel') || {}).value || 'gpt_image_2';
       var eyebrowEl = document.getElementById('ad-eyebrow');
       var topic = eyebrowEl ? eyebrowEl.textContent.trim() : '';
       fetch('/api/hf-dashboard-start', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ model: model, topic: topic }) })
         .then(function(r) { return r.json(); })
         .then(function(d) {
-          if (!d.jobId) { adSetLoading(false); return; }
+          if (!d.jobId) {
+            var errText = d.error || '';
+            if (errText.indexOf('not_enough_credits') !== -1) {
+              adShowError('Out of Higgsfield credits. Top up at higgsfield.ai to generate.');
+            } else {
+              adShowError('Generation failed. Check API config.');
+            }
+            return;
+          }
           var jobId = d.jobId;
           (function poll() {
             setTimeout(function() {
@@ -2475,11 +2511,11 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
                       setTimeout(function() { img.src = d.url; img.style.transition = 'opacity .3s'; img.style.opacity = '1'; }, 150);
                     }
                   } else if (d.status !== 'failed') { poll(); }
-                  else { adSetLoading(false); }
-                }).catch(function() { adSetLoading(false); });
+                  else { adShowError('Generation failed. Try a different model.'); }
+                }).catch(function() { adShowError('Network error. Check connection.'); });
             }, 3000);
           })();
-        }).catch(function() { adSetLoading(false); });
+        }).catch(function() { adShowError('Network error. Check connection.'); });
     }
 
     window.adGenerate = function() {
