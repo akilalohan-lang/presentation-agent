@@ -1,7 +1,6 @@
 // Generates a PurchasePlus analytics dashboard image via Higgsfield.
 // Accepts { model, topic } in the POST body.
-// model defaults to gpt_image_2 (best for UI + text sharpness).
-// topic adjusts the prompt context to match the active slide variant.
+// Auto-refreshes the Higgsfield token via Edge Config on 401.
 const HF_API  = 'https://fnf.higgsfield.ai';
 const PP_LOGO = 'ef87048f-c65e-4283-be15-a9a859ecb162';
 
@@ -46,11 +45,10 @@ TYPOGRAPHY: Clean geometric sans-serif (Inter, SF Pro, or equivalent). ALL text 
 
 NO watermarks. NO other brand names. NO additional logos. Only the cross/plus emblem in the top-left nav bar.`;
 
+import { hfFetch } from './lib/hf-auth.js';
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
-
-  const token = process.env.HIGGSFIELD_TOKEN;
-  if (!token) return res.status(500).json({ error: 'HIGGSFIELD_TOKEN not configured' });
 
   const { model = 'gpt_image_2', topic } = req.body || {};
 
@@ -67,14 +65,18 @@ export default async function handler(req, res) {
     }
   };
 
-  const r = await fetch(`${HF_API}/agents/jobs`, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(body)
-  });
+  let r;
+  try {
+    r = await hfFetch(token =>
+      fetch(`${HF_API}/agents/jobs`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      })
+    );
+  } catch (e) {
+    return res.status(401).json({ error: e.message });
+  }
 
   if (!r.ok) return res.status(r.status).json({ error: await r.text() });
 

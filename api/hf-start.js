@@ -1,6 +1,7 @@
 // Starts a Higgsfield image generation job for the Text+Longarms+UI slide.
 // Accepts { prompt, count } in the POST body.
 // count controls how many Longarms character reference images are passed to the model.
+// Auto-refreshes the Higgsfield token via Edge Config on 401.
 const HF_API = 'https://fnf.higgsfield.ai';
 
 // All 12 Stand Alone characters uploaded to Higgsfield.
@@ -25,11 +26,10 @@ function pickRandom(arr, n) {
   return shuffled.slice(0, n);
 }
 
+import { hfFetch } from './lib/hf-auth.js';
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
-
-  const token = process.env.HIGGSFIELD_TOKEN;
-  if (!token) return res.status(500).json({ error: 'HIGGSFIELD_TOKEN not configured' });
 
   const { prompt, count = 1, model = 'nano_banana_2' } = req.body || {};
   if (!prompt) return res.status(400).json({ error: 'prompt required' });
@@ -40,21 +40,21 @@ export default async function handler(req, res) {
 
   const body = {
     job_set_type: model,
-    params: {
-      prompt,
-      aspect_ratio: '9:16',
-      medias
-    }
+    params: { prompt, aspect_ratio: '9:16', medias }
   };
 
-  const r = await fetch(`${HF_API}/agents/jobs`, {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(body)
-  });
+  let r;
+  try {
+    r = await hfFetch(token =>
+      fetch(`${HF_API}/agents/jobs`, {
+        method: 'POST',
+        headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      })
+    );
+  } catch (e) {
+    return res.status(401).json({ error: e.message });
+  }
 
   if (!r.ok) {
     const err = await r.text();
