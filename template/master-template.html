@@ -722,14 +722,14 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
   min-height: 0;
   overflow: hidden;
 }
-/* Topic image right panel - full bleed generated image */
+/* Topic image right panel - fully responsive, character always fully visible */
 .tl-right-img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center top;
+  object-fit: contain;
+  object-position: center bottom;
 }
 
 /* Feature highlight */
@@ -1385,7 +1385,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
         <div class="slide-right" style="padding:0;overflow:hidden;" id="ad-right">
           <img id="ad-img" src="../assets/Generated/analytics-dashboard-ai.png"
                alt="Analytics dashboard AI"
-               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;">
+               style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:top center;">
         </div>
 
       </section>
@@ -2139,10 +2139,13 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 
     function tlBuildPrompt(scene, n) {
       var count = n || tlGetCharCount();
-      var groupDesc = count === 1
-        ? 'A single cartoon character with EXTREMELY long curved arms far beyond normal human proportions, wearing a navy dark blue business suit, white shirt, small red tie'
-        : 'A group of exactly ' + count + ' cartoon characters, each with EXTREMELY long curved arms far beyond normal human proportions. Characters wear different hospitality uniforms: navy business suit, chef whites, waiter uniform, bellhop uniform, casual, vary the outfits. All have abstract minimal faces with NO nose, only two small dot eyes and a simple curved smile line';
-      return 'Flat vector illustration. ' + groupDesc + '. ' + scene + '. Pure white background. Colors strictly: purple rgb(124,93,255), teal rgb(0,189,197), blue rgb(55,102,254), dark navy. ABSOLUTELY NO text, NO logos, NO written words, NO letters, NO brand names, NO numbers, NO labels, NO watermarks anywhere in the image at all. Flat design style, portrait.';
+      var uniforms = ['navy business suit with white shirt and small red tie', 'white chef uniform with toque hat and apron', 'waiter uniform with bow tie and serving tray', 'bellhop uniform with pillbox hat', 'delivery uniform with cap', 'casual business attire', 'supplier vest and shirt'];
+      var charDesc = count === 1
+        ? 'A single Longarms character in a ' + uniforms[0]
+        : 'Exactly ' + count + ' Longarms characters standing side by side, ALL ' + count + ' fully visible from head to toe. Each wears a DIFFERENT uniform: ' + uniforms.slice(0, count).join(', ') + '. Spread them evenly across the width. Every single character must appear in the image.';
+      var skinRule = 'CRITICAL SKIN COLOR: All character skin and face areas are VERY DARK NAVY (#0c0821) — almost charcoal black. This color is fixed from the reference images and must NEVER change. Do NOT apply purple, blue, teal or any other color to skin or faces. Purple (#7c5dff), teal (#00bdc5) and blue (#3766fe) are used ONLY on clothing accents, accessories, and background graphic elements.';
+      var shapeRule = 'Each character has EXTREMELY long curved arms extending 3x beyond normal human arm length. Abstract minimal face: two tiny dot eyes only, NO nose, NO mouth detail. Flat vector illustration style matching the reference images exactly.';
+      return charDesc + '. ' + skinRule + ' ' + shapeRule + ' Scene context: ' + scene + '. Pure white (#ffffff) background. ABSOLUTELY NO text, NO letters, NO numbers, NO logos, NO watermarks anywhere in the image.';
     }
 
     // ── Queue and state ──
@@ -2274,7 +2277,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
       return fetch('/api/hf-start', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: prompt })
+        body: JSON.stringify({ prompt: prompt, count: n || tlGetCharCount() })
       }).then(function(r) { return r.json(); }).then(function(d) {
         if (d.jobId && tlQueue[pendingIdx]) tlQueue[pendingIdx].jobId = d.jobId;
       }).catch(function() {});
