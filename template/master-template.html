@@ -2190,12 +2190,39 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 
     function tlBuildPrompt(n, topicText) {
       var count = n || tlGetCharCount();
+
       var charDesc = count === 1
-        ? 'Reproduce the character from the reference image exactly as shown. One character, standing upright, fully visible from head to toe.'
-        : 'Reproduce exactly ' + count + ' characters from the reference images, standing side by side. All ' + count + ' characters fully visible from head to toe, evenly spread across the full width. Each character is a different one from the reference images.';
-      var styleGuide = 'Copy every visual detail from the reference images precisely: the flat geometric vector illustration style, every character\'s exact colors, their distinctive curved arm shapes, their unique face shape and color, their specific hat and uniform. Do not change any colors. Do not change any shapes. Do not make it realistic. Keep the flat clean vector look exactly as in the references.';
-      var topicCtx = topicText ? 'Presentation slide topic: ' + topicText + '.' : '';
-      return charDesc + ' ' + styleGuide + ' ' + topicCtx + ' Pure white (#ffffff) background. No text, no letters, no numbers, no logos, no watermarks.';
+        ? 'Flat vector illustration. One character, fully visible from head to toe, centered on pure white background.'
+        : 'Flat vector illustration. Exactly ' + count + ' characters side by side on pure white background, all fully visible from head to toe, evenly spaced across the full width.';
+
+      var styleGuide = 'Each character has EXTREMELY long curved arms that extend far beyond normal human body proportions — the arms swoop and curve dramatically, much longer than the torso. Abstract minimal face: no nose, just two small dot eyes and a gentle curved smile line. Flat geometric vector art style, clean solid color fills, no gradients, no realistic shading. Copy the exact colors and uniform details of each character precisely from the reference images — do not invent or change any colors.';
+
+      var poseMap = [
+        ['AP AUTOMATION',      'Characters hold documents and invoices, one long arm sweeping upward in an approving gesture, the other arm extended outward.'],
+        ['AUTOMATION',         'Characters hold documents and invoices, one long arm sweeping upward in an approving gesture, the other arm extended outward.'],
+        ['SPEND',              'Characters point at data and charts with one long arm raised high, the other arm gesturing outward enthusiastically.'],
+        ['BUDGET',             'Characters spread their long arms wide open in a confident controlling gesture, palms facing out.'],
+        ['PURCHAS',            'Characters reach out with long arms holding documents, one arm raised presenting forward.'],
+        ['MARKETPLACE',        'Characters extend both long arms outward presenting and welcoming, palms open.'],
+        ['INVOICE',            'Characters hold documents with arms raised triumphantly overhead.'],
+        ['SUPPLIER',           'Characters wave with one long arm raised high, the other arm extended at shoulder height.'],
+        ['APPROVAL',           'Characters raise one long arm high giving a thumbs-up gesture, other arm extended to the side.'],
+        ['ANALYTICS',          'Characters point with one long arm at an imaginary chart, the other arm resting on their hip.'],
+        ['REPORTING',          'Characters hold a clipboard or document in one hand, the other long arm pointing forward at the viewer.']
+      ];
+
+      var poseCtx = 'Characters are in a dynamic pose with arms extended and raised, as if presenting or celebrating.';
+      if (topicText) {
+        var upperTopic = topicText.toUpperCase();
+        for (var i = 0; i < poseMap.length; i++) {
+          if (upperTopic.indexOf(poseMap[i][0]) !== -1) {
+            poseCtx = poseMap[i][1];
+            break;
+          }
+        }
+      }
+
+      return charDesc + ' ' + styleGuide + ' ' + poseCtx + ' Pure white (#ffffff) background. ABSOLUTELY NO text, NO logos, NO letters, NO numbers, NO watermarks anywhere in the image.';
     }
 
     function tlHandleModelResult(modelId) {
