@@ -2,66 +2,68 @@
 // Accepts { model, topic } in the POST body.
 // Auto-refreshes the Higgsfield token via Edge Config on 401.
 const HF_API  = 'https://fnf.higgsfield.ai';
-const PP_LOGO = 'ef87048f-c65e-4283-be15-a9a859ecb162';
 
-const TOPIC_CONTEXT = {
-  'Spend Intelligence': 'The dashboard is focused on spend analytics: category breakdown, bar chart, and donut distribution are the featured visuals.',
-  'Budget Control':     'The dashboard is focused on budget tracking: department budget limits, rolling forecast, and alert indicators are featured.',
-  'Invoice Automation': 'The dashboard is focused on invoice automation: the invoice cycle time line chart (14 days down to 1.8 days) is the hero visual.'
-};
+const BASE_PROMPT = `High-fidelity screenshot of a dark-mode B2B SaaS analytics dashboard. \
+Full-bleed portrait image, no browser chrome, no device frame. \
+Dark navy background (#0f1117) fills the entire image.
 
-const BASE_PROMPT = `Photorealistic high-fidelity screenshot of a modern B2B SaaS procurement platform. \
-Pure white background (#ffffff) throughout. Crisp, pixel-perfect UI. All text sharp and correctly proportioned — absolutely no stretching, no distortion, no blurring of letterforms.
+HEADER BAR (top 8% of image):
+Left: small text "PURCHASEPLUS ANALYTICS" in muted grey. Below it: "Spend Intelligence Report" in white 22px bold.
+Right: "FY 2025–26  Q4" in grey, then a green dot with "Live" text.
 
-LAYOUT (portrait, full-bleed screenshot):
+KPI ROW (next 16% of image, 4 equal dark cards side by side with 1px borders):
+Each card has: large metric number (28px, colored), label text below (12px grey), trend text below that (12px).
+Card 1: "$2.4B" in purple, "TOTAL SPEND", "+12% YoY" in green.
+Card 2: "40M+" in teal, "INVOICES", "99.9% Accuracy" in green.
+Card 3: "18%" in purple, "COST SAVINGS", "+4.2% vs prior" in green.
+Card 4: "1.8d" in teal, "INVOICE CYCLE", "↓ from 14 days" in red.
 
-TOP NAVIGATION BAR — white background, 1px bottom border. \
-Left: small purple-and-blue cross/plus emblem only (no text beside it, emblem is ~32px). \
-Right: date range pill "May 1 – May 31, 2026" with dropdown chevron, then a "Filters" button with funnel icon. Both in dark navy text.
+CHARTS AREA (bottom 76% of image). Split into two columns: LEFT 60% wide, RIGHT 40% wide.
 
-LEFT SIDEBAR — white, 1px right border, approximately 180px wide. \
-Vertical menu items in this exact order, each with a small monoline icon then label text: \
-Home (active — purple filled pill background, white text), Requisitions, Purchase Orders, Invoices (red notification dot), Buy Lists, Catalogues, Products, Supplier, Inventory, Reports. \
-Icons are thin line style, dark navy, matching each menu label.
+LEFT COLUMN — one full-height bar chart card titled "Monthly Spend by Category":
+Dark card background. Y-axis on the left with labels: $800k, $600k, $400k, $200k, $0. Horizontal gridlines.
+Six vertical bars, evenly spaced, each bar is narrow with clear gaps between bars. Bars must NOT fill the full chart height — they should reach their exact data value on the y-axis.
+Bar data and colors:
+Food → $750k, deep purple (#5b21b6)
+Bev → $520k, royal blue (#3766fe)
+Equip → $380k, teal (#00bdc5)
+Linen → $240k, light purple (#a956ff)
+Clean → $180k, pink-red (#ee2b62)
+Other → $120k, light teal (#67e8f9)
+Dollar value label rendered in white text directly above each bar.
+Category name label in grey below each bar on the x-axis.
 
-MAIN CONTENT AREA — white background, starts right of sidebar. \
-Heading: "Analytics" in bold 28px dark navy. Subheading: "May 2026" in 14px grey.
+RIGHT COLUMN — split into two stacked chart cards, each taking exactly 50% of the right column height.
 
-KPI CARDS ROW — four equal white cards with subtle rounded border and light shadow: \
-Card 1: dollar-coin icon, "$2.4B", "Total Spend", green "+12.6% vs Apr 2026". \
-Card 2: document icon, "40M", "Total Invoices", teal "99.9% Accuracy Rate". \
-Card 3: trending-up arrow icon, "18%", "M Saved", green "+4.2% vs Apr 2026". \
-Card 4: clock icon, "1.8", "Days", red "↓ 87.1% Down from 14.0 days".
+RIGHT TOP — "Spend Distribution" donut chart:
+Dark card, title "Spend Distribution" in white 14px bold top-left.
+A large donut ring centered in the card. The ring must fill at least 65% of the card width. Ring segments in the 6 brand colors proportional to: Food 42%, Bev 28%, Equip 19%, Linen 6%, Clean 3%, Other 2%.
+A compact legend to the right of or below the donut: colored dot + category name + percentage on each row.
+The donut must be LARGE AND PROMINENT. Not small. Not tiny. It fills the card center.
 
-BAR CHART — titled "Monthly Spend by Category" with "This Month" dropdown. \
-Y-axis 0–800M. Bars: Food 735M (deep purple #5b21b6), Beverages 520M (royal blue #3766fe), Equipment 410M (teal #00bdc5), Linen 280M (light purple #a956ff), Cleaning 160M (red-pink #ee2b62), Other 95M (light teal #67e8f9). \
-Clean gridlines, x-axis category labels, y-axis labels.
+RIGHT BOTTOM — "Invoice Cycle Time" line chart:
+Dark card, title "Invoice Cycle Time" in white 14px bold top-left. "1.8d" in teal 20px bold top-right.
+Y-axis labeled "Days" with ticks at 0, 4, 8, 12, 16. Horizontal gridlines.
+One smooth curve declining from 14.0 at the far left x-axis to 1.8 at the far right x-axis.
+The line uses a gradient stroke: starts purple (#7c5dff) on the left, ends teal (#00bdc5) on the right.
+Small circle data points on the line. The curve is bold and clearly visible — at least 3px stroke weight.
 
-TWO BOTTOM CHARTS side by side: \
-Left — "Spend Distribution" donut chart with the same 6 brand colors, percentage labels inside/outside, legend below. \
-Right — "Invoice Processing Time" line chart, y-axis "Days" 0–16, smooth curve declining from 14.0 (left) to 1.8 (right), purple-to-teal gradient stroke, data points as dots.
-
-TYPOGRAPHY: Clean geometric sans-serif (Inter, SF Pro, or equivalent). ALL text is properly proportioned, horizontal, and fully legible. Dark navy (#111827) on white. No AI-generated text artifacts.
-
-NO watermarks. NO other brand names. NO additional logos. Only the cross/plus emblem in the top-left nav bar.`;
+All text throughout is sharp, legible, correctly proportioned. No blurred text. No distorted letterforms. \
+No watermarks. No logos. No brand names. White and light-grey text on dark backgrounds throughout.`;
 
 import { hfFetch } from './lib/hf-auth.js';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { model = 'gpt_image_2', topic } = req.body || {};
-
-  const topicCtx = topic && TOPIC_CONTEXT[topic] ? ' ' + TOPIC_CONTEXT[topic] : '';
-  const prompt = BASE_PROMPT + topicCtx;
+  const { model = 'gpt_image_2' } = req.body || {};
 
   const body = {
     job_set_type: model,
     params: {
-      prompt,
+      prompt: BASE_PROMPT,
       aspect_ratio: '9:16',
-      resolution: '2k',
-      medias: [{ data: { id: PP_LOGO, type: 'media_input' }, role: 'image' }]
+      resolution: '2k'
     }
   };
 
