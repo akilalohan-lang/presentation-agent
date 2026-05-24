@@ -800,11 +800,11 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
 .team-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:10px; flex:1; min-height:0; overflow:hidden; }
 .person-card { display:flex; flex-direction:column; background:var(--softer); border:1px solid var(--border-soft); border-radius:12px; overflow:hidden; transition:border-color .15s; }
 .person-card:hover { border-color:rgba(124,93,255,.28); }
-.person-photo { width:100%; height:clamp(90px,10vw,130px); object-fit:cover; object-position:top center; flex-shrink:0; }
+.person-photo { width:100%; aspect-ratio:1/1; height:auto; object-fit:cover; object-position:top center; flex-shrink:0; }
 .person-info { padding:10px 13px 12px; display:flex; flex-direction:column; gap:3px; flex:1; }
-.person-name { font-size:clamp(14px,1.3vw,17px); font-weight:600; color:var(--ink); line-height:1.2; text-wrap:balance; }
-.person-role { font-size:clamp(12px,1.1vw,14px); color:var(--body); }
-.person-bio  { font-size:clamp(12px,1.1vw,14px); color:var(--muted); line-height:1.45; text-wrap:balance; margin-top:2px; }
+.person-name { font-size:clamp(16px,1.5vw,18px); font-weight:600; color:var(--ink); line-height:1.2; text-wrap:balance; }
+.person-role { font-size:clamp(14px,1.4vw,18px); color:var(--body); }
+.person-bio  { font-size:clamp(14px,1.4vw,18px); color:var(--muted); line-height:1.45; text-wrap:balance; margin-top:2px; }
 
 @media (max-width:1100px) {
   .divider-inner { padding:60px 48px; }
@@ -1699,7 +1699,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
               </div>
             </div>
             <div class="person-card" style="border-color:rgba(124,93,255,.25);">
-              <div style="width:100%;height:clamp(90px,10vw,130px);background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:clamp(28px,3vw,42px);font-weight:300;color:#fff;letter-spacing:.06em;flex-shrink:0;">AL</div>
+              <div style="width:100%;aspect-ratio:1/1;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:clamp(28px,3vw,42px);font-weight:300;color:#fff;letter-spacing:.06em;flex-shrink:0;">AL</div>
               <div class="person-info">
                 <div class="person-name">Akila Lohan</div>
                 <div class="person-role"><span class="grad">Head of Marketing</span></div>
