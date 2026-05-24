@@ -722,15 +722,18 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
   min-height: 0;
   overflow: hidden;
 }
-/* Topic image right panel - fully responsive, character always fully visible */
+/* Topic image right panel - covers full right section, character centered */
 .tl-right-img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: center bottom;
+  object-fit: cover;
+  object-position: center center;
 }
+/* Remove purple overlay for the tl-right panel — background is white */
+#tl-right.slide-right { background: #fff; }
+#tl-right.slide-right::before { display: none; }
 
 /* Feature highlight */
 .feature-pills { display:flex; flex-wrap:wrap; gap:7px; margin:4px 0 18px; }
@@ -1082,7 +1085,7 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
             <p class="kicker" id="tl-kicker">Source: PurchasePlus 2026 Hospitality Procurement Index.</p>
           </div>
 
-          <div class="slide-right" id="tl-right" style="position:relative;overflow:hidden;">
+          <div class="slide-right" id="tl-right" style="position:relative;overflow:hidden;background:#fff;">
             <img class="tl-right-img" id="tl-img"
                  src="../assets/Generated/tl-procurement-challenge.png"
                  alt="Procurement challenge scene">
@@ -1383,9 +1386,13 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
         </div>
 
         <div class="slide-right" style="padding:0;overflow:hidden;" id="ad-right">
-          <img id="ad-img" src="../assets/Generated/analytics-dashboard-ai.png"
-               alt="Analytics dashboard AI"
-               style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:top center;">
+          <img id="ad-img" src=""
+               alt="Analytics dashboard — press Generate"
+               style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top center;display:none;">
+          <div id="ad-placeholder" style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;background:#fff;">
+            <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="4" y="4" width="32" height="32" rx="6" stroke="#e5e7eb" stroke-width="2"/><circle cx="14" cy="15" r="3" stroke="#9ca3af" stroke-width="1.5"/><path d="M4 28l9-8 6 6 5-5 12 10" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span style="font-size:12px;color:#9ca3af;font-weight:500;text-align:center;max-width:140px;line-height:1.5;">Press Generate to create your dashboard</span>
+          </div>
         </div>
 
       </section>
@@ -2459,8 +2466,14 @@ button { font-family: inherit; cursor: pointer; border: 0; background: none; }
                 .then(function(d) {
                   if (d.status === 'completed' && d.url) {
                     adSetLoading(false);
+                    var ph = document.getElementById('ad-placeholder');
+                    if (ph) ph.style.display = 'none';
                     var img = document.getElementById('ad-img');
-                    if (img) { img.style.opacity = '0.3'; setTimeout(function() { img.src = d.url; img.style.transition = 'opacity .3s'; img.style.opacity = '1'; }, 150); }
+                    if (img) {
+                      img.style.display = 'block';
+                      img.style.opacity = '0.3';
+                      setTimeout(function() { img.src = d.url; img.style.transition = 'opacity .3s'; img.style.opacity = '1'; }, 150);
+                    }
                   } else if (d.status !== 'failed') { poll(); }
                   else { adSetLoading(false); }
                 }).catch(function() { adSetLoading(false); });
